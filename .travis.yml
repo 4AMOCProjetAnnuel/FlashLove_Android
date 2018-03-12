@@ -1,13 +1,16 @@
 language: android
 android:
   components:
-    - tools
-    - platform-tools
-    - build-tools-26.0.2
-    - android-26
-    - extra-android-m2repository
-    - extra-google-m2repository
+  - tools
+  - platform-tools
+  - build-tools-26.0.2
+  - android-26
+  - extra-android-m2repository
+  - extra-google-m2repository
 jdk:
-  - oraclejdk8
+- oraclejdk8
 script:
-  - ./gradlew build
+- "./gradlew build"
+notifications:
+  slack:
+    secure: TXuizujFzzhZvOzqDkdrLFrumNck9/RyxQ+k9MSh+30PFbH4ky0h+mzi86Q8MGI3wEd4LXX6cNcsT7LquzAloCcZ+GIJ/9YiqVOYzZH1gZKqfm6RqKjkRuQOEJIfMxMSw/PHoarCxNHml369Z7/RLO3N3wycK6bSWDYOM4DHLS6rpwBTqsegoNbb9KNh5DDG5CdHAyH7/ddyFr4eeJJGEqckP9cENZLTb8bHhYOOBPk89s+CRlO7UEJWIAg4lD5B6N3+3PnR5sJLS92JN0Q6VGLERy1b5mt7YV+ahN37pqzG46yTNQ4fgw4eDJRsQx2woB4MrscARl0JRn8dHQnesThK7xXEb1UzcBfFExz2nTRWYGGM3I1oFtXgsPpp3xN7TyTkpgc4CdSfuguWfJUSQcXT9xTvjbXptduvZr2GCpP2roo1knBniH1zoWXW/Lu1Xl1R8NL5ICeCj8kRDVxEwC/6bkaui1Ov7fWfYngUm9uCi2LHVU3nnC3/AV32+Nf9c+Fo9bUxcElBgtq4z33BIhUYFwZhA9mEZqh82G0IpdHA8Mg6RvdmH+EkNO74CQJy+ph5TfbsP5uHcEplequfbBKGixUX2VQ3KDnyiE5dHRe2OrDonhd6C3Z7Ylk83pLXXiZ+ooXp0zAmdz5R4JjTWm8vu6S/3tGVk8WtXf15xJc=
