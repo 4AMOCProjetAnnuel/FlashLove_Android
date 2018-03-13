@@ -1,0 +1,86 @@
+[2018-03-13 13:53:40.304][debug][command:null][tid:01][com.sun.jna.Platform] null
+java.io.FileNotFoundException: /proc/self/exe (No such file or directory)
+	at java.io.RandomAccessFile.open0(Native Method)
+	at java.io.RandomAccessFile.open(RandomAccessFile.java:316)
+	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:243)
+	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:124)
+	at com.sun.jna.ELFAnalyser.runDetection(ELFAnalyser.java:109)
+	at com.sun.jna.ELFAnalyser.analyse(ELFAnalyser.java:36)
+	at com.sun.jna.Platform.isSoftFloat(Platform.java:259)
+	at com.sun.jna.Platform.<clinit>(Platform.java:133)
+	at com.sun.jna.Native.loadNativeDispatchLibraryFromClasspath(Native.java:936)
+	at com.sun.jna.Native.loadNativeDispatchLibrary(Native.java:922)
+	at com.sun.jna.Native.<clinit>(Native.java:190)
+	at com.sun.jna.Pointer.<clinit>(Pointer.java:54)
+	at com.facebook.buck.cli.Main.<clinit>(Main.java:224)
+	at com.facebook.buck.cli.Main$DaemonBootstrap.main(Main.java:1735)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.facebook.buck.cli.bootstrapper.ClassLoaderBootstrapper.main(ClassLoaderBootstrapper.java:55)
+
+[2018-03-13 13:53:40.489][debug][command:null][tid:01][com.sun.jna.Platform] null
+java.io.FileNotFoundException: /proc/self/exe (No such file or directory)
+	at java.io.RandomAccessFile.open0(Native Method)
+	at java.io.RandomAccessFile.open(RandomAccessFile.java:316)
+	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:243)
+	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:124)
+	at com.sun.jna.ELFAnalyser.runDetection(ELFAnalyser.java:109)
+	at com.sun.jna.ELFAnalyser.analyse(ELFAnalyser.java:36)
+	at com.sun.jna.Platform.isSoftFloat(Platform.java:259)
+	at com.sun.jna.Platform.getNativeLibraryResourcePrefix(Platform.java:287)
+	at com.sun.jna.Platform.getNativeLibraryResourcePrefix(Platform.java:276)
+	at com.sun.jna.Platform.<clinit>(Platform.java:134)
+	at com.sun.jna.Native.loadNativeDispatchLibraryFromClasspath(Native.java:936)
+	at com.sun.jna.Native.loadNativeDispatchLibrary(Native.java:922)
+	at com.sun.jna.Native.<clinit>(Native.java:190)
+	at com.sun.jna.Pointer.<clinit>(Pointer.java:54)
+	at com.facebook.buck.cli.Main.<clinit>(Main.java:224)
+	at com.facebook.buck.cli.Main$DaemonBootstrap.main(Main.java:1735)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.facebook.buck.cli.bootstrapper.ClassLoaderBootstrapper.main(ClassLoaderBootstrapper.java:55)
+
+[2018-03-13 13:53:40.604][info ][command:null][tid:01][com.facebook.buck.cli.HangMonitor] HangMonitorAutoStart
+[2018-03-13 13:53:40.759][debug][command:null][tid:01][com.google.common.util.concurrent.ServiceManager] Starting HangMonitor [RUNNING].
+[2018-03-13 13:53:40.760][debug][command:null][tid:01][com.google.common.util.concurrent.ServiceManager] Started HangMonitor [RUNNING] in 20.39 ms.
+[2018-03-13 13:53:40.808][info ][command:null][tid:01][com.facebook.buck.cli.Main] enabling background process killing for buckd
+[2018-03-13 13:53:40.815][info ][command:null][tid:01][com.facebook.buck.cli.Main] enabled background process killing for buckd
+[2018-03-13 13:53:40.817][info ][command:null][tid:01][com.facebook.buck.cli.Main] initialized bg session killer
+[2018-03-13 13:53:40.893][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Waiting for first client to connect
+[2018-03-13 13:53:40.903][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Client connected
+[2018-03-13 13:53:40.903][debug][command:null][tid:15][com.martiansoftware.nailgun.NGSession] Waiting for first client to connect
+[2018-03-13 13:53:40.911][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Tearing down client socket
+[2018-03-13 13:53:40.911][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Flushing client socket
+[2018-03-13 13:53:40.911][warn ][command:null][tid:16][com.martiansoftware.nailgun.NGInputStream] Nailgun client read future was interrupted
+java.lang.InterruptedException
+	at java.util.concurrent.FutureTask.awaitDone(FutureTask.java:404)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:204)
+	at com.martiansoftware.nailgun.NGInputStream$1.run(NGInputStream.java:91)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+
+[2018-03-13 13:53:40.912][debug][command:null][tid:16][com.martiansoftware.nailgun.NGInputStream] Nailgun client read shutting down
+[2018-03-13 13:53:40.912][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Error shutting down socket I/O (this is expected if the client disconnected already)
+java.io.IOException: com.sun.jna.LastErrorException: [57] Socket is not connected
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.doShutdown(NGUnixDomainSocket.java:74)
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.shutdownInput(NGUnixDomainSocket.java:60)
+	at com.martiansoftware.nailgun.NGSession.run(NGSession.java:375)
+Caused by: com.sun.jna.LastErrorException: [57] Socket is not connected
+	at com.martiansoftware.nailgun.NGUnixDomainSocketLibrary.shutdown(Native Method)
+	at com.martiansoftware.nailgun.NGUnixDomainSocket.doShutdown(NGUnixDomainSocket.java:71)
+	... 2 more
+
+[2018-03-13 13:53:40.912][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Closing client socket
+[2018-03-13 13:53:40.912][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Finished tearing down client socket
+[2018-03-13 13:53:40.912][debug][command:null][tid:14][com.martiansoftware.nailgun.NGSession] Waiting for next client to connect
+[2018-03-13 13:53:40.912][info ][command:null][tid:14][com.martiansoftware.nailgun.NGSession] NGSession shutting down
+[2018-03-13 13:53:40.914][debug][command:null][tid:15][com.martiansoftware.nailgun.NGSession] Client connected
+[2018-03-13 13:53:40.914][debug][command:null][tid:18][com.martiansoftware.nailgun.NGSession] Waiting for first client to connect
+[2018-03-13 13:53:41.172][debug][command:null][tid:15][com.facebook.buck.cli.Main] Rotating log.
