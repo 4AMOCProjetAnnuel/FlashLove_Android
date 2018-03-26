@@ -12,5 +12,4 @@ interface BasePresenter {
     fun pause()
 
     fun stop()
-
 }

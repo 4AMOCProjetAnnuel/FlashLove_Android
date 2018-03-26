@@ -39,6 +39,8 @@ dependencies {
     api "com.android.support:recyclerview-v7:$android_supportlib_version"
     implementation 'com.github.salomonbrys.kodein:kodein:4.1.0'
     implementation 'com.airbnb.android:epoxy:2.10.0'
+    implementation 'org.koin:koin-android:0.9.1'
+    implementation 'com.android.support:design:26.1.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

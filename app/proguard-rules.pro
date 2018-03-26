@@ -21,4 +21,3 @@
 #-renamesourcefileattribute SourceFile
 
 -keepattributes Signature
-
