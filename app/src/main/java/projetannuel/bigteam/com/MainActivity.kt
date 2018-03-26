@@ -7,12 +7,11 @@ import projetannuel.bigteam.com.navigation.AppNavigator
 
 class MainActivity : AppCompatActivity() {
 
-    var appNavigator = AppNavigator(fragmentManager, R.id.main_container_id)
+    private var appNavigator = AppNavigator(fragmentManager, R.id.main_container_id)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        appNavigator.displayParties()
-
+        appNavigator.displayRegistration()
     }
 }

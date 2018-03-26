@@ -7,6 +7,7 @@ package projetannuel.bigteam.com.navigation
  */
 interface Navigator {
 
+    fun displayRegistration()
     fun displayPartyDetails()
     fun displayParties()
 
