@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             fab:layout_constraintBottom_toBottomOf="parent"
             fab:layout_constraintEnd_toEndOf="parent"
-            fab:menu_icon="@android:drawable/arrow_up_float"
+            fab:menu_icon="@drawable/ic_menu_white"
             fab:menu_colorNormal="@color/colorAccent">
 
         </com.github.clans.fab.FloatingActionMenu>
