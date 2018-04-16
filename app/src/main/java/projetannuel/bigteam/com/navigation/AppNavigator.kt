@@ -16,8 +16,8 @@ class AppNavigator(private val fragmentManager: FragmentManager,
     override fun displayRegistration() {
         fragmentManager
                 .beginTransaction()
-                .replace(containerId, RegistrationFragment(), RegistrationFragment.REGISTER_FRAGMENT_TAG)
-                .addToBackStack(RegistrationFragment.REGISTER_FRAGMENT_TAG)
+                .replace(containerId, RegistrationFragment(), RegistrationFragment.registerFragmentTag)
+                .addToBackStack(RegistrationFragment.registerFragmentTag)
                 .commit()
     }
 

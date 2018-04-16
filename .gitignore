@@ -9,3 +9,5 @@
 .externalNativeBuild
 .idea/
 buck-out/
+app/google-services.json
+build.gradle

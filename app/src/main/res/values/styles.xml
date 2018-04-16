@@ -3,9 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/limed_spruce</item>
+        <item name="colorPrimaryDark">@color/outer_space</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="SansSerif" parent="@android:style/TextAppearance" >
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="SansSerif.Italic_TowerGray_12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAppearance">@android:color/black</item>
+    </style>
 </resources>

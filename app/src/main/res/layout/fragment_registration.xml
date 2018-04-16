@@ -1,9 +1,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="projetannuel.bigteam.com.feat.register.RegistrationFragment">
 
 
@@ -11,21 +11,185 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/mt_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/mt_user_email"
+            app:layout_constraintHorizontal_bias="0.5"
+            fab:layout_constraintEnd_toEndOf="parent"
+            fab:layout_constraintStart_toStartOf="parent"
+            fab:layout_constraintTop_toTopOf="parent"
+            fab:mtf_image="@drawable/ic_person">
+
+            <EditText
+                style="@style/SansSerif.Italic_TowerGray_12"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/name"
+                android:textColor="@color/outer_space"
+                android:textColorHint="@color/gull_gray"
+                android:textStyle="normal" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/mt_user_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/mt_user_password"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/mt_user_name"
+            fab:layout_constraintEnd_toEndOf="@id/mt_user_name"
+            fab:layout_constraintStart_toStartOf="@id/mt_user_name"
+            fab:layout_constraintTop_toBottomOf="@id/mt_user_name"
+            fab:mtf_image="@drawable/ic_mail">
+
+            <EditText
+                style="@style/SansSerif.Italic_TowerGray_12"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/email"
+                android:textColor="@color/outer_space"
+                android:textColorHint="@color/gull_gray"
+                android:textStyle="normal" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/mt_user_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/mt_user_birthday"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/mt_user_email"
+            fab:layout_constraintEnd_toEndOf="@id/mt_user_email"
+            fab:layout_constraintStart_toStartOf="@id/mt_user_email"
+            fab:layout_constraintTop_toBottomOf="@id/mt_user_email"
+            fab:mtf_image="@drawable/ic_lock">
+
+            <EditText
+                style="@style/SansSerif.Italic_TowerGray_12"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/mot_de_passe"
+                android:textColor="@color/outer_space"
+                android:textColorHint="@color/gull_gray"
+                android:textStyle="normal" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/mt_user_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/mt_user_description"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/mt_user_password"
+            fab:layout_constraintEnd_toEndOf="@id/mt_user_password"
+            fab:layout_constraintStart_toStartOf="@id/mt_user_password"
+            fab:layout_constraintTop_toBottomOf="@id/mt_user_password"
+            fab:mtf_image="@drawable/ic_child">
+
+            <EditText
+                style="@style/SansSerif.Italic_TowerGray_12"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/date_de_naissance"
+                android:textColor="@color/outer_space"
+                android:textColorHint="@color/gull_gray"
+                android:textStyle="normal" />
+
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/mt_user_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/user_status_title"
+            app:layout_constraintEnd_toEndOf="@id/mt_user_birthday"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@id/mt_user_birthday"
+            app:layout_constraintTop_toBottomOf="@+id/mt_user_birthday"
+            app:mtf_image="@drawable/ic_info">
+
+            <EditText
+                style="@style/SansSerif.Italic_TowerGray_12"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/description"
+                android:textColor="@color/outer_space"
+                android:textColorHint="@color/gull_gray"
+                android:textStyle="normal" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+        <TextView
+            android:id="@+id/user_status_title"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Single"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/register_fab_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mt_user_description" />
+
+        <RadioGroup
+            android:id="@+id/user_status"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/user_status_title"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintRight_toLeftOf="@id/user_status_title"
+            app:layout_constraintTop_toTopOf="@id/user_status_title">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Yes" />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="No" />
+
+        </RadioGroup>
+
 
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/register_fab_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_status_title"
             fab:layout_constraintEnd_toEndOf="parent"
-            fab:menu_icon="@drawable/ic_menu_white"
-            fab:menu_colorNormal="@color/colorAccent">
+            fab:layout_constraintTop_toBottomOf="@id/user_status_title"
+            fab:menu_colorNormal="@color/tower_gray"
+            fab:menu_icon="@drawable/ic_menu_black_24dp">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/google_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_name" />
 
         </com.github.clans.fab.FloatingActionMenu>
 
 
     </android.support.constraint.ConstraintLayout>
-
-
 
 </ScrollView>

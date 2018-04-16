@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="name">name</string>
+    <string name="email">email</string>
+    <string name="mot_de_passe">password</string>
+    <string name="date_de_naissance">Age</string>
+    <string name="description">Description</string>
+</resources>
