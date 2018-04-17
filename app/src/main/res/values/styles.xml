@@ -1,19 +1,23 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/limed_spruce</item>
         <item name="colorPrimaryDark">@color/outer_space</item>
         <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:editTextColor">@color/outer_space</item>
     </style>
 
-    <style name="SansSerif" parent="@android:style/TextAppearance" >
+    <style name="AppTheme.EditText.SansSerif" parent="AppTheme">
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="SansSerif.Italic_TowerGray_12">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textAppearance">@android:color/black</item>
+    <style name="SansSerif.Normal.14.OuterSpace" parent="AppTheme.EditText.SansSerif">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColorHint">@color/outer_space</item>
     </style>
+
 </resources>

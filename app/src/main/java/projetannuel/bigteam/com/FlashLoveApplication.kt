@@ -1,6 +1,7 @@
 package projetannuel.bigteam.com
 
 import android.app.Application
+import com.facebook.FacebookSdk
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
 import org.koin.android.ext.android.startKoin
 import projetannuel.bigteam.com.koin.appKoinModule
@@ -20,7 +21,7 @@ class FlashLoveApplication : Application() {
 
         RxPaparazzo
                 .register(this)
-                .withFileProviderAuthority(packageName + ".provider")
+                .withFileProviderAuthority("$packageName.provider")
                 .withFileProviderPath("medias")
     }
 

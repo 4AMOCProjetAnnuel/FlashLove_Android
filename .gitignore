@@ -11,3 +11,10 @@
 buck-out/
 app/google-services.json
 build.gradle
+app/src/main/AndroidManifest.xml
+app/src/main/res/values/strings.xml
+app/build.gradle
+app/proguard-rules.pro
+build.gradle
+gradle.properties
+gradle/wrapper/gradle-wrapper.properties

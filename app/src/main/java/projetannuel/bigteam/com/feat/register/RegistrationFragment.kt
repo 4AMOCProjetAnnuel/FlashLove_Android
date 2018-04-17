@@ -12,7 +12,13 @@ import projetannuel.bigteam.com.R
 import android.app.Activity.RESULT_OK
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuth.AuthStateListener
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.fragment_registration.facebook_sign
 import kotlinx.android.synthetic.main.fragment_registration.google_sign
+import kotlinx.android.synthetic.main.fragment_registration.register_fab_menu
 
 /**
  * A simple [Fragment] subclass.
@@ -21,7 +27,12 @@ class RegistrationFragment : Fragment() {
 
     private val RC_SIGN_IN = 444
 
-    lateinit var providers: List<AuthUI.IdpConfig>
+    private lateinit var providers: List<AuthUI.IdpConfig>
+
+    private lateinit var database : FirebaseDatabase
+    private lateinit var databaseRef : DatabaseReference
+
+    private var user : FirebaseUser? = null
 
     companion object {
         const val registerFragmentTag = "register_fragment"
@@ -29,7 +40,27 @@ class RegistrationFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        providers = listOf(AuthUI.IdpConfig.GoogleBuilder().build())
+        providers = listOf(AuthUI.IdpConfig.GoogleBuilder().build(),
+                AuthUI.IdpConfig.FacebookBuilder().build())
+
+        database = FirebaseDatabase.getInstance()
+        databaseRef = database.reference
+
+        user = FirebaseAuth.getInstance().currentUser
+
+        AuthStateListener {
+            user = it.currentUser
+
+            user?.let {
+
+                    Log.v("@@@@TEST Display Name ", "${it.displayName}")
+                    Log.v("@@@@TEST Email ", "${it.email}")
+                    Log.v("@@@@TEST Photo Url ", "${it.photoUrl}")
+                    Log.v("@@@@TEST email verified", " ${it.isEmailVerified}")
+                    Log.v("@@@@TEST uid ", "${it.uid}")
+
+            }
+        }
 
     }
 
@@ -42,30 +73,60 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        google_sign.setOnClickListener {
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setAvailableProviders(providers)
-                            .build(),
-                    RC_SIGN_IN
-            )
+        register_fab_menu.setOnMenuButtonClickListener {
+            google_sign.apply {
+                visibility = View.VISIBLE
+                onSignUpWithProvider()
+            }
+
+            facebook_sign.apply {
+                visibility = View.VISIBLE
+                onSignUpWithProvider()
+            }
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         when {
-            requestCode == RC_SIGN_IN -> {
-                if (resultCode == RESULT_OK) {
-                    val user = FirebaseAuth.getInstance().currentUser
-                    Log.v("@@@@TEST", "$user")
-                } else {
-                    Log.v("@@@@@TEST", "Authentication failed. REsponse code is : $resultCode")
+            resultCode == RESULT_OK -> {
+
+
+                if (requestCode == RC_SIGN_IN) {
+                    user?.let {
+
+                        it.providerData.forEach {
+
+                            Log.v("@@@@TEST ProviderId ", "${it.providerId}")
+
+                            Log.v("@@@@TEST Display Name ", "${it.displayName}")
+                            Log.v("@@@@TEST Email ", "${it.email}")
+                            Log.v("@@@@TEST Photo Url ", "${it.photoUrl}")
+                            Log.v("@@@@TEST email verified", " ${it.isEmailVerified}")
+                            Log.v("@@@@TEST uid ", "${it.uid}")
+
+                        }
+
+                    }
                 }
             }
+            else -> {
+                Log.v("@@@@@TEST", "Authentication failed. REsponse code is : $resultCode")
+            }
+
         }
+    }
+
+    private fun onSignUpWithProvider() {
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .setIsSmartLockEnabled(false)
+                        .build(),
+                RC_SIGN_IN)
     }
 
 }

@@ -21,3 +21,7 @@
 #-renamesourcefileattribute SourceFile
 
 -keepattributes Signature
+
+-keepclassmembers class projetannuel.bigteam.com.models.** {
+  *;
+}
