@@ -40,6 +40,7 @@ class RegistrationFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         providers = listOf(AuthUI.IdpConfig.GoogleBuilder().build(),
                 AuthUI.IdpConfig.FacebookBuilder().build())
 
@@ -73,25 +74,26 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        register_fab_menu.setOnMenuButtonClickListener {
+
             google_sign.apply {
                 visibility = View.VISIBLE
-                onSignUpWithProvider()
+                setOnClickListener { onSignUpWithProvider()  }
             }
 
             facebook_sign.apply {
                 visibility = View.VISIBLE
-                onSignUpWithProvider()
+                setOnClickListener { onSignUpWithProvider() }
+
             }
-        }
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        when {
-            resultCode == RESULT_OK -> {
+        when(resultCode) {
+
+            RESULT_OK -> {
 
 
                 if (requestCode == RC_SIGN_IN) {
