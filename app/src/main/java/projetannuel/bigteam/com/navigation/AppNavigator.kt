@@ -1,5 +1,6 @@
 package projetannuel.bigteam.com.navigation
 
+import android.app.Fragment
 import android.app.FragmentManager
 import projetannuel.bigteam.com.feat.parties.PartiesFragment
 import projetannuel.bigteam.com.feat.register.RegistrationFragment
@@ -11,7 +12,6 @@ import projetannuel.bigteam.com.feat.register.RegistrationFragment
  */
 class AppNavigator(private val fragmentManager: FragmentManager,
         private val containerId: Int) : Navigator {
-
 
     override fun displayRegistration() {
         fragmentManager
@@ -32,5 +32,8 @@ class AppNavigator(private val fragmentManager: FragmentManager,
     override fun displayPartyDetails() {
         //TODO
     }
+
+    data class FactoryParameters( val fragmentManager: FragmentManager,
+            val layout : Int)
 
 }

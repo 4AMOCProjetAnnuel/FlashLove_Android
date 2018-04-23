@@ -1,5 +1,7 @@
 package projetannuel.bigteam.com.navigation
 
+import android.app.Fragment
+
 /**
  * Navigator -
  * @author guirassy

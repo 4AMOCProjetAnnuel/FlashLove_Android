@@ -8,4 +8,8 @@
     <string name="single_status_title">Single</string>
     <string name="status_yes">Yes</string>
     <string name="status_no">No</string>
+    <string name="submit_registration_btn_title">SUBMIT</string>
+    <string name="register_or_other_providers_textview">OR</string>
+    <string name="sign_up_with_google_title">Sign up with Google</string>
+    <string name="connect_with_facebook">Sign up with Facebook</string>
 </resources>

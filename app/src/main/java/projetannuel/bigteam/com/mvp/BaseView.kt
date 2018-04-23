@@ -5,12 +5,8 @@ package projetannuel.bigteam.com.mvp
  * @author guirassy
  * @version $Id$
  */
-interface BaseView {
+interface BaseView<P : BasePresenter> {
 
     fun setToolbarText()
-
-    fun displayMessage()
-
-    fun setLoadingState()
 
 }

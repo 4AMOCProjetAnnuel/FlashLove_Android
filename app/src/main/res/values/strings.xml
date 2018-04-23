@@ -13,5 +13,9 @@
 
     <string name="facebook_application_id">2037392489840869</string>
     <string name="fb_login_protocol_scheme">fb2037392489840869</string>
+    <string name="submit_registration_btn_title">VALIDER</string>
+    <string name="register_or_other_providers_textview">OU</string>
+    <string name="sign_up_with_google_title">Se Connecter avec Google</string>
+    <string name="connect_with_facebook">Se connecter avec Facebook</string>
 
 </resources>

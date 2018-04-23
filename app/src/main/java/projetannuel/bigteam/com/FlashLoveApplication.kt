@@ -1,10 +1,13 @@
 package projetannuel.bigteam.com
 
 import android.app.Application
-import com.facebook.FacebookSdk
+import com.github.salomonbrys.kodein.Kodein
+import com.github.salomonbrys.kodein.KodeinAware
+import com.github.salomonbrys.kodein.bind
+import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.lazy
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
-import org.koin.android.ext.android.startKoin
-import projetannuel.bigteam.com.koin.appKoinModule
+import projetannuel.bigteam.com.kodein.kodeinModule
 
 /**
  * FlashLoveApplication -
@@ -12,12 +15,18 @@ import projetannuel.bigteam.com.koin.appKoinModule
  * @version $Id$
  */
 
-class FlashLoveApplication : Application() {
+class FlashLoveApplication : Application(), KodeinAware {
+
+    override val kodein by Kodein.lazy {
+        bind<Application>() with instance(this@FlashLoveApplication)
+        import(kodeinModule)
+
+    }
 
     override fun onCreate() {
         super.onCreate()
 
-        startKoin(this, listOf(appKoinModule))
+       // startKoin(this, listOf(appKoinModule))
 
         RxPaparazzo
                 .register(this)

@@ -131,32 +131,67 @@
             android:padding="5dp"
             />
 
-
-        <com.github.clans.fab.FloatingActionMenu
-            android:id="@+id/register_fab_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:layout_constraintEnd_toEndOf="parent"
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="@string/description"
+            app:layout_constraintEnd_toEndOf="@string/description"
             app:layout_constraintTop_toBottomOf="@id/user_description"
-            fab:menu_colorNormal="@color/tower_gray"
-            fab:menu_icon="@drawable/ic_menu_black_24dp">
+            android:text="@string/submit_registration_btn_title"
+            android:id="@+id/submit_btn_title"
+            android:background="@color/outer_space"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            />
 
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/google_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_name"
-                />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/or_textview"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/register_or_other_providers_textview"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/submit_btn_title"
+            android:gravity="center_horizontal"
+            />
 
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/facebook_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/com_facebook_button_login_logo"
-                app:fab_colorNormal="@color/com_facebook_button_background_color"
-                />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/common_google_signin_btn_icon_light"
+            android:text="@string/sign_up_with_google_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/or_textview"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/google_sign"
+            android:background="@color/google_sign_in_background"
+            android:paddingStart="11dp"
+            android:paddingEnd="0dp"
+            />
 
-        </com.github.clans.fab.FloatingActionMenu>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/fui_ic_facebook_white_22dp"
+            android:paddingStart="15dp"
+            android:text="@string/connect_with_facebook"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/google_sign"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/facebook_sign"
+            android:background="@drawable/com_facebook_button_background"
+            android:paddingEnd="0dp"
+            />
 
     </android.support.constraint.ConstraintLayout>
 
