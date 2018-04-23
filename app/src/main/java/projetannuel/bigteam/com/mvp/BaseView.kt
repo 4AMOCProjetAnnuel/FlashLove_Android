@@ -8,5 +8,6 @@ package projetannuel.bigteam.com.mvp
 interface BaseView<P : BasePresenter> {
 
     fun setToolbarText()
+    fun toastMessage(message :String)
 
 }

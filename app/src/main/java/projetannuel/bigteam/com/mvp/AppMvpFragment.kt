@@ -1,6 +1,6 @@
 package projetannuel.bigteam.com.mvp
 
-import com.github.salomonbrys.kodein.KodeinInjector
+import android.widget.Toast
 
 /**
  * AppMvpFragment -
@@ -11,6 +11,10 @@ abstract class AppMvpFragment<P : BasePresenter> : AbstractMvpFragment<P>(), Bas
 
     final override fun setToolbarText() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun toastMessage(message: String) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
 }

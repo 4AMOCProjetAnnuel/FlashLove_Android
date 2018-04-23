@@ -1,9 +1,9 @@
 package projetannuel.bigteam.com.feat.register
 
 import android.content.Intent
-import android.util.Log
 import com.firebase.ui.auth.AuthUI
-import projetannuel.bigteam.com.feat.AppFirebase.FirebaseAuthManager
+import com.google.firebase.auth.FirebaseUser
+import projetannuel.bigteam.com.AppFirebase.FirebaseAuthManager
 import projetannuel.bigteam.com.mvp.AppMvpPresenter
 import projetannuel.bigteam.com.navigation.AppNavigator
 
@@ -14,12 +14,10 @@ import projetannuel.bigteam.com.navigation.AppNavigator
  */
 class RegisterPresenter(view : RegisterContract.View,
         navigator: AppNavigator,
-        val authManager: FirebaseAuthManager) :
+        private val authManager: FirebaseAuthManager) :
         AppMvpPresenter<AppNavigator, RegisterContract.View>(view, navigator), RegisterContract.Presenter {
 
-    override fun resume() {
-        Log.v("RegisterPresenter : ", " Presenter resume")
-    }
+    override fun resume() {}
 
     override fun signUpWithProvider() : Intent {
 
@@ -29,6 +27,10 @@ class RegisterPresenter(view : RegisterContract.View,
                 .setAvailableProviders(authManager.authProviders)
                 .build()
 
+    }
+
+    override fun onSignUpWithProviderSucceeded(user: FirebaseUser) {
+        authManager.user = user
     }
 
 }

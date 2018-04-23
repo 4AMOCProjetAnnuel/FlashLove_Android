@@ -9,7 +9,7 @@ import com.github.salomonbrys.kodein.provider
 import com.github.salomonbrys.kodein.singleton
 import projetannuel.bigteam.com.MainActivity
 import projetannuel.bigteam.com.R
-import projetannuel.bigteam.com.feat.AppFirebase.FirebaseAuthManager
+import projetannuel.bigteam.com.AppFirebase.FirebaseAuthManager
 import projetannuel.bigteam.com.feat.register.RegisterContract
 import projetannuel.bigteam.com.feat.register.RegisterPresenter
 import projetannuel.bigteam.com.feat.register.RegisterFragment

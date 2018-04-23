@@ -17,5 +17,6 @@
     <string name="register_or_other_providers_textview">OU</string>
     <string name="sign_up_with_google_title">Se Connecter avec Google</string>
     <string name="connect_with_facebook">Se connecter avec Facebook</string>
+    <string name="sign_up_with_provider_error_message">Une erreur est survenue lors de l\'inscription. Merci d\'essayer à nouveau</string>
 
 </resources>

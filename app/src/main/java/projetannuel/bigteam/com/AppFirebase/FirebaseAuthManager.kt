@@ -1,4 +1,4 @@
-package projetannuel.bigteam.com.feat.AppFirebase
+package projetannuel.bigteam.com.AppFirebase
 
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseUser
@@ -16,6 +16,8 @@ class FirebaseAuthManager {
 
     var user: FirebaseUser? = null
 
-    var RC_SIGN_IN =  444
+    fun setFirebaseUser(user: FirebaseUser) {
+        this.user = user
+    }
 
 }

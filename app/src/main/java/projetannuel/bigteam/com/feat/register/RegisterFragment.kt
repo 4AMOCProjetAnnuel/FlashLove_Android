@@ -6,9 +6,7 @@ import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.github.salomonbrys.kodein.instance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -20,17 +18,13 @@ import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.mvp.AppMvpFragment
 
 
-/**
- * A simple [Fragment] subclass.
- */
 class RegisterFragment : AppMvpFragment<RegisterContract.Presenter>(), RegisterContract.View {
 
     override val presenter: RegisterContract.Presenter by injector.instance()
 
     override val defaultLayout = R.layout.fragment_registration
 
-    private val RC_SIGN_IN = 444
-
+    private val RCSIGNIN = 444
 
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseRef: DatabaseReference
@@ -40,10 +34,6 @@ class RegisterFragment : AppMvpFragment<RegisterContract.Presenter>(), RegisterC
     companion object {
         const val registerFragmentTag = "register_fragment"
     }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_registration, container, false)
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,9 +48,9 @@ class RegisterFragment : AppMvpFragment<RegisterContract.Presenter>(), RegisterC
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        google_sign.setOnClickListener { startActivityForResult( presenter.signUpWithProvider() , RC_SIGN_IN ) }
+        google_sign.setOnClickListener { startActivityForResult( presenter.signUpWithProvider() , RCSIGNIN ) }
 
-        facebook_sign.setOnClickListener { startActivityForResult( presenter.signUpWithProvider() , RC_SIGN_IN ) }
+        facebook_sign.setOnClickListener { startActivityForResult( presenter.signUpWithProvider() , RCSIGNIN ) }
 
     }
 
@@ -71,7 +61,7 @@ class RegisterFragment : AppMvpFragment<RegisterContract.Presenter>(), RegisterC
 
             RESULT_OK -> {
 
-                if (requestCode == RC_SIGN_IN) {
+                if (requestCode == RCSIGNIN) {
 
                     user?.let {
 
@@ -93,7 +83,7 @@ class RegisterFragment : AppMvpFragment<RegisterContract.Presenter>(), RegisterC
                 }
             }
             else -> {
-                Log.v("@@@@@TEST", "Authentication failed. REsponse code is : $resultCode")
+                toastMessage(getString(R.string.sign_up_with_provider_error_message))
             }
 
         }
