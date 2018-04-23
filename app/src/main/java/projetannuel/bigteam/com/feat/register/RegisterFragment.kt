@@ -5,13 +5,10 @@ import android.app.Activity.RESULT_OK
 import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
-import android.system.Os.bind
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.firebase.ui.auth.AuthUI
-import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -26,7 +23,7 @@ import projetannuel.bigteam.com.mvp.AppMvpFragment
 /**
  * A simple [Fragment] subclass.
  */
-class RegistrationFragment : AppMvpFragment<RegisterContract.Presenter>(), RegisterContract.View {
+class RegisterFragment : AppMvpFragment<RegisterContract.Presenter>(), RegisterContract.View {
 
     override val presenter: RegisterContract.Presenter by injector.instance()
 
@@ -34,7 +31,6 @@ class RegistrationFragment : AppMvpFragment<RegisterContract.Presenter>(), Regis
 
     private val RC_SIGN_IN = 444
 
-    private lateinit var providers: List<AuthUI.IdpConfig>
 
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseRef: DatabaseReference
@@ -52,37 +48,19 @@ class RegistrationFragment : AppMvpFragment<RegisterContract.Presenter>(), Regis
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        providers = listOf(AuthUI.IdpConfig.GoogleBuilder().build(),
-                AuthUI.IdpConfig.FacebookBuilder().build())
-
         database = FirebaseDatabase.getInstance()
         databaseRef = database.reference
 
         user = FirebaseAuth.getInstance().currentUser
-
-        /*
-        AuthStateListener {
-            user = it.currentUser
-
-            user?.let {
-
-                    Log.v("@@@@TEST Display Name ", "${it.displayName}")
-                    Log.v("@@@@TEST Email ", "${it.email}")
-                    Log.v("@@@@TEST Photo Url ", "${it.photoUrl}")
-                    Log.v("@@@@TEST email verified", " ${it.isEmailVerified}")
-                    Log.v("@@@@TEST uid ", "${it.uid}")
-            }
-        }
-        */
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        google_sign.setOnClickListener { onSignUpWithProvider() }
+        google_sign.setOnClickListener { startActivityForResult( presenter.signUpWithProvider() , RC_SIGN_IN ) }
 
-        facebook_sign.setOnClickListener { onSignUpWithProvider() }
+        facebook_sign.setOnClickListener { startActivityForResult( presenter.signUpWithProvider() , RC_SIGN_IN ) }
 
     }
 
@@ -93,21 +71,21 @@ class RegistrationFragment : AppMvpFragment<RegisterContract.Presenter>(), Regis
 
             RESULT_OK -> {
 
-
                 if (requestCode == RC_SIGN_IN) {
+
                     user?.let {
 
                         //TODO save in database
 
                         it.providerData.forEach {
 
-                            Log.v("@@@@TEST ProviderId ", "${it.providerId}")
+                            Log.v("@@@@TEST ProviderId ", it.providerId)
 
                             Log.v("@@@@TEST Display Name ", "${it.displayName}")
                             Log.v("@@@@TEST Email ", "${it.email}")
                             Log.v("@@@@TEST Photo Url ", "${it.photoUrl}")
                             Log.v("@@@@TEST email verified", " ${it.isEmailVerified}")
-                            Log.v("@@@@TEST uid ", "${it.uid}")
+                            Log.v("@@@@TEST uid ", it.uid)
 
                         }
 
@@ -120,17 +98,5 @@ class RegistrationFragment : AppMvpFragment<RegisterContract.Presenter>(), Regis
 
         }
     }
-
-
-    private fun onSignUpWithProvider() {
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setIsSmartLockEnabled(false)
-                        .build(),
-                RC_SIGN_IN)
-    }
-
 
 }

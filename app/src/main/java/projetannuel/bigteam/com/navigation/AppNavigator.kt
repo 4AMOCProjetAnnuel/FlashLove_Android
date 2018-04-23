@@ -1,9 +1,8 @@
 package projetannuel.bigteam.com.navigation
 
-import android.app.Fragment
 import android.app.FragmentManager
 import projetannuel.bigteam.com.feat.parties.PartiesFragment
-import projetannuel.bigteam.com.feat.register.RegistrationFragment
+import projetannuel.bigteam.com.feat.register.RegisterFragment
 
 /**
  * AppNavigator -
@@ -16,8 +15,8 @@ class AppNavigator(private val fragmentManager: FragmentManager,
     override fun displayRegistration() {
         fragmentManager
                 .beginTransaction()
-                .replace(containerId, RegistrationFragment(), RegistrationFragment.registerFragmentTag)
-                .addToBackStack(RegistrationFragment.registerFragmentTag)
+                .replace(containerId, RegisterFragment(), RegisterFragment.registerFragmentTag)
+                .addToBackStack(RegisterFragment.registerFragmentTag)
                 .commit()
     }
 

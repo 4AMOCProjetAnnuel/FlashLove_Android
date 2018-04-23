@@ -1,5 +1,6 @@
 package projetannuel.bigteam.com.feat.register
 
+import android.content.Intent
 import projetannuel.bigteam.com.mvp.AppView
 import projetannuel.bigteam.com.mvp.BasePresenter
 
@@ -16,7 +17,7 @@ interface RegisterContract {
 
 
     interface Presenter : BasePresenter {
-
+        fun signUpWithProvider() : Intent
     }
 
 }
