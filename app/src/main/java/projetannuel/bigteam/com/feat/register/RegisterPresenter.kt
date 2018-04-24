@@ -3,7 +3,9 @@ package projetannuel.bigteam.com.feat.register
 import android.content.Intent
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseUser
-import projetannuel.bigteam.com.AppFirebase.FirebaseAuthManager
+import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
+import projetannuel.bigteam.com.appFirebase.FirebaseAuthManager
+import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.AppMvpPresenter
 import projetannuel.bigteam.com.navigation.AppNavigator
 
@@ -14,7 +16,8 @@ import projetannuel.bigteam.com.navigation.AppNavigator
  */
 class RegisterPresenter(view : RegisterContract.View,
         navigator: AppNavigator,
-        private val authManager: FirebaseAuthManager) :
+        private val authManager: FirebaseAuthManager,
+        private val appFirebaseDatabase: AppFirebaseDatabase) :
         AppMvpPresenter<AppNavigator, RegisterContract.View>(view, navigator), RegisterContract.Presenter {
 
     override fun resume() {}
@@ -30,7 +33,13 @@ class RegisterPresenter(view : RegisterContract.View,
     }
 
     override fun onSignUpWithProviderSucceeded(user: FirebaseUser) {
-        authManager.user = user
+
+        val flashLuvUser  = FlashLuvUser(displayName = user.displayName!!,
+                email = user.email!!,
+                photoUrl = user.photoUrl!!.toString(),
+                uid = user.uid)
+
+        appFirebaseDatabase.saveFlashLuvUser(flashLuvUser)
     }
 
 }

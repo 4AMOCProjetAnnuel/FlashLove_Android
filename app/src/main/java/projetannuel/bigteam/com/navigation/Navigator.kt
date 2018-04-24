@@ -1,7 +1,5 @@
 package projetannuel.bigteam.com.navigation
 
-import android.app.Fragment
-
 /**
  * Navigator -
  * @author guirassy
@@ -12,5 +10,4 @@ interface Navigator {
     fun displayRegistration()
     fun displayPartyDetails()
     fun displayParties()
-
 }

@@ -16,7 +16,6 @@ class AppNavigator(private val fragmentManager: FragmentManager,
         fragmentManager
                 .beginTransaction()
                 .replace(containerId, RegisterFragment(), RegisterFragment.registerFragmentTag)
-                .addToBackStack(RegisterFragment.registerFragmentTag)
                 .commit()
     }
 
@@ -31,8 +30,5 @@ class AppNavigator(private val fragmentManager: FragmentManager,
     override fun displayPartyDetails() {
         //TODO
     }
-
-    data class FactoryParameters( val fragmentManager: FragmentManager,
-            val layout : Int)
 
 }
