@@ -18,3 +18,4 @@ app/proguard-rules.pro
 build.gradle
 gradle.properties
 gradle/wrapper/gradle-wrapper.properties
+app/src/main/res/values/strings.xml
