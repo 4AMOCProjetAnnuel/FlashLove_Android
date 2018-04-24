@@ -3,7 +3,6 @@ package projetannuel.bigteam.com.feat.register
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.util.Log
 import com.github.salomonbrys.kodein.instance
 import com.google.firebase.auth.FirebaseAuth
 import projetannuel.bigteam.com.R
@@ -24,12 +23,9 @@ class RegisterFragment : AppMvpFragment<RegisterContract.Presenter>(), RegisterC
 
     override fun onStart() {
         super.onStart()
-
-        FirebaseAuth.getInstance().currentUser?.let {
-            presenter.onSignUpWithProviderSucceeded(it)
-        }
-
+        startActivityForResult(presenter.signUpWithProvider(), RCSIGNIN)
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
