@@ -14,6 +14,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_registration.facebook_sign
 import kotlinx.android.synthetic.main.fragment_registration.google_sign
+import kotlinx.android.synthetic.main.fragment_registration.instagram_sign_in
+import kotlinx.android.synthetic.main.fragment_registration.twitter_sign_in
 import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.mvp.AppMvpFragment
 
@@ -51,6 +53,10 @@ class RegisterFragment : AppMvpFragment<RegisterContract.Presenter>(), RegisterC
         google_sign.setOnClickListener { startActivityForResult( presenter.signUpWithProvider() , RCSIGNIN ) }
 
         facebook_sign.setOnClickListener { startActivityForResult( presenter.signUpWithProvider() , RCSIGNIN ) }
+
+        twitter_sign_in.setOnClickListener { startActivityForResult( presenter.signUpWithProvider() , RCSIGNIN ) }
+
+        instagram_sign_in.setOnClickListener { startActivityForResult( presenter.signUpWithProvider() , RCSIGNIN ) }
 
     }
 

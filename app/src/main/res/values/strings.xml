@@ -10,13 +10,23 @@
     <string name="status_yes">Oui</string>
     <string name="status_no">Non</string>
 
-
     <string name="facebook_application_id">2037392489840869</string>
     <string name="fb_login_protocol_scheme">fb2037392489840869</string>
+
+
+    <string name="twitter_consumer_key" translatable="false">VfZ8WUCKsafBxWApoAdhoM3HU</string>
+    <string name="twitter_consumer_secret" translatable="false">PrSOruBotAoVtSmgoT4sJLdYfIbXmS9zvRLL6EBbztoVdSSw2D</string>
+
+
+
     <string name="submit_registration_btn_title">VALIDER</string>
     <string name="register_or_other_providers_textview">OU</string>
-    <string name="sign_up_with_google_title">Se Connecter avec Google</string>
-    <string name="connect_with_facebook">Se connecter avec Facebook</string>
+    <string name="sign_up_with_google_title">S\'inscrire avec Google</string>
+    <string name="connect_with_facebook">S\'inscrire avec Facebook</string>
     <string name="sign_up_with_provider_error_message">Une erreur est survenue lors de l\'inscription. Merci d\'essayer à nouveau</string>
+    <string name="sign_up_with_twitter_title">S\'inscrire avec Twitter</string>
+    <string name="sign_up_with_instagram_title">S\'inscrire avec Instagram</string>
+
+
 
 </resources>

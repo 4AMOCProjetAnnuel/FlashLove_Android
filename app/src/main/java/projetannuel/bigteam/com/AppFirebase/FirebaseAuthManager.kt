@@ -10,14 +10,11 @@ import com.google.firebase.auth.FirebaseUser
  */
 class FirebaseAuthManager {
 
-     var authProviders  = listOf(
+    var authProviders = listOf(
             AuthUI.IdpConfig.GoogleBuilder().build(),
-            AuthUI.IdpConfig.FacebookBuilder().build())
+            AuthUI.IdpConfig.FacebookBuilder().build(),
+            AuthUI.IdpConfig.TwitterBuilder().build())
 
     var user: FirebaseUser? = null
-
-    fun setFirebaseUser(user: FirebaseUser) {
-        this.user = user
-    }
 
 }
