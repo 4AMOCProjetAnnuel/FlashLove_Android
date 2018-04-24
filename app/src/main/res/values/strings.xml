@@ -10,8 +10,8 @@
     <string name="status_yes">Oui</string>
     <string name="status_no">Non</string>
 
-    <string name="facebook_application_id">2037392489840869</string>
-    <string name="fb_login_protocol_scheme">fb2037392489840869</string>
+    <string name="facebook_application_id" translatable="false">2037392489840869</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb2037392489840869</string>
 
 
     <string name="twitter_consumer_key" translatable="false">VfZ8WUCKsafBxWApoAdhoM3HU</string>
