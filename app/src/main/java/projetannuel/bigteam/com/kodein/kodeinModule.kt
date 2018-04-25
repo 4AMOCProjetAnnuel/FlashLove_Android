@@ -11,6 +11,12 @@ import projetannuel.bigteam.com.MainActivity
 import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.appFirebase.FirebaseAuthManager
+import projetannuel.bigteam.com.feat.dashboard.DashboardContract
+import projetannuel.bigteam.com.feat.dashboard.DashboardFragment
+import projetannuel.bigteam.com.feat.dashboard.DashboardPresenter
+import projetannuel.bigteam.com.feat.profile.update.UpdateProfileContract
+import projetannuel.bigteam.com.feat.profile.update.UpdateProfileFragment
+import projetannuel.bigteam.com.feat.profile.update.UpdateProfilePresenter
 import projetannuel.bigteam.com.feat.register.RegisterContract
 import projetannuel.bigteam.com.feat.register.RegisterPresenter
 import projetannuel.bigteam.com.feat.register.RegisterFragment
@@ -39,5 +45,13 @@ val kodeinModule = Kodein.Module {
     bind<FirebaseAuthManager>() with singleton { FirebaseAuthManager() }
 
     bind<AppFirebaseDatabase>() with singleton { AppFirebaseDatabase() }
+
+    bind<UpdateProfileContract.Presenter>() with provider { (UpdateProfilePresenter(instance(), instance())) as UpdateProfileContract.Presenter}
+
+    bind<UpdateProfileContract.View>() with provider { (UpdateProfileFragment()) as UpdateProfileContract.View }
+
+    bind<DashboardContract.Presenter>() with provider { (DashboardPresenter(instance(), instance())) as DashboardContract.Presenter}
+
+    bind<DashboardContract.View>() with provider { (DashboardFragment()) as DashboardContract.View }
 
 }

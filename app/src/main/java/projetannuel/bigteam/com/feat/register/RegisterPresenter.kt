@@ -43,6 +43,8 @@ class RegisterPresenter(view : RegisterContract.View,
                 uid = user.uid)
 
         appFirebaseDatabase.saveFlashLuvUser(flashLuvUser)
+
+        navigator.displayUpdateProfile()
     }
 
 }

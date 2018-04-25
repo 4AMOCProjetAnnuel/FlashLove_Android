@@ -10,4 +10,6 @@ interface Navigator {
     fun displayRegistration()
     fun displayPartyDetails()
     fun displayParties()
+    fun displayUpdateProfile()
+    fun displayDashboard()
 }

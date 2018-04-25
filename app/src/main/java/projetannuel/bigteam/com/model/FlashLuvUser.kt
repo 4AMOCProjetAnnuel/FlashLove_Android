@@ -13,4 +13,10 @@ data class FlashLuvUser(val single: Boolean = false,
         val displayName: String,
         val email: String,
         val photoUrl: String,
-        val uid: String)
+        val uid: String,
+        val profileCompleted: Boolean = false) {
+
+    constructor() : this(false, "", 0, "",
+            "", "", "", "", false)
+
+}

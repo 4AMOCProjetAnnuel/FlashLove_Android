@@ -22,6 +22,6 @@
 
 -keepattributes Signature
 
--keepclassmembers class projetannuel.bigteam.com.models.** {
+-keepclassmembers class projetannuel.bigteam.com.model.** {
   *;
 }

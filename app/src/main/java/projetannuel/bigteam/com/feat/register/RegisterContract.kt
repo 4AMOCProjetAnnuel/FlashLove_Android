@@ -12,7 +12,7 @@ import projetannuel.bigteam.com.mvp.BasePresenter
  */
 interface RegisterContract {
 
-    interface View : AppView<Presenter>  {}
+    interface View : AppView<Presenter>
 
     interface Presenter : BasePresenter {
         fun signUpWithProvider() : Intent

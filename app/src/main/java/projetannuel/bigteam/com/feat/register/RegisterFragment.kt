@@ -3,6 +3,7 @@ package projetannuel.bigteam.com.feat.register
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.os.Bundle
 import com.github.salomonbrys.kodein.instance
 import com.google.firebase.auth.FirebaseAuth
 import projetannuel.bigteam.com.R
@@ -21,11 +22,10 @@ class RegisterFragment : AppMvpFragment<RegisterContract.Presenter>(), RegisterC
         const val registerFragmentTag = "register_fragment"
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         startActivityForResult(presenter.signUpWithProvider(), RCSIGNIN)
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
