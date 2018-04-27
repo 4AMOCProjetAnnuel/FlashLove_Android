@@ -15,7 +15,9 @@ class AppFirebaseDatabase {
 
     private val databaseReference = FirebaseDatabase.getInstance().reference
 
-    val usersReference : DatabaseReference = databaseReference.child("users")
+    val usersReference : DatabaseReference = databaseReference.child("users").apply {
+        keepSynced(true)
+    }
 
     private val firebaseUser = FirebaseAuth.getInstance().currentUser
 

@@ -6,6 +6,7 @@ import com.github.salomonbrys.kodein.KodeinAware
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
+import com.google.firebase.database.FirebaseDatabase
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
 import projetannuel.bigteam.com.kodein.kodeinModule
 
@@ -26,7 +27,7 @@ class FlashLoveApplication : Application(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
 
-       // startKoin(this, listOf(appKoinModule))
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
 
         RxPaparazzo
                 .register(this)

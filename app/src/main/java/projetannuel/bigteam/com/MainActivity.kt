@@ -3,7 +3,7 @@ package projetannuel.bigteam.com
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
+import android.view.Window
 import com.github.salomonbrys.kodein.KodeinInjector
 import com.github.salomonbrys.kodein.android.AppCompatActivityInjector
 import com.google.firebase.auth.FirebaseAuth
@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
     private var firebaseDatabase = AppFirebaseDatabase()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestWindowFeature(Window.FEATURE_ACTION_BAR)
         super.onCreate(savedInstanceState)
         initializeInjector()
         setContentView(R.layout.activity_main)

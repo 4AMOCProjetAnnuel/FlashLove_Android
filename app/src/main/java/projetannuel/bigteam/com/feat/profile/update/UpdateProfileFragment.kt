@@ -1,6 +1,8 @@
 package projetannuel.bigteam.com.feat.profile.update
 
 
+import android.os.Bundle
+import android.view.View
 import com.github.salomonbrys.kodein.instance
 import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.mvp.AppMvpFragment
@@ -17,4 +19,8 @@ class UpdateProfileFragment : AppMvpFragment<UpdateProfileContract.Presenter>(),
         const val fragmentTag = "update_profile"
     }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        activity.actionBar.title = "Hello World"
+    }
 }
