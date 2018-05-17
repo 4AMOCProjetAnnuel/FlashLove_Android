@@ -15,4 +15,7 @@
     <string name="sign_up_with_provider_error_message">Sign up with the chosen provider ended up with error. Please retry.</string>
     <string name="sign_up_with_twitter_title">Sign up with Twitter</string>
     <string name="sign_up_with_instagram_title">Sign up with Instagram</string>
+    <string name="navigation_title_flirts">flirts</string>
+    <string name="navigation_title_profile">Profile</string>
+    <string name="navigation_titile_figures">Figures</string>
 </resources>

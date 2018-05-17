@@ -6,17 +6,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feat.dashboard.DashboardFragment">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/navigation_items_container"
+        />
+
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/primary_pink_light"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        android:background="@color/white"
+        app:itemIconTint="@color/primary_pink_normal"
+        app:itemTextColor="@color/primary_pink_normal"
         app:menu="@menu/navigation_menu"
         android:elevation="6dp"
+        android:id="@+id/dashboard_navigator"
+
         />
 
 </android.support.constraint.ConstraintLayout>
