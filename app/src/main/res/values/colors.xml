@@ -21,4 +21,8 @@
     <color name="twitter_blue">#1dcaff</color>
     <color name="instagram_orange">#cd486b</color>
 
+    <color name="primary_pink_normal">#ff4081</color>
+    <color name="primary_pink_light">#ff79b0</color>
+    <color name="primary_pink_dark">#c60055</color>
+
 </resources>

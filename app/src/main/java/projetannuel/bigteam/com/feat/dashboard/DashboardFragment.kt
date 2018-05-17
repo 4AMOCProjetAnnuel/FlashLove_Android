@@ -1,6 +1,9 @@
 package projetannuel.bigteam.com.feat.dashboard
 
 
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.github.salomonbrys.kodein.instance
 import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.mvp.AppMvpFragment
@@ -14,7 +17,15 @@ class DashboardFragment : AppMvpFragment<DashboardContract.Presenter>(), Dashboa
 
 
     companion object {
-        const val fragmentTag = "dashboard"
+        const val fragmentTag = "Dashboard"
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar!!.title = DashboardFragment.fragmentTag
+        (activity as AppCompatActivity).supportActionBar!!.setIcon(R.drawable.ic_home_white)
+        (activity as AppCompatActivity).supportActionBar!!.setHomeButtonEnabled(true)
+
     }
 
 }

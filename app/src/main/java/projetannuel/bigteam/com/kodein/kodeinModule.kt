@@ -21,6 +21,7 @@ import projetannuel.bigteam.com.feat.register.RegisterContract
 import projetannuel.bigteam.com.feat.register.RegisterPresenter
 import projetannuel.bigteam.com.feat.register.RegisterFragment
 import projetannuel.bigteam.com.navigation.AppNavigator
+import projetannuel.bigteam.com.view.adapter.DashboardPagerAdapter
 
 /**
  * kodeinModule -
@@ -53,5 +54,7 @@ val kodeinModule = Kodein.Module {
     bind<DashboardContract.Presenter>() with provider { (DashboardPresenter(instance(), instance())) as DashboardContract.Presenter}
 
     bind<DashboardContract.View>() with provider { (DashboardFragment()) as DashboardContract.View }
+
+    bind<DashboardPagerAdapter>() with provider { DashboardPagerAdapter(instance()) }
 
 }

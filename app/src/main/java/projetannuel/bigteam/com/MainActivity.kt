@@ -3,13 +3,13 @@ package projetannuel.bigteam.com
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.Window
 import com.github.salomonbrys.kodein.KodeinInjector
 import com.github.salomonbrys.kodein.android.AppCompatActivityInjector
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.toolbar.app_toolbar
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.navigation.AppNavigator
@@ -24,16 +24,17 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
     private var firebaseDatabase = AppFirebaseDatabase()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_ACTION_BAR)
         super.onCreate(savedInstanceState)
         initializeInjector()
         setContentView(R.layout.activity_main)
 
-        initiateNavigation()
+        setSupportActionBar(app_toolbar)
+
+        startNavigation()
 
     }
 
-    private fun initiateNavigation() {
+    private fun startNavigation() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
 
         if (firebaseUser == null) {
@@ -51,6 +52,8 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
 
                                 val flashLuvUser = snap.getValue(FlashLuvUser::class.java)
 
+                                appNavigator.displayDashboard()
+                                /*
                                 if (flashLuvUser != null) {
                                     if (flashLuvUser.profileCompleted) {
                                         appNavigator.displayDashboard()
@@ -58,6 +61,7 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
                                         appNavigator.displayUpdateProfile()
                                     }
                                 }
+                                */
                             }
                         }
 

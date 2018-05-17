@@ -2,6 +2,7 @@ package projetannuel.bigteam.com.feat.profile.update
 
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.github.salomonbrys.kodein.instance
 import projetannuel.bigteam.com.R
@@ -21,6 +22,6 @@ class UpdateProfileFragment : AppMvpFragment<UpdateProfileContract.Presenter>(),
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        activity.actionBar.title = "Hello World"
+        (activity as AppCompatActivity).supportActionBar!!.title = "Dashboard"
     }
 }

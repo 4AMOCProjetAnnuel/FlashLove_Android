@@ -1,5 +1,6 @@
 package projetannuel.bigteam.com.mvp
 
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 
 /**
@@ -9,8 +10,7 @@ import android.widget.Toast
  */
 abstract class AppMvpFragment<P : BasePresenter> : AbstractMvpFragment<P>(), BaseView<P> {
 
-    final override fun setToolbarText() {
-
+    final override fun setToolbarText(title: String) {
     }
 
     override fun toastMessage(message: String) {
