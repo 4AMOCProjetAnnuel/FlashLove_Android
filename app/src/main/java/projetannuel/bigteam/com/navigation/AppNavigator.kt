@@ -3,7 +3,8 @@ package projetannuel.bigteam.com.navigation
 import android.app.FragmentManager
 import projetannuel.bigteam.com.feat.dashboard.DashboardFragment
 import projetannuel.bigteam.com.feat.parties.PartiesFragment
-import projetannuel.bigteam.com.feat.profile.update.UpdateProfileFragment
+import projetannuel.bigteam.com.feat.profile.other.OtherProfileFragment
+import projetannuel.bigteam.com.feat.profile.self.SelfProfileFragment
 import projetannuel.bigteam.com.feat.register.RegisterFragment
 
 /**
@@ -33,18 +34,38 @@ class AppNavigator(private val fragmentManager: FragmentManager,
         //TODO
     }
 
-    override fun displayUpdateProfile() {
+    override fun displaySelfProfile() {
         fragmentManager
                 .beginTransaction()
-                .replace(containerId, UpdateProfileFragment(), UpdateProfileFragment.fragmentTag)
-                .addToBackStack(UpdateProfileFragment.fragmentTag)
+                .replace(containerId, SelfProfileFragment(), SelfProfileFragment.fragmentTag)
+                .addToBackStack(SelfProfileFragment.fragmentTag)
                 .commit()
     }
 
     override fun displayDashboard() {
+
+        var dashboard = fragmentManager.findFragmentByTag(DashboardFragment.fragmentTag)
+        if(dashboard == null) {
+            dashboard = DashboardFragment()
+        }
+
         fragmentManager
                 .beginTransaction()
-                .replace(containerId, DashboardFragment(), DashboardFragment.fragmentTag)
+                .replace(containerId, dashboard, DashboardFragment.fragmentTag)
+                .addToBackStack(DashboardFragment.fragmentTag)
+                .commit()
+    }
+
+    override fun displayOtherProfile() {
+        var otherProfileFragment = fragmentManager.findFragmentByTag(OtherProfileFragment.fragmentTag)
+        if(otherProfileFragment == null) {
+            otherProfileFragment = OtherProfileFragment()
+        }
+
+        fragmentManager
+                .beginTransaction()
+                .replace(containerId, otherProfileFragment , OtherProfileFragment.fragmentTag)
+                .addToBackStack(OtherProfileFragment.fragmentTag)
                 .commit()
     }
 

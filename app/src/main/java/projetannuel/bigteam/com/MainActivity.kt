@@ -3,8 +3,11 @@ package projetannuel.bigteam.com
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import com.firebase.ui.auth.AuthUI
 import com.github.salomonbrys.kodein.KodeinInjector
 import com.github.salomonbrys.kodein.android.AppCompatActivityInjector
+import com.github.salomonbrys.kodein.instance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,8 +24,6 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
 
     private var appNavigator = AppNavigator(fragmentManager, R.id.main_container_id)
 
-    private var firebaseDatabase = AppFirebaseDatabase()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeInjector()
@@ -35,37 +36,14 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
     }
 
     private fun startNavigation() {
-        val firebaseUser = FirebaseAuth.getInstance().currentUser
-
-        if (firebaseUser == null) {
-            //Go to Sign in
-            appNavigator.displayRegistration()
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            AuthUI.getInstance()
+                    .signOut(this)
+                    .addOnCompleteListener {
+                        appNavigator.displayRegistration()
+                    }
         } else {
-
-            firebaseDatabase.usersReference.child(firebaseUser.uid)
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onCancelled(error: DatabaseError?) {}
-
-                        override fun onDataChange(snap: DataSnapshot?) {
-
-                            if (snap != null) {
-
-                                val flashLuvUser = snap.getValue(FlashLuvUser::class.java)
-
-                                appNavigator.displayDashboard()
-                                /*
-                                if (flashLuvUser != null) {
-                                    if (flashLuvUser.profileCompleted) {
-                                        appNavigator.displayDashboard()
-                                    } else {
-                                        appNavigator.displayUpdateProfile()
-                                    }
-                                }
-                                */
-                            }
-                        }
-
-                    })
+            appNavigator.displayDashboard()
         }
     }
 
@@ -73,6 +51,14 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
         super.onActivityResult(requestCode, resultCode, data)
         supportFragmentManager.fragments.forEach {
             it.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    override fun onBackPressed() {
+        if(fragmentManager.backStackEntryCount >= 0){
+            fragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
         }
     }
 }

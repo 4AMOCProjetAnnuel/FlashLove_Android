@@ -27,8 +27,6 @@ class FlashLoveApplication : Application(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
-
         RxPaparazzo
                 .register(this)
                 .withFileProviderAuthority("$packageName.provider")

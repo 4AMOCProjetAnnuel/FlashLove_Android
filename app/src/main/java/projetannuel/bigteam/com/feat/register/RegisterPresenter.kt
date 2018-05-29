@@ -32,7 +32,6 @@ class RegisterPresenter(view : RegisterContract.View,
                 .setLogo(R.drawable.flashluv_ic_launcher)
                 .setTheme(R.style.AppTheme)
                 .build()
-
     }
 
     override fun onSignUpWithProviderSucceeded(user: FirebaseUser) {
@@ -43,8 +42,7 @@ class RegisterPresenter(view : RegisterContract.View,
                 uid = user.uid)
 
         appFirebaseDatabase.saveFlashLuvUser(flashLuvUser)
-
-        navigator.displayUpdateProfile()
+        navigator.displayDashboard()
     }
 
 }

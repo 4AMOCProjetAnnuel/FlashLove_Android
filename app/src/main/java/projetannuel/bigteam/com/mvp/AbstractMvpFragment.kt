@@ -62,6 +62,7 @@ abstract class AbstractMvpFragment<P : BasePresenter>: Fragment(), BaseView<P>, 
         get() = this::class.java.simpleName
     }
 
+    /*
     /**
      * This method can be overridden by subclassing Fragment
      * to allow custom back-press event handling
@@ -70,6 +71,6 @@ abstract class AbstractMvpFragment<P : BasePresenter>: Fragment(), BaseView<P>, 
     open fun onBackPressed(): Boolean {
         return false
     }
-
+    */
 
 }

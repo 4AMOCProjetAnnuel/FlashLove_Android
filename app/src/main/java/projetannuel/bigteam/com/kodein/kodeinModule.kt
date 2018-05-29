@@ -14,9 +14,12 @@ import projetannuel.bigteam.com.appFirebase.FirebaseAuthManager
 import projetannuel.bigteam.com.feat.dashboard.DashboardContract
 import projetannuel.bigteam.com.feat.dashboard.DashboardFragment
 import projetannuel.bigteam.com.feat.dashboard.DashboardPresenter
-import projetannuel.bigteam.com.feat.profile.update.UpdateProfileContract
-import projetannuel.bigteam.com.feat.profile.update.UpdateProfileFragment
-import projetannuel.bigteam.com.feat.profile.update.UpdateProfilePresenter
+import projetannuel.bigteam.com.feat.profile.other.OtherProfileContract
+import projetannuel.bigteam.com.feat.profile.other.OtherProfileFragment
+import projetannuel.bigteam.com.feat.profile.other.OtherProfilePresenter
+import projetannuel.bigteam.com.feat.profile.self.SelfProfileContract
+import projetannuel.bigteam.com.feat.profile.self.SelfProfileFragment
+import projetannuel.bigteam.com.feat.profile.self.SelfProfilePresenter
 import projetannuel.bigteam.com.feat.register.RegisterContract
 import projetannuel.bigteam.com.feat.register.RegisterPresenter
 import projetannuel.bigteam.com.feat.register.RegisterFragment
@@ -47,14 +50,18 @@ val kodeinModule = Kodein.Module {
 
     bind<AppFirebaseDatabase>() with singleton { AppFirebaseDatabase() }
 
-    bind<UpdateProfileContract.Presenter>() with provider { (UpdateProfilePresenter(instance(), instance())) as UpdateProfileContract.Presenter}
+    bind<SelfProfileContract.Presenter>() with provider { (SelfProfilePresenter(instance(), instance(), instance())) as SelfProfileContract.Presenter}
 
-    bind<UpdateProfileContract.View>() with provider { (UpdateProfileFragment()) as UpdateProfileContract.View }
+    bind<SelfProfileContract.View>() with provider { (SelfProfileFragment()) as SelfProfileContract.View }
 
     bind<DashboardContract.Presenter>() with provider { (DashboardPresenter(instance(), instance())) as DashboardContract.Presenter}
 
     bind<DashboardContract.View>() with provider { (DashboardFragment()) as DashboardContract.View }
 
     bind<DashboardPagerAdapter>() with provider { DashboardPagerAdapter(instance()) }
+
+    bind<OtherProfileContract.View>() with provider { (OtherProfileFragment()) as OtherProfileContract.View }
+
+    bind<OtherProfileContract.Presenter>() with provider { (OtherProfilePresenter(instance(), instance())) as OtherProfileContract.Presenter }
 
 }

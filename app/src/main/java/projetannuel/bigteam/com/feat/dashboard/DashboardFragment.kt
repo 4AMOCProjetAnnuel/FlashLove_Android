@@ -6,8 +6,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.github.salomonbrys.kodein.instance
 import kotlinx.android.synthetic.main.fragment_dashboard.dashboard_navigator
+import kotlinx.android.synthetic.main.toolbar.app_toolbar
 import projetannuel.bigteam.com.R
-import projetannuel.bigteam.com.feat.profile.update.UpdateProfileFragment
+import projetannuel.bigteam.com.feat.profile.self.SelfProfileFragment
 import projetannuel.bigteam.com.mvp.AppMvpFragment
 
 
@@ -26,11 +27,18 @@ class DashboardFragment : AppMvpFragment<DashboardContract.Presenter>(), Dashboa
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar!!.title = DashboardFragment.fragmentTag
         (activity as AppCompatActivity).supportActionBar!!.setIcon(R.drawable.ic_home_white)
-        (activity as AppCompatActivity).supportActionBar!!.setHomeButtonEnabled(true)
+        (activity as AppCompatActivity).app_toolbar.navigationIcon = null
+
+
+        var selfProfileFragment = childFragmentManager.findFragmentByTag(SelfProfileFragment.fragmentTag)
+
+        if(selfProfileFragment == null){
+            selfProfileFragment = SelfProfileFragment()
+        }
 
         childFragmentManager
                 .beginTransaction()
-                .replace(R.id.navigation_items_container, UpdateProfileFragment(), UpdateProfileFragment.fragmentTag)
+                .replace(R.id.navigation_items_container, selfProfileFragment, SelfProfileFragment.fragmentTag)
                 .commit()
 
 
@@ -39,11 +47,10 @@ class DashboardFragment : AppMvpFragment<DashboardContract.Presenter>(), Dashboa
                 "Profile" -> {
                     childFragmentManager
                             .beginTransaction()
-                            .replace(R.id.navigation_items_container, UpdateProfileFragment(), UpdateProfileFragment.fragmentTag)
+                            .replace(R.id.navigation_items_container, SelfProfileFragment(), SelfProfileFragment.fragmentTag)
                             .commit()
                 }
             }
-
             true
         })
 
