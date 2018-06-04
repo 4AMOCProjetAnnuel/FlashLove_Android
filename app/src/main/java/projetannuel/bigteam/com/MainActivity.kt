@@ -1,7 +1,12 @@
 package projetannuel.bigteam.com
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
+import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.firebase.ui.auth.AuthUI
@@ -33,15 +38,13 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
 
         startNavigation()
 
+        createNotificationChannel()
+
     }
 
     private fun startNavigation() {
         if (FirebaseAuth.getInstance().currentUser == null) {
-            AuthUI.getInstance()
-                    .signOut(this)
-                    .addOnCompleteListener {
-                        appNavigator.displayRegistration()
-                    }
+            appNavigator.displayRegistration()
         } else {
             appNavigator.displayDashboard()
         }
@@ -55,10 +58,27 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
     }
 
     override fun onBackPressed() {
-        if(fragmentManager.backStackEntryCount >= 0){
+        if (fragmentManager.backStackEntryCount >= 0) {
             fragmentManager.popBackStack()
         } else {
             super.onBackPressed()
         }
+    }
+
+
+    private fun createNotificationChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            val channelName = "FlirtChannel"
+            val description = "First channel for testing purposes"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("1234", channelName, importance)
+            channel.description = description
+            val notifManager = getSystemService(NotificationManager::class.java)
+            notifManager.createNotificationChannel(channel)
+
+        }
+
     }
 }

@@ -21,8 +21,8 @@ class SelfProfilePresenter(view: SelfProfileContract.View,
         appFirebaseDatabase.saveFlashLuvUser(flashLuvUser)
     }
 
-    override fun onScanSuccess() {
-        navigator.displayOtherProfile()
+    override fun onScanSuccess(flashLuvUserId: String) {
+        navigator.displayOtherProfile(flashLuvUserId)
     }
 
 }

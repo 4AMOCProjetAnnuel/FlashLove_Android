@@ -1,8 +1,6 @@
 package projetannuel.bigteam.com.model
 
-import android.os.Parcel
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 
 /**
  * FlashLuvUser -
@@ -10,7 +8,6 @@ import kotlinx.android.parcel.Parcelize
  * @version $Id$
  */
 
-@Parcelize
 data class FlashLuvUser(var single: Boolean = false,
         var description: String = "",
         var age: Int = 0,
@@ -22,7 +19,7 @@ data class FlashLuvUser(var single: Boolean = false,
         var profileCompleted: Boolean = false,
         var views: Int = 0,
         var likes: Int = 0,
-        var flirts: Int = 0) : Parcelable {
+        var flirts: Int = 0) {
 
     constructor() : this(false, "", 0, "",
             "", "", "", "", false,

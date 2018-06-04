@@ -2,6 +2,7 @@ package projetannuel.bigteam.com.navigation
 
 import android.app.FragmentManager
 import projetannuel.bigteam.com.feat.dashboard.DashboardFragment
+import projetannuel.bigteam.com.feat.flirt.FlirtFragment
 import projetannuel.bigteam.com.feat.parties.PartiesFragment
 import projetannuel.bigteam.com.feat.profile.other.OtherProfileFragment
 import projetannuel.bigteam.com.feat.profile.self.SelfProfileFragment
@@ -56,16 +57,30 @@ class AppNavigator(private val fragmentManager: FragmentManager,
                 .commit()
     }
 
-    override fun displayOtherProfile() {
-        var otherProfileFragment = fragmentManager.findFragmentByTag(OtherProfileFragment.fragmentTag)
+    override fun displayOtherProfile(flashLuvUserId: String) {
+        var otherProfileFragment = fragmentManager.findFragmentByTag(OtherProfileFragment.FRAGMENT_TAG)
         if(otherProfileFragment == null) {
-            otherProfileFragment = OtherProfileFragment()
+            otherProfileFragment = OtherProfileFragment.newInstance(flashLuvUserId)
+        }
+        fragmentManager
+                .beginTransaction()
+                .replace(containerId, otherProfileFragment , OtherProfileFragment.FRAGMENT_TAG)
+                .addToBackStack(OtherProfileFragment.FRAGMENT_TAG)
+                .commit()
+    }
+
+    override fun displayFlirt(){
+
+        var flirtFragment = fragmentManager.findFragmentByTag(FlirtFragment.fragmentTag)
+
+        if(flirtFragment == null){
+            flirtFragment = FlirtFragment()
         }
 
         fragmentManager
                 .beginTransaction()
-                .replace(containerId, otherProfileFragment , OtherProfileFragment.fragmentTag)
-                .addToBackStack(OtherProfileFragment.fragmentTag)
+                .replace(containerId, flirtFragment, FlirtFragment.fragmentTag)
+                .addToBackStack(FlirtFragment.fragmentTag)
                 .commit()
     }
 

@@ -3,6 +3,7 @@ package projetannuel.bigteam.com.kodein
 import android.app.Activity
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
+import com.github.salomonbrys.kodein.factory
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.jxinject.jxInjectorModule
 import com.github.salomonbrys.kodein.provider
@@ -14,6 +15,9 @@ import projetannuel.bigteam.com.appFirebase.FirebaseAuthManager
 import projetannuel.bigteam.com.feat.dashboard.DashboardContract
 import projetannuel.bigteam.com.feat.dashboard.DashboardFragment
 import projetannuel.bigteam.com.feat.dashboard.DashboardPresenter
+import projetannuel.bigteam.com.feat.flirt.FlirtContract
+import projetannuel.bigteam.com.feat.flirt.FlirtFragment
+import projetannuel.bigteam.com.feat.flirt.FlirtPresenter
 import projetannuel.bigteam.com.feat.profile.other.OtherProfileContract
 import projetannuel.bigteam.com.feat.profile.other.OtherProfileFragment
 import projetannuel.bigteam.com.feat.profile.other.OtherProfilePresenter
@@ -54,14 +58,15 @@ val kodeinModule = Kodein.Module {
 
     bind<SelfProfileContract.View>() with provider { (SelfProfileFragment()) as SelfProfileContract.View }
 
-    bind<DashboardContract.Presenter>() with provider { (DashboardPresenter(instance(), instance())) as DashboardContract.Presenter}
+    bind<DashboardContract.Presenter>() with provider { (DashboardPresenter(instance(), instance())) as DashboardContract.Presenter }
 
     bind<DashboardContract.View>() with provider { (DashboardFragment()) as DashboardContract.View }
 
     bind<DashboardPagerAdapter>() with provider { DashboardPagerAdapter(instance()) }
 
-    bind<OtherProfileContract.View>() with provider { (OtherProfileFragment()) as OtherProfileContract.View }
+    bind<OtherProfileContract.Presenter>() with factory {  params: OtherProfilePresenter.FactoryParameters -> (OtherProfilePresenter(instance(), instance(), params.flashLuvUserId, instance())) as OtherProfileContract.Presenter }
 
-    bind<OtherProfileContract.Presenter>() with provider { (OtherProfilePresenter(instance(), instance())) as OtherProfileContract.Presenter }
+    bind<FlirtContract.Presenter>() with provider { (FlirtPresenter(instance(), instance())) as FlirtContract.Presenter }
 
+    bind<FlirtContract.View>() with provider { (FlirtFragment()) as FlirtContract.View }
 }

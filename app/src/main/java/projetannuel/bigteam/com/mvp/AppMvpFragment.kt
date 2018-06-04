@@ -8,7 +8,7 @@ import android.widget.Toast
  * @author guirassy
  * @version $Id$
  */
-abstract class AppMvpFragment<P : BasePresenter> : AbstractMvpFragment<P>(), BaseView<P> {
+abstract class AppMvpFragment<P : BasePresenter> : MvpKodeinFragment<P>(), BaseView<P> {
 
     final override fun setToolbarText(title: String) {
     }

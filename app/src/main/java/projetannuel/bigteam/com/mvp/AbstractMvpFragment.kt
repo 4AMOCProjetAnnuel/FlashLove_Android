@@ -15,19 +15,16 @@ import com.github.salomonbrys.kodein.android.FragmentInjector
  * @author guirassy
  * @version $Id$
  */
-abstract class AbstractMvpFragment<P : BasePresenter>: Fragment(), BaseView<P>, FragmentInjector {
+abstract class AbstractMvpFragment<P : BasePresenter>: Fragment(), BaseView<P> {
 
     open val TAG = "MvpFragment"
 
     abstract val presenter: P
 
-    override val injector = KodeinInjector()
-
     abstract val defaultLayout: Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initializeInjector()
         retainInstance = true
     }
 
@@ -54,7 +51,6 @@ abstract class AbstractMvpFragment<P : BasePresenter>: Fragment(), BaseView<P>, 
     override fun onDestroy() {
         Log.v(TAG, "onDestroy(): " + this.toString())
         super.onDestroy()
-        destroyInjector()
     }
 
     companion object {

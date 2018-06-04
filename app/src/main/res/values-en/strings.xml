@@ -18,4 +18,5 @@
     <string name="navigation_title_flirts">flirts</string>
     <string name="navigation_title_profile">Profile</string>
     <string name="navigation_titile_figures">Figures</string>
+    <string name="btn_go_to_user_quizz_title">Quizz</string>
 </resources>

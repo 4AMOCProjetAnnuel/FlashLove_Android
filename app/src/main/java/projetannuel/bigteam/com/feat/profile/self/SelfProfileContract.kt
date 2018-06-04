@@ -15,8 +15,7 @@ interface SelfProfileContract {
 
     interface Presenter : BasePresenter {
         fun updateFlashLuvUser(flashLuvUser: FlashLuvUser)
-        fun onScanSuccess()
+        fun onScanSuccess(flashLuvUserId: String)
     }
-
 
 }

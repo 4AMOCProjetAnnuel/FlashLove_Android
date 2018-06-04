@@ -12,5 +12,7 @@ interface Navigator {
     fun displayParties()
     fun displaySelfProfile()
     fun displayDashboard()
-    fun displayOtherProfile()
+    fun displayOtherProfile(flashLuvUserId: String)
+    fun displayFlirt()
+
 }

@@ -1,5 +1,6 @@
 package projetannuel.bigteam.com.feat.profile.other
 
+import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.BasePresenter
 import projetannuel.bigteam.com.mvp.BaseView
 
@@ -10,7 +11,12 @@ import projetannuel.bigteam.com.mvp.BaseView
  */
 interface OtherProfileContract {
 
-    interface View : BaseView<Presenter>
+    interface View : BaseView<Presenter>{
+        fun setFlashLuvUser(flashLuvUser: FlashLuvUser)
+    }
 
-    interface Presenter : BasePresenter
+    interface Presenter : BasePresenter {
+        fun queryFlashLuvUser()
+        fun goToQuiz()
+    }
 }

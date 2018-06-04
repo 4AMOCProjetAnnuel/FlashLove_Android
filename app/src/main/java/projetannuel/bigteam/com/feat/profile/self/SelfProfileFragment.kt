@@ -1,11 +1,12 @@
 package projetannuel.bigteam.com.feat.profile.self
 
 
-import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
@@ -16,7 +17,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
-import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.fragment_update_profile.ed_user_age
 import kotlinx.android.synthetic.main.fragment_update_profile.ed_user_description
 import kotlinx.android.synthetic.main.fragment_update_profile.ed_user_email
@@ -44,11 +44,17 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
     private val appFirebaseDatabase: AppFirebaseDatabase by injector.instance()
     private var flashLuvUser: FlashLuvUser? = null
 
+    private lateinit var notificationManager : NotificationManagerCompat
+
     companion object {
         const val fragmentTag = "update_profile"
         const val scanCode= 124
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        notificationManager = NotificationManagerCompat.from(activity)
+    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,14 +64,10 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
             appFirebaseDatabase.usersReference.child(it.uid)
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(error: DatabaseError?) {}
-
                         override fun onDataChange(snap: DataSnapshot?) {
-
                             if (snap != null) {
-
                                 flashLuvUser = snap.getValue(FlashLuvUser::class.java)
                                 setView()
-
                             }
                         }
                     })
@@ -97,8 +99,22 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
                     }
             */
 
-            presenter.onScanSuccess()
+            sendNotification()
+            presenter.onScanSuccess("n6wA37GjV4dghWjeXlloMmwlJiJ3")
         }
+    }
+
+    private fun sendNotification() {
+        //TODO setIntent to open new activity or fragment(with data)
+        val notifBuilder = NotificationCompat.Builder(activity, "1234")
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Test Sambarou")
+                .setContentText("Hello World from  Sambarou")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        //TODO dynamically change id
+        notificationManager.notify(12365667, notifBuilder.build())
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -113,7 +129,7 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
                              SelfProfileFragment.scanCode -> {
                                  val res = it.getStringExtra(QRCodeActivity.scanCodeFlag)
                                  Log.v("@@scanRES", res)
-                                    presenter.onScanSuccess()
+                                    //presenter.onScanSuccess()
                              }
                              else -> { }
                          }
@@ -124,12 +140,11 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
     }
 
     private fun setView() {
-
         flashLuvUser?.let {
-
             Picasso.with(activity)
                     .load(Uri.parse(it.photoUrl))
                     .into(iv_user)
+
             tv_user_name.text = it.displayName
 
             radioGroup.check(
@@ -150,9 +165,7 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
             tv_user_views.text = it.views.toString()
             tv_user_likes.text = it.likes.toString()
             tv_user_flirts.text = it.flirts.toString()
-
         }
-
     }
 
 }
