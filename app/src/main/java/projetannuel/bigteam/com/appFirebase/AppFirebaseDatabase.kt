@@ -13,12 +13,13 @@ import projetannuel.bigteam.com.model.FlashLuvUser
 
 class AppFirebaseDatabase {
 
-    val databaseReference = FirebaseDatabase.getInstance().reference
+    private val databaseReference : DatabaseReference = FirebaseDatabase.getInstance().reference
 
     val usersReference : DatabaseReference = databaseReference.child("users")
 
     fun saveFlashLuvUser(user: FlashLuvUser) {
         databaseReference.child("users").child(user.uid).setValue(user)
     }
+
 
 }

@@ -25,6 +25,7 @@ class RegisterFragment : AppMvpFragment<RegisterContract.Presenter>(), RegisterC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startActivityForResult(presenter.signUpWithProvider(), RCSIGNIN)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

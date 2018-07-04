@@ -21,4 +21,18 @@
         <item name="android:textColorHint">@color/outer_space</item>
     </style>
 
+
+
+    <style name="SansSerif.Normal.14.OuterSpace.withBackground" parent="AppTheme.EditText.SansSerif">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColorHint">@color/outer_space</item>
+        <item name="android:ems">3</item>
+        <item name="android:gravity">start|top</item>
+        <item name="android:background">@drawable/background_description_background</item>
+    </style>
+
+
+
+
 </resources>

@@ -26,7 +26,6 @@ class FlashLoveApplication : Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
-
         RxPaparazzo
                 .register(this)
                 .withFileProviderAuthority("$packageName.provider")

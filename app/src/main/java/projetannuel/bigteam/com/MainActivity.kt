@@ -23,11 +23,16 @@ import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.navigation.AppNavigator
 
 
+
+//ref.unauth()
+
 class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
 
     override val injector = KodeinInjector()
 
     private var appNavigator = AppNavigator(fragmentManager, R.id.main_container_id)
+
+    private lateinit var authStateListener : FirebaseAuth.AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +41,20 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
 
         setSupportActionBar(app_toolbar)
 
-        startNavigation()
-
         createNotificationChannel()
+
+        authStateListener = FirebaseAuth.AuthStateListener {
+            val user = FirebaseAuth.getInstance().currentUser
+            if(user == null) {
+                appNavigator.displayRegistration()
+            } else {
+                appNavigator.displayDashboard()
+            }
+        }
+
+        FirebaseAuth.getInstance().addAuthStateListener { authStateListener }
+
+         startNavigation()
 
     }
 
@@ -80,5 +96,10 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
 
         }
 
+    }
+
+    override fun onDestroy() {
+        FirebaseAuth.getInstance().removeAuthStateListener { authStateListener }
+        super.onDestroy()
     }
 }

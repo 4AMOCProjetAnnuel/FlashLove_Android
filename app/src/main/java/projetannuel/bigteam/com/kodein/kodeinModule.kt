@@ -24,6 +24,9 @@ import projetannuel.bigteam.com.feat.profile.other.OtherProfilePresenter
 import projetannuel.bigteam.com.feat.profile.self.SelfProfileContract
 import projetannuel.bigteam.com.feat.profile.self.SelfProfileFragment
 import projetannuel.bigteam.com.feat.profile.self.SelfProfilePresenter
+import projetannuel.bigteam.com.feat.quiz.UserQuizContract
+import projetannuel.bigteam.com.feat.quiz.UserQuizFragment
+import projetannuel.bigteam.com.feat.quiz.UserQuizPresenter
 import projetannuel.bigteam.com.feat.register.RegisterContract
 import projetannuel.bigteam.com.feat.register.RegisterPresenter
 import projetannuel.bigteam.com.feat.register.RegisterFragment
@@ -69,4 +72,9 @@ val kodeinModule = Kodein.Module {
     bind<FlirtContract.Presenter>() with provider { (FlirtPresenter(instance(), instance())) as FlirtContract.Presenter }
 
     bind<FlirtContract.View>() with provider { (FlirtFragment()) as FlirtContract.View }
+
+    bind<UserQuizContract.Presenter>() with provider { (UserQuizPresenter(instance(), instance(), instance())) as UserQuizContract.Presenter }
+
+    bind<UserQuizContract.View>() with provider { (UserQuizFragment()) as UserQuizContract.View }
+
 }

@@ -16,7 +16,4 @@ class FirebaseAuthManager {
             AuthUI.IdpConfig.TwitterBuilder().build(),
             AuthUI.IdpConfig.EmailBuilder().build(),
             AuthUI.IdpConfig.PhoneBuilder().build())
-
-    var user: FirebaseUser? = null
-
 }

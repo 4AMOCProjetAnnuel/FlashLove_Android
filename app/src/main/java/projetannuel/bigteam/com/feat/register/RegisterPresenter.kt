@@ -41,8 +41,11 @@ class RegisterPresenter(view : RegisterContract.View,
                 photoUrl = user.photoUrl!!.toString(),
                 uid = user.uid)
 
+         for(i in 0 until 10){
+            flashLuvUser.questions.add("How deep your pussy is ?")
+        }
+
         appFirebaseDatabase.saveFlashLuvUser(flashLuvUser)
         navigator.displayDashboard()
     }
-
 }

@@ -1,7 +1,5 @@
 package projetannuel.bigteam.com.model
 
-import android.os.Parcelable
-
 /**
  * FlashLuvUser -
  * @author guirassy
@@ -19,10 +17,13 @@ data class FlashLuvUser(var single: Boolean = false,
         var profileCompleted: Boolean = false,
         var views: Int = 0,
         var likes: Int = 0,
-        var flirts: Int = 0) {
+        var flirts: Int = 0,
+        var humidity: Int = 0,
+        var temperature: Int = 0,
+        var heartbeat: Int = 0,
+        var questions: MutableList<String> = mutableListOf()) {
 
     constructor() : this(false, "", 0, "",
             "", "", "", "", false,
-            0, 0, 0)
-
+            0, 0, 0,0,0,0, mutableListOf())
 }
