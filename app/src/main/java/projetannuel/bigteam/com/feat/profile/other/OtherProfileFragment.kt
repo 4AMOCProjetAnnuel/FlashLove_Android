@@ -13,7 +13,14 @@ import com.github.salomonbrys.kodein.with
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.app_toolbar
 import kotlinx.android.synthetic.main.fragment_other_profile.go_to_quizz
+import kotlinx.android.synthetic.main.fragment_other_profile.tv_user_views
+import kotlinx.android.synthetic.main.fragment_other_profile.user_description
+import kotlinx.android.synthetic.main.fragment_other_profile.user_email
+import kotlinx.android.synthetic.main.fragment_other_profile.user_flirts
+import kotlinx.android.synthetic.main.fragment_other_profile.user_likes
 import kotlinx.android.synthetic.main.fragment_other_profile.user_profile_picture
+import kotlinx.android.synthetic.main.fragment_other_profile.user_status_and_age
+import kotlinx.android.synthetic.main.fragment_update_profile.tv_user_name
 import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.AppMvpFragment
@@ -41,7 +48,6 @@ class OtherProfileFragment : AppMvpFragment<OtherProfileContract.Presenter>(),
     companion object {
 
         const val FRAGMENT_TAG = "otherProfile"
-        const val FRAGMENT_TITLE = "Other Profile"
         const val USER_ID_TAG = "userId"
 
         fun newInstance(userId : String) : OtherProfileFragment {
@@ -84,6 +90,14 @@ class OtherProfileFragment : AppMvpFragment<OtherProfileContract.Presenter>(),
                  .resize(width.toInt() + 3,250)
                 .centerCrop()
                 .into(user_profile_picture)
+
+        val userStatus = getString(R.string.single_status_title.takeIf { flashLuvUser.single } ?: R.string.other_profile_dating_title)
+        user_status_and_age.text = getString(R.string.other_profile_status_and_age, userStatus , flashLuvUser.age)
+        user_email.text = flashLuvUser.email
+        tv_user_views.text = flashLuvUser.views.toString().takeIf { flashLuvUser.views != null }
+        user_likes.text = flashLuvUser.likes.toString()
+        user_flirts.text =flashLuvUser.flirts.toString()
+        user_description.text = flashLuvUser.description
     }
 
     override fun onResume() {

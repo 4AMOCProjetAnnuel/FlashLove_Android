@@ -31,7 +31,6 @@ class QRCodeActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
-
     }
 
     override fun onResume() {

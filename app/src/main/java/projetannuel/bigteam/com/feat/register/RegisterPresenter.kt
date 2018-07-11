@@ -3,6 +3,7 @@ package projetannuel.bigteam.com.feat.register
 import android.content.Intent
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.iid.FirebaseInstanceId
 import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.appFirebase.FirebaseAuthManager
@@ -41,8 +42,14 @@ class RegisterPresenter(view : RegisterContract.View,
                 photoUrl = user.photoUrl!!.toString(),
                 uid = user.uid)
 
-         for(i in 0 until 10){
-            flashLuvUser.questions.add("How deep your pussy is ?")
+        //flashLuvUser.fcmToken = "EgLIDAhu9zZta5AUGKp7DuR2lXR2"
+
+        FirebaseInstanceId.getInstance().token?.let {
+            flashLuvUser.fcmToken = it
+        }
+
+        for(i in 0 until 5){
+            flashLuvUser.questions.add("blank quiz question")
         }
 
         appFirebaseDatabase.saveFlashLuvUser(flashLuvUser)

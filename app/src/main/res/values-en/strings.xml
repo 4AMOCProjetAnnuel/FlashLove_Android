@@ -6,6 +6,7 @@
     <string name="date_de_naissance"><i>Age</i></string>
     <string name="description"><i>Description</i></string>
     <string name="single_status_title">Single</string>
+    <string name="other_profile_dating_title">Dating</string>
     <string name="status_yes">Yes</string>
     <string name="status_no">No</string>
     <string name="submit_registration_btn_title">SUBMIT</string>
@@ -20,4 +21,6 @@
     <string name="navigation_titile_figures">flirts</string>
     <string name="btn_go_to_user_quizz_title">Quiz</string>
     <string name="user_quiz_submt_btn_title">Submit changes</string>
+    <string name="other_profile_status_and_age">%s, %d years</string>
+    <string name="notif_just_flashed_msg">%s has just flashed you</string>
 </resources>

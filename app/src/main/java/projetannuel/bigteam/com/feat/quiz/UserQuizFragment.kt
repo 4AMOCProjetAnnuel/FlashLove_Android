@@ -37,7 +37,6 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
     private lateinit var flashLuvUser: FlashLuvUser
 
 
-
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,21 +56,14 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
             override fun onChildChanged(dataSnap: DataSnapshot?, p1: String?) {
 
                 dataSnap?.let {
-
                     epoxyController.questions = (dataSnap.value as MutableList<String>)
                     epoxyController.requestModelBuild()
                     presenter.setCurrentFlashLuvUser(flashLuvUser)
-
-                    Log.v("@@TestUpdate", "$it")
                 }
 
             }
 
         }
-
-
-
-
 
         FirebaseAuth.getInstance().currentUser?.let {
 

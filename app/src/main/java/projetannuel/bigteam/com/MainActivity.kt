@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
 
         createNotificationChannel()
 
+        /*
         authStateListener = FirebaseAuth.AuthStateListener {
             val user = FirebaseAuth.getInstance().currentUser
             if(user == null) {
@@ -51,11 +52,10 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
                 appNavigator.displayDashboard()
             }
         }
+        */
+        //FirebaseAuth.getInstance().addAuthStateListener { authStateListener }
 
-        FirebaseAuth.getInstance().addAuthStateListener { authStateListener }
-
-         startNavigation()
-
+        startNavigation()
     }
 
     private fun startNavigation() {
@@ -89,13 +89,25 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
             val channelName = "FlirtChannel"
             val description = "First channel for testing purposes"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("1234", channelName, importance)
+            val channel = NotificationChannel(getString(R.string.o_nitification_channel), channelName, importance)
             channel.description = description
             val notifManager = getSystemService(NotificationManager::class.java)
             notifManager.createNotificationChannel(channel)
 
         }
 
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+
+        intent?.let {
+
+            val flashingUSerId  = it.getStringExtra("flashingUserId")
+
+            appNavigator.displayOtherProfile(flashingUSerId)
+
+            Log.v("@@NotifTest", flashingUSerId)
+        }
     }
 
     override fun onDestroy() {

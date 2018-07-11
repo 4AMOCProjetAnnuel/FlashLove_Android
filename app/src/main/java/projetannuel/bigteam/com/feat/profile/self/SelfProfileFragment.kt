@@ -35,6 +35,7 @@ import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.AppMvpFragment
+import java.util.concurrent.atomic.AtomicLong
 
 class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
         SelfProfileContract.View {
@@ -100,20 +101,21 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
             */
 
             sendNotification()
-            presenter.onScanSuccess("n6wA37GjV4dghWjeXlloMmwlJiJ3")
+            presenter.onScanSuccess("RWVkt3kbU4UKaovuNLw90lSUgBx2")
         }
     }
 
     private fun sendNotification() {
         //TODO setIntent to open new activity or fragment(with data)
-        val notifBuilder = NotificationCompat.Builder(activity, "1234")
+        val notifBuilder = NotificationCompat.Builder(activity, getString(R.string.o_nitification_channel))
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle("Test Sambarou")
-                .setContentText("Hello World from  Sambarou")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.notif_just_flashed_msg, flashLuvUser!!.displayName))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
 
-        //TODO dynamically change id
-        notificationManager.notify(12365667, notifBuilder.build())
+
+        //TODO generate random ids
+        notificationManager.notify(49375454, notifBuilder.build())
 
     }
 
@@ -166,6 +168,10 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
             tv_user_likes.text = it.likes.toString()
             tv_user_flirts.text = it.flirts.toString()
         }
+    }
+
+    private fun generateRandomId() : Int {
+        return  AtomicLong(System.currentTimeMillis()).incrementAndGet().toInt()
     }
 
 }

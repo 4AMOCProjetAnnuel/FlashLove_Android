@@ -21,9 +21,10 @@ data class FlashLuvUser(var single: Boolean = false,
         var humidity: Int = 0,
         var temperature: Int = 0,
         var heartbeat: Int = 0,
-        var questions: MutableList<String> = mutableListOf()) {
+        var questions: MutableList<String> = mutableListOf(),
+        var fcmToken:String = "") {
 
     constructor() : this(false, "", 0, "",
             "", "", "", "", false,
-            0, 0, 0,0,0,0, mutableListOf())
+            0, 0, 0,0,0,0, mutableListOf(), "")
 }
