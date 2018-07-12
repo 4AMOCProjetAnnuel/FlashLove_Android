@@ -69,12 +69,12 @@ class AppNavigator(private val fragmentManager: FragmentManager,
                 .commit()
     }
 
-    override fun displayFlirt(){
+    override fun displayFlirt(requestUserId: String){
 
         var flirtFragment = fragmentManager.findFragmentByTag(FlirtFragment.fragmentTag)
 
         if(flirtFragment == null){
-            flirtFragment = FlirtFragment()
+            flirtFragment = FlirtFragment.newInstance(requestUserId)
         }
 
         fragmentManager

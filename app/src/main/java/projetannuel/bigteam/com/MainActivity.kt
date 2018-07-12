@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.toolbar.app_toolbar
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
+import projetannuel.bigteam.com.messaging.FlashLuvFirebaseMessagingService
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.navigation.AppNavigator
 
@@ -102,11 +103,14 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
 
         intent?.let {
 
-            val flashingUSerId  = it.getStringExtra("flashingUserId")
+            val flashingUserId  = it.getStringExtra(FlashLuvFirebaseMessagingService.NOTIFICATION_PENDING_INTENT_TAG)
+            val notificationType = it.getStringExtra(FlashLuvFirebaseMessagingService.NOTIFICATION_TYPE_TAG)
 
-            appNavigator.displayOtherProfile(flashingUSerId)
-
-            Log.v("@@NotifTest", flashingUSerId)
+            if (notificationType == resources.getString(R.string.notification_flash)) {
+                appNavigator.displayOtherProfile(flashingUserId)
+            } else {
+                appNavigator.displayFlirt(flashingUserId)
+            }
         }
     }
 

@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.fragment_other_profile.user_flirts
 import kotlinx.android.synthetic.main.fragment_other_profile.user_likes
 import kotlinx.android.synthetic.main.fragment_other_profile.user_profile_picture
 import kotlinx.android.synthetic.main.fragment_other_profile.user_status_and_age
-import kotlinx.android.synthetic.main.fragment_update_profile.tv_user_name
 import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.AppMvpFragment
@@ -76,7 +75,7 @@ class OtherProfileFragment : AppMvpFragment<OtherProfileContract.Presenter>(),
         }
 
         go_to_quizz.setOnClickListener {
-            presenter.goToQuiz()
+            presenter.goFlirt()
         }
     }
 
@@ -94,7 +93,7 @@ class OtherProfileFragment : AppMvpFragment<OtherProfileContract.Presenter>(),
         val userStatus = getString(R.string.single_status_title.takeIf { flashLuvUser.single } ?: R.string.other_profile_dating_title)
         user_status_and_age.text = getString(R.string.other_profile_status_and_age, userStatus , flashLuvUser.age)
         user_email.text = flashLuvUser.email
-        tv_user_views.text = flashLuvUser.views.toString().takeIf { flashLuvUser.views != null }
+        tv_user_views.text = flashLuvUser.views.toString()
         user_likes.text = flashLuvUser.likes.toString()
         user_flirts.text =flashLuvUser.flirts.toString()
         user_description.text = flashLuvUser.description

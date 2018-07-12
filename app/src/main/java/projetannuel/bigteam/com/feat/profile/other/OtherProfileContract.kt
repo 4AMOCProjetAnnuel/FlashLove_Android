@@ -17,6 +17,6 @@ interface OtherProfileContract {
 
     interface Presenter : BasePresenter {
         fun queryFlashLuvUser()
-        fun goToQuiz()
+        fun goFlirt()
     }
 }

@@ -1,11 +1,11 @@
 package projetannuel.bigteam.com.feat.profile.self
 
 
+import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.fragment_update_profile.ed_user_age
 import kotlinx.android.synthetic.main.fragment_update_profile.ed_user_description
 import kotlinx.android.synthetic.main.fragment_update_profile.ed_user_email
@@ -35,7 +36,6 @@ import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.AppMvpFragment
-import java.util.concurrent.atomic.AtomicLong
 
 class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
         SelfProfileContract.View {
@@ -82,13 +82,13 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
 
                 presenter.updateFlashLuvUser(it)
 
-                Toast.makeText(activity, "Your profile has been successfully updated",
+                Toast.makeText(activity, getString(R.string.toast_profile_update_success),
                         Toast.LENGTH_SHORT).show()
             }
         }
 
         fab.setOnClickListener {
-            /*
+
             RxPermissions(activity)
                     .request(Manifest.permission.CAMERA)
                     .subscribe {
@@ -98,13 +98,13 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
                                     Toast.LENGTH_SHORT).show()
                         }
                     }
-            */
 
-            sendNotification()
-            presenter.onScanSuccess("RWVkt3kbU4UKaovuNLw90lSUgBx2")
+           // sendNotification()
+            //presenter.onScanSuccess("RWVkt3kbU4UKaovuNLw90lSUgBx2")
         }
     }
 
+    /*
     private fun sendNotification() {
         //TODO setIntent to open new activity or fragment(with data)
         val notifBuilder = NotificationCompat.Builder(activity, getString(R.string.o_nitification_channel))
@@ -118,7 +118,7 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
         notificationManager.notify(49375454, notifBuilder.build())
 
     }
-
+    */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -131,12 +131,22 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
                              SelfProfileFragment.scanCode -> {
                                  val res = it.getStringExtra(QRCodeActivity.scanCodeFlag)
                                  Log.v("@@scanRES", res)
-                                    //presenter.onScanSuccess()
+                                    presenter.onScanSuccess(res)
                              }
-                             else -> { }
+                             else -> {
+                                 Toast.makeText(
+                                         activity,
+                                         resources.getString(R.string.qrcode_scan_error_message),
+                                         Toast.LENGTH_SHORT
+                                 ).show()
+                             }
                          }
                      }
-                    else -> {}
+                    else -> Toast.makeText(
+                            activity,
+                            resources.getString(R.string.qrcode_scan_error_message),
+                            Toast.LENGTH_SHORT
+                    ).show()
             }
         }
     }
@@ -169,9 +179,4 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
             tv_user_flirts.text = it.flirts.toString()
         }
     }
-
-    private fun generateRandomId() : Int {
-        return  AtomicLong(System.currentTimeMillis()).incrementAndGet().toInt()
-    }
-
 }

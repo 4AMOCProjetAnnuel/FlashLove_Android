@@ -1,5 +1,6 @@
 package projetannuel.bigteam.com.feat.flirt
 
+import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.BasePresenter
 import projetannuel.bigteam.com.mvp.BaseView
 
@@ -10,8 +11,12 @@ import projetannuel.bigteam.com.mvp.BaseView
  */
 interface FlirtContract {
 
-    interface View : BaseView<Presenter> {}
+    interface View : BaseView<Presenter> {
+        fun setRequestedUserQuiz(requestedUser: FlashLuvUser)
+    }
 
 
-    interface Presenter: BasePresenter
+    interface Presenter: BasePresenter {
+        fun queryRequestingUser()
+    }
 }

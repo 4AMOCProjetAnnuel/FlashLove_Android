@@ -9,6 +9,7 @@
     <string name="other_profile_dating_title">Dating</string>
     <string name="status_yes">Yes</string>
     <string name="status_no">No</string>
+    <string name="profile_submit_btn">Submit</string>
     <string name="submit_registration_btn_title">SUBMIT</string>
     <string name="register_or_other_providers_textview">OR</string>
     <string name="sign_up_with_google_title">Sign up with Google</string>
@@ -23,4 +24,17 @@
     <string name="user_quiz_submt_btn_title">Submit changes</string>
     <string name="other_profile_status_and_age">%s, %d years</string>
     <string name="notif_just_flashed_msg">%s has just flashed you</string>
+
+
+    <!-- Notification -->
+    <string name="notification_flash_title">Flash alert</string>
+    <string name="notification_quiz_title">Quiz alert</string>
+    <string name="notification_flash">flash</string>
+    <string name="notification_quiz">quiz</string>
+    <string name="toast_profile_update_success">Your profile has been successfully updated</string>
+
+
+    <!-- qr code -->
+    <string name="qrcode_scan_error_message">Error occurred while scanning qr code. Please retry.</string>
+
 </resources>

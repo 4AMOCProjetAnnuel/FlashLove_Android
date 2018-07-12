@@ -21,6 +21,8 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
         AppMvpPresenter<AppNavigator, OtherProfileContract.View>(view, navigator),
         OtherProfileContract.Presenter {
 
+    lateinit var flashedUser: FlashLuvUser
+
     override fun resume() {}
 
     override fun queryFlashLuvUser() {
@@ -29,15 +31,15 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
                     override fun onCancelled(error: DatabaseError?) {}
                     override fun onDataChange(snap: DataSnapshot?) {
                         snap?.let {
-                            val flashLuvUser = it.getValue(FlashLuvUser::class.java)
-                            view.setFlashLuvUser(flashLuvUser!!)
+                            val flashedUser = it.getValue(FlashLuvUser::class.java)
+                            view.setFlashLuvUser(flashedUser!!)
                         }
                     }
                 })
     }
 
-    override fun goToQuiz() {
-        navigator.displayFlirt()
+    override fun goFlirt() {
+        navigator.displayFlirt(flashedUser.uid)
     }
 
     data class FactoryParameters(val flashLuvUserId: String)

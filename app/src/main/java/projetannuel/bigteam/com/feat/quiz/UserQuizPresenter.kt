@@ -1,6 +1,5 @@
 package projetannuel.bigteam.com.feat.quiz
 
-import android.util.Log
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.AppMvpPresenter

@@ -7,10 +7,13 @@ import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import projetannuel.bigteam.com.MainActivity
 import projetannuel.bigteam.com.R
+import projetannuel.bigteam.com.model.FlashLuvUser
+import java.util.Random
 
 /**
  * FlashLuvFirebaseMessagingService -
@@ -19,18 +22,31 @@ import projetannuel.bigteam.com.R
  */
 class FlashLuvFirebaseMessagingService : FirebaseMessagingService() {
 
+    companion object {
+
+        const val NOTIFICATION_PENDING_INTENT_TAG = "userId"
+        const val NOTIFICATION_TYPE_TAG = "notificationType"
+        const val NOTIFICATION_FLASH_TYPE = "flash"
+        const val NOTIFICATION_QUIZ_TYPE = "quiz"
+    }
+
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         // super.onMessageReceived(msg)
 
         remoteMessage?.let {
 
-            // TODO(developer): Handle FCM messages here.
-            // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-            Log.d("@@TEST", "From: " + remoteMessage?.getFrom());
+            var userId = ""
 
             // Check if message contains a data payload.
             if (it.data.isNotEmpty()) {
+
                 Log.d("@@TEST", "Message data payload: " + it.data)
+            }
+
+            it.data?.let {
+                it["userId"]?.let {
+                    userId = it
+                }
             }
 
             var title = ""
@@ -45,30 +61,34 @@ class FlashLuvFirebaseMessagingService : FirebaseMessagingService() {
                 }
 
                 it.notification?.body?.let {
+                    //message = it.plus( " ${currentUser!!.displayName}")
                     message = it
                 }
-
-                sendNotification(title, message)
-
+                sendNotification(userId, title, message)
             }
-            // Also if you intend on generating your own notifications as a result of a received FCM
-            // message, here is where that should be initiated. See sendNotification method below.
         }
 
     }
 
-    private fun sendNotification(title: String, message: String) {
+    private fun sendNotification(userId: String, title: String, message: String) {
 
+        val toMainActivity = Intent(this, MainActivity::class.java)
+        toMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        toMainActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
-        var i = Intent(this, MainActivity::class.java)
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        i.putExtra("flashingUserId", "RWVkt3kbU4UKaovuNLw90lSUgBx2")
-        var  pendingIntent = PendingIntent.getActivity (this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT)
+        toMainActivity.putExtra(FlashLuvFirebaseMessagingService.NOTIFICATION_PENDING_INTENT_TAG, userId)
 
-        var notificationManager = NotificationManagerCompat.from(this)
+        if(title == resources.getString(R.string.notification_flash_title)) {
+            toMainActivity.putExtra(FlashLuvFirebaseMessagingService.NOTIFICATION_TYPE_TAG, resources.getString(R.string.notification_flash))
+        }else {
+            toMainActivity.putExtra(FlashLuvFirebaseMessagingService.NOTIFICATION_TYPE_TAG, resources.getString(R.string.notification_quiz))
+        }
 
-        val notifBuilder = NotificationCompat.Builder(this, getString(R.string.o_nitification_channel))
+        val pendingIntent = PendingIntent.getActivity(this, 0, toMainActivity, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val notificationManager = NotificationManagerCompat.from(this)
+
+        val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.o_nitification_channel))
                 .setAutoCancel(true)
                 .setDefaults(android.app.Notification.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_notification)
@@ -78,8 +98,7 @@ class FlashLuvFirebaseMessagingService : FirebaseMessagingService() {
                 .setColor(ContextCompat.getColor(this, R.color.primary_pink_light))
                 .setContentIntent(pendingIntent)
 
-        //TODO generate random ids
-        notificationManager.notify(84394454, notifBuilder.build())
+        notificationManager.notify(Random().nextInt(84394454), notificationBuilder.build())
     }
 
 }
