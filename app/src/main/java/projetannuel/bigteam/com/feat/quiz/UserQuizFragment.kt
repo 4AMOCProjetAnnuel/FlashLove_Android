@@ -30,7 +30,6 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
     override val defaultLayout: Int = R.layout.fragment_user_quiz
     private var epoxyController = UserQuizEpoxyController(
             { index:Int , text: String ->presenter.updateQuizItemText(index, text)}
-
     )
 
     private val appFirebaseDatabase : AppFirebaseDatabase by injector.instance()
@@ -43,7 +42,7 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
         rv_user_quiz.adapter = epoxyController.adapter
         rv_user_quiz.layoutManager = LinearLayoutManager(context)
 
-        var userQuizEventListener = object : ChildEventListener{
+        val userQuizEventListener = object : ChildEventListener{
 
             override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
 
@@ -60,9 +59,7 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
                     epoxyController.requestModelBuild()
                     presenter.setCurrentFlashLuvUser(flashLuvUser)
                 }
-
             }
-
         }
 
         FirebaseAuth.getInstance().currentUser?.let {
@@ -83,10 +80,6 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
                             }
                         }
                     })
-
-
-
-
         }
 
         btn_submit_user_quiz.setOnClickListener {

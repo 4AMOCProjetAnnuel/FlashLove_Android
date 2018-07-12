@@ -16,11 +16,14 @@ class FlirtPresenter(view: FlirtContract.View,
         AppMvpPresenter<AppNavigator, FlirtContract.View>(view, navigator),
         FlirtContract.Presenter {
 
-
-
     override fun queryRequestingUser() {
+
         Log.v("@Quiz Id", requestedUserId)
+
+
+
     }
+
 
     data class FactoryParameters(val requestedUserId: String)
 }

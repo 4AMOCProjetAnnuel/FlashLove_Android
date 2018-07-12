@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import com.github.salomonbrys.kodein.instance
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -61,18 +62,8 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar!!.title = "Dashboard"
 
-        FirebaseAuth.getInstance().currentUser?.let {
-            appFirebaseDatabase.usersReference.child(it.uid)
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onCancelled(error: DatabaseError?) {}
-                        override fun onDataChange(snap: DataSnapshot?) {
-                            if (snap != null) {
-                                flashLuvUser = snap.getValue(FlashLuvUser::class.java)
-                                setView()
-                            }
-                        }
-                    })
-        }
+        loadFlashLuvUser()
+
 
         submit.setOnClickListener {
             flashLuvUser?.let {
@@ -98,27 +89,30 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
                                     Toast.LENGTH_SHORT).show()
                         }
                     }
-
-           // sendNotification()
-            //presenter.onScanSuccess("RWVkt3kbU4UKaovuNLw90lSUgBx2")
         }
     }
 
-    /*
-    private fun sendNotification() {
-        //TODO setIntent to open new activity or fragment(with data)
-        val notifBuilder = NotificationCompat.Builder(activity, getString(R.string.o_nitification_channel))
-                .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.notif_just_flashed_msg, flashLuvUser!!.displayName))
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
+    fun loadFlashLuvUser() {
 
+        FirebaseAuth.getInstance().currentUser?.let {
+            appFirebaseDatabase.usersReference.child(it.uid)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(error: DatabaseError?) {}
+                        override fun onDataChange(snap: DataSnapshot?) {
+                            if (snap != null) {
+                                flashLuvUser = snap.getValue(FlashLuvUser::class.java)
+                                setView()
 
-        //TODO generate random ids
-        notificationManager.notify(49375454, notifBuilder.build())
+                                val query =  appFirebaseDatabase.usersReference.child(flashLuvUser!!.uid)
+                                query.addChildEventListener(userValuesEventListener)
+
+                            }
+                        }
+                    })
+        }
 
     }
-    */
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -179,4 +173,27 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
             tv_user_flirts.text = it.flirts.toString()
         }
     }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        //super.onSaveInstanceState(outState)
+    }
+
+    val userValuesEventListener = object : ChildEventListener {
+
+        override fun onCancelled(p0: DatabaseError?) {}
+
+        override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
+
+        override fun onChildChanged(data: DataSnapshot?, childName: String?) {
+            childName?.let {
+                if(data != null && data.value != null) {
+                    loadFlashLuvUser()
+                }
+            }
+        }
+        override fun onChildAdded(p0: DataSnapshot?, p1: String?) {}
+
+        override fun onChildRemoved(p0: DataSnapshot?) {}
+    }
+
 }

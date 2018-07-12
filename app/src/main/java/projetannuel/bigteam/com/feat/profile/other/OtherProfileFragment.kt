@@ -12,6 +12,7 @@ import com.github.salomonbrys.kodein.kodein
 import com.github.salomonbrys.kodein.with
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.app_toolbar
+import kotlinx.android.synthetic.main.fragment_other_profile.fab_other_profile_like
 import kotlinx.android.synthetic.main.fragment_other_profile.go_to_quizz
 import kotlinx.android.synthetic.main.fragment_other_profile.tv_user_views
 import kotlinx.android.synthetic.main.fragment_other_profile.user_description
@@ -75,32 +76,41 @@ class OtherProfileFragment : AppMvpFragment<OtherProfileContract.Presenter>(),
         }
 
         go_to_quizz.setOnClickListener {
-            presenter.goFlirt()
+            presenter.queryFlashLuvUser(false, false, true)
         }
-    }
 
-    override fun setFlashLuvUser(flashLuvUser: FlashLuvUser) {
-        val displayMetrics = resources.displayMetrics
-        val width = displayMetrics.widthPixels / displayMetrics.density
+        fab_other_profile_like.setOnClickListener {
+            presenter.queryFlashLuvUser(false, true, false)
+        }
 
-        (activity as AppCompatActivity).supportActionBar!!.title = flashLuvUser.displayName
-        Picasso.with(activity)
-                .load(flashLuvUser.photoUrl)
-                 .resize(width.toInt() + 3,250)
-                .centerCrop()
-                .into(user_profile_picture)
-
-        val userStatus = getString(R.string.single_status_title.takeIf { flashLuvUser.single } ?: R.string.other_profile_dating_title)
-        user_status_and_age.text = getString(R.string.other_profile_status_and_age, userStatus , flashLuvUser.age)
-        user_email.text = flashLuvUser.email
-        tv_user_views.text = flashLuvUser.views.toString()
-        user_likes.text = flashLuvUser.likes.toString()
-        user_flirts.text =flashLuvUser.flirts.toString()
-        user_description.text = flashLuvUser.description
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.queryFlashLuvUser()
+        presenter.queryFlashLuvUser(true, false, false)
     }
+
+    override fun setFlashLuvUser(flashLuvUser: FlashLuvUser) {
+
+        if(this.view != null) {
+            val displayMetrics = resources.displayMetrics
+            val width = displayMetrics.widthPixels / displayMetrics.density
+
+            (activity as AppCompatActivity).supportActionBar!!.title = flashLuvUser.displayName
+            Picasso.with(activity)
+                    .load(flashLuvUser.photoUrl)
+                    .resize(width.toInt() + 3,250)
+                    .centerCrop()
+                    .into(user_profile_picture)
+
+            val userStatus = getString(R.string.single_status_title.takeIf { flashLuvUser.single } ?: R.string.other_profile_dating_title)
+            user_status_and_age.text = getString(R.string.other_profile_status_and_age, userStatus , flashLuvUser.age)
+            user_email.text = flashLuvUser.email
+            tv_user_views.text = flashLuvUser.views.toString()
+            user_likes.text = flashLuvUser.likes.toString()
+            user_flirts.text =flashLuvUser.flirts.toString()
+            user_description.text = flashLuvUser.description
+        }
+    }
+
 }

@@ -66,7 +66,8 @@ class AppNavigator(private val fragmentManager: FragmentManager,
                 .beginTransaction()
                 .replace(containerId, otherProfileFragment , OtherProfileFragment.FRAGMENT_TAG)
                 .addToBackStack(OtherProfileFragment.FRAGMENT_TAG)
-                .commit()
+                //.commit()
+                .commitAllowingStateLoss()
     }
 
     override fun displayFlirt(requestUserId: String){

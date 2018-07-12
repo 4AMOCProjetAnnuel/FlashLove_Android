@@ -1,5 +1,10 @@
 package projetannuel.bigteam.com.feat.profile.self
 
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.AppMvpPresenter
@@ -24,5 +29,4 @@ class SelfProfilePresenter(view: SelfProfileContract.View,
     override fun onScanSuccess(flashLuvUserId: String) {
         navigator.displayOtherProfile(flashLuvUserId)
     }
-
 }

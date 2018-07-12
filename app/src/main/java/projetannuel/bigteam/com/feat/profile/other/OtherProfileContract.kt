@@ -11,12 +11,15 @@ import projetannuel.bigteam.com.mvp.BaseView
  */
 interface OtherProfileContract {
 
-    interface View : BaseView<Presenter>{
+    interface View : BaseView<Presenter> {
         fun setFlashLuvUser(flashLuvUser: FlashLuvUser)
     }
 
     interface Presenter : BasePresenter {
-        fun queryFlashLuvUser()
+        fun queryFlashLuvUser(incrementViews: Boolean,
+                incrementLikes: Boolean,
+                incrementFlirts: Boolean)
+
         fun goFlirt()
     }
 }
