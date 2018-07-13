@@ -8,6 +8,8 @@ import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.appFirebase.FirebaseAuthManager
 import projetannuel.bigteam.com.model.FlashLuvUser
+import projetannuel.bigteam.com.model.Flirt
+import projetannuel.bigteam.com.model.QuizItem
 import projetannuel.bigteam.com.mvp.AppMvpPresenter
 import projetannuel.bigteam.com.navigation.AppNavigator
 
@@ -42,15 +44,18 @@ class RegisterPresenter(view : RegisterContract.View,
                 photoUrl = user.photoUrl!!.toString(),
                 uid = user.uid)
 
-        //flashLuvUser.fcmToken = "EgLIDAhu9zZta5AUGKp7DuR2lXR2"
-
         FirebaseInstanceId.getInstance().token?.let {
             flashLuvUser.fcmToken = it
         }
 
         for(i in 0 until 5){
             flashLuvUser.questions.add("blank quiz question")
+            flashLuvUser.meToOthersFlirts.add(Flirt(mutableListOf(QuizItem("Mocked Question", "Mocked Answer")),
+                    40,50, 40, FlashLuvUser()))
+            flashLuvUser.othersToMeFlirts.add(Flirt(mutableListOf(QuizItem("Mocked Question", "Mocked Answer")),
+                    40, 50, 40, FlashLuvUser()))
         }
+
 
         appFirebaseDatabase.saveFlashLuvUser(flashLuvUser)
         navigator.displayDashboard()
