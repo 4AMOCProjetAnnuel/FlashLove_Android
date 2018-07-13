@@ -11,12 +11,15 @@ import projetannuel.bigteam.com.mvp.BaseView
  */
 interface SelfProfileContract {
 
-    interface View : BaseView<Presenter>
-
-    interface Presenter : BasePresenter {
-        fun updateFlashLuvUser(flashLuvUser: FlashLuvUser)
-        fun onScanSuccess(flashLuvUserId: String)
-        fun notifyFlash()
+    interface View : BaseView<Presenter> {
+            fun setFlashLuvUSer(flashLuvUser: FlashLuvUser)
+            fun notifyFCMError()
+            fun notifyFCMSuccess()
     }
 
+    interface Presenter : BasePresenter {
+        fun updateFlashLuvUser(description: String, status: Boolean, age : Int)
+        fun onScanSuccess(flashLuvUserId: String)
+        fun notifyFlashedUser(flashedUserId: String, notificationBody: String)
+    }
 }

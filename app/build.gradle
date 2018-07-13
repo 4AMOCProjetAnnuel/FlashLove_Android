@@ -16,6 +16,15 @@ android {
         multiDexEnabled true
     }
     buildTypes {
+
+        it.each {
+            
+            it.buildConfigField("String", "FCMServerKey", FCMServerKey)
+            it.buildConfigField("String", "FCMServerBaseUrl", FCMServerBaseUrl)
+            it.buildConfigField("String", "NotificationFlashAlert", NotificationFlashAlert)
+            it.buildConfigField("String", "NotificationQuizAlert", NotificationQuizAlert)
+        }
+        
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

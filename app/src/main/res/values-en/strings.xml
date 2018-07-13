@@ -23,8 +23,7 @@
     <string name="btn_go_to_user_quizz_title">Quiz</string>
     <string name="user_quiz_submt_btn_title">Submit changes</string>
     <string name="other_profile_status_and_age">%s, %d years</string>
-    <string name="notif_just_flashed_msg">%s has just flashed you</string>
-
+    <string name="notif_just_flashed_msg">has just flashed you</string>
 
     <!-- Notification -->
     <string name="notification_flash_title">Flash alert</string>
@@ -33,8 +32,12 @@
     <string name="notification_quiz">quiz</string>
     <string name="toast_profile_update_success">Your profile has been successfully updated</string>
 
-
     <!-- qr code -->
     <string name="qrcode_scan_error_message">Error occurred while scanning qr code. Please retry.</string>
+    <string name="notification_flirt_channel_name">FlirtChannel</string>
+    <string name="notification_flirt_channel_description">FlashLuv Main Notification channel</string>
+    <string name="notification_flash_error">Error occurred when notifying the user you\'ve just flashed</string>
+    <string name="notification_flash_success">The user you\' ve just flashed have been successfully notified</string>
+    <string name="qr_code_camera_permission_denied_message">Camera permission is needed for QrCode Scan</string>
 
 </resources>

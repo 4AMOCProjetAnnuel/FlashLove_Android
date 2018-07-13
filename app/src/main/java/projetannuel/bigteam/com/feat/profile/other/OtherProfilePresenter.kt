@@ -42,7 +42,6 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
                 if (dataSnap != null && dataSnap.value != null) {
                     queryFlashLuvUser(false, false, false)
                 }
-
             }
         }
     }
@@ -55,12 +54,9 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
                     override fun onCancelled(error: DatabaseError?) {}
                     override fun onDataChange(snap: DataSnapshot?) {
                         snap?.let {
-
-
                             flashedUser = it.getValue(FlashLuvUser::class.java)!!
 
                             flashedUser?.let {
-
 
                                 view.setFlashLuvUser(it)
 
@@ -89,7 +85,6 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
                             }
 
                         }
-
                     }
                 })
     }
@@ -102,7 +97,6 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
         query.removeEventListener(flashedUserValuesEventListener)
         super.stop()
     }
-
 
     data class FactoryParameters(val flashLuvUserId: String)
 }

@@ -35,12 +35,20 @@ class AppNavigator(private val fragmentManager: FragmentManager,
         //TODO
     }
 
-    override fun displaySelfProfile() {
+    override fun displaySelfProfile(flashLuvUserId: String) {
+
+        var selfProfileFragment = fragmentManager.findFragmentByTag(SelfProfileFragment.fragmentTag)
+
+        if(selfProfileFragment == null) {
+            selfProfileFragment = SelfProfileFragment.newInstance(flashLuvUserId)
+        }
+
         fragmentManager
                 .beginTransaction()
-                .replace(containerId, SelfProfileFragment(), SelfProfileFragment.fragmentTag)
+                .replace(containerId, selfProfileFragment, SelfProfileFragment.fragmentTag)
                 .addToBackStack(SelfProfileFragment.fragmentTag)
                 .commit()
+
     }
 
     override fun displayDashboard() {

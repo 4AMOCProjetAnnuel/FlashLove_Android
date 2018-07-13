@@ -62,11 +62,9 @@ val kodeinModule = Kodein.Module {
 
     bind<AppFirebaseDatabase>() with singleton { AppFirebaseDatabase() }
 
-    bind<SelfProfileContract.Presenter>() with provider { (SelfProfilePresenter(instance(), instance(), instance(), instance())) as SelfProfileContract.Presenter}
+    bind<SelfProfileContract.Presenter>() with factory { params : SelfProfilePresenter.FactoryParameters -> (SelfProfilePresenter(instance(), instance(), instance(), instance(), params.flashLuvUserId)) as SelfProfileContract.Presenter}
 
-    bind<SelfProfileContract.View>() with provider { (SelfProfileFragment()) as SelfProfileContract.View }
-
-    bind<DashboardContract.Presenter>() with provider { (DashboardPresenter(instance(), instance())) as DashboardContract.Presenter }
+    bind<DashboardContract.Presenter>() with provider { (DashboardPresenter(instance(), instance() )) as DashboardContract.Presenter }
 
     bind<DashboardContract.View>() with provider { (DashboardFragment()) as DashboardContract.View }
 

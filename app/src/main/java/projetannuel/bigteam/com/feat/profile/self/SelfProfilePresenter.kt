@@ -1,10 +1,13 @@
 package projetannuel.bigteam.com.feat.profile.self
 
-import android.util.Log
-import com.google.gson.Gson
-import io.reactivex.Observable
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import projetannuel.bigteam.com.BuildConfig
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.messaging.model.AppFCMDataModel
 import projetannuel.bigteam.com.messaging.model.AppFCMNotificationModel
@@ -23,44 +26,105 @@ import projetannuel.bigteam.com.network.FCMServiceInterface
 class SelfProfilePresenter(view: SelfProfileContract.View,
         navigator: AppNavigator,
         private val appFirebaseDatabase: AppFirebaseDatabase,
-        private val fcmServiceInterface: FCMServiceInterface) :
+        private val fcmServiceInterface: FCMServiceInterface,
+        private val flashLuvCurrentUserId: String) :
         AppMvpPresenter<AppNavigator, SelfProfileContract.View>(view, navigator),
         SelfProfileContract.Presenter {
 
-    override fun updateFlashLuvUser(flashLuvUser: FlashLuvUser) {
+    lateinit var flashLuvUser: FlashLuvUser
+    var disposableBag =  CompositeDisposable()
+
+    override fun resume() {
+
+        appFirebaseDatabase.usersReference.child(flashLuvCurrentUserId)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError?) {}
+                    override fun onDataChange(snap: DataSnapshot?) {
+                        if (snap != null) {
+
+                            flashLuvUser = snap.getValue(FlashLuvUser::class.java)!!
+
+                            view.setFlashLuvUSer(flashLuvUser)
+
+                            val query = appFirebaseDatabase.usersReference.child(flashLuvUser!!.uid)
+                            query.addChildEventListener(userValuesEventListener)
+
+                        }
+                    }
+                })
+    }
+
+    override fun updateFlashLuvUser(description: String, status: Boolean, age : Int) {
+
+        flashLuvUser.description = description
+        flashLuvUser.single = status
+        flashLuvUser.age = age
+
         appFirebaseDatabase.saveFlashLuvUser(flashLuvUser)
     }
 
-    override fun onScanSuccess(flashLuvUserId: String) {
-        navigator.displayOtherProfile(flashLuvUserId)
+    override fun onScanSuccess(flashedUserId: String) {
+        navigator.displayOtherProfile(flashedUserId)
     }
 
-    override fun notifyFlash() {
-        val appFCMRequestModel = AppFCMRequestModel(
-                to = "df8nusHKk3Q:APA91bF90583wyBrfgbXdsWBPeFrlgatVe4s7waNBK6sjdwf4nyBVUZWGKjHe8uhtJrB6szofSHFQWUgWCwF_Mhf1vXhtnwuccNZEecElB2umxve_SXLrvfMgcilwiulEzUeyP5hXJtmKd7jsypNAGHhVWHyknXa3A",
-                data = AppFCMDataModel("dcyNGgJ1NJTjIvsHwn1oIeBL2bD3")
-        )
 
-        launchNotification()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe ({
-                    Log.v("@@NotifTest", "$it")
-                },{
-                    Log.v("@@NotifErr", "${it.printStackTrace()}")
-                    Log.v("@@NotifErr", it.localizedMessage)
-                    Log.v("@@NotifErr", "${it.cause}")
+    override fun notifyFlashedUser(flashedUserId: String, notificationBody: String) {
+
+        appFirebaseDatabase.usersReference.child(flashedUserId)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError?) {}
+                    override fun onDataChange(snap: DataSnapshot?) {
+                        if (snap != null) {
+
+                            val flashedUser = snap.getValue(FlashLuvUser::class.java)!!
+
+                            val appFCMRequestModel = AppFCMRequestModel(
+                                    to = flashedUser.fcmToken,
+                                    notification = AppFCMNotificationModel(BuildConfig.NotificationFlashAlert,
+                                            "${flashedUser.displayName} ".plus(notificationBody)),
+                                    data = AppFCMDataModel(flashLuvUser.uid))
+
+                            val notificationObservable = fcmServiceInterface
+                                    .postNotification(appFCMRequestModel)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe({
+                                        navigator.displayOtherProfile(flashedUser.uid)
+                                    }, {
+                                            view.notifyFCMError()
+                                    })
+
+                            disposableBag.add(notificationObservable)
+
+                        }
+                    }
                 })
-
     }
 
-    private fun launchNotification() : Observable<Any> {
-
-        val appFCMRequestModel = AppFCMRequestModel(
-                to = "cSWsf5Fv8ig:APA91bGYjsM4mNcV6JSOu_pA6kFOZm5EhZhjVh-G-e9-mDg0rii_OabIxIXmEJtuWWFRu4md0iFReIA2t7AdDMnCRQsZLw4-2D6UVnk5oucJF6JMgGBlWnTu_nv3u9ErEnbAa92iWlVyZcvcNWFxUelYU3r7ZLf6pA",
-                data = AppFCMDataModel("dcyNGgJ1NJTjIvsHwn1oIeBL2bD3")
-        )
-        return fcmServiceInterface.postNotification(appFCMRequestModel)
+    override fun pause() {
+        disposableBag.clear()
+        super.pause()
     }
+
+    val userValuesEventListener = object : ChildEventListener {
+
+        override fun onCancelled(p0: DatabaseError?) {}
+
+        override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
+
+        override fun onChildChanged(data: DataSnapshot?, childName: String?) {
+
+            data?.let {
+                resume()
+            }
+        }
+
+        override fun onChildAdded(p0: DataSnapshot?, p1: String?) {}
+
+        override fun onChildRemoved(p0: DataSnapshot?) {}
+    }
+
+
+    data class FactoryParameters(val flashLuvUserId: String)
 
 }

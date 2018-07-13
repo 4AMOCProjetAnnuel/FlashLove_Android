@@ -26,8 +26,6 @@ class FlashLuvFirebaseMessagingService : FirebaseMessagingService() {
 
         const val NOTIFICATION_PENDING_INTENT_TAG = "userId"
         const val NOTIFICATION_TYPE_TAG = "notificationType"
-        const val NOTIFICATION_FLASH_TYPE = "flash"
-        const val NOTIFICATION_QUIZ_TYPE = "quiz"
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
@@ -61,11 +59,12 @@ class FlashLuvFirebaseMessagingService : FirebaseMessagingService() {
                 }
 
                 it.notification?.body?.let {
-                    //message = it.plus( " ${currentUser!!.displayName}")
                     message = it
                 }
-                sendNotification(userId, title, message)
             }
+
+            sendNotification(userId, title, message)
+
         }
 
     }
@@ -91,10 +90,9 @@ class FlashLuvFirebaseMessagingService : FirebaseMessagingService() {
         val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.o_nitification_channel))
                 .setAutoCancel(true)
                 .setDefaults(android.app.Notification.DEFAULT_ALL)
-                .setSmallIcon(R.drawable.ic_notification)
+                .setSmallIcon(R.drawable.ic_filled_favorite)
                 .setContentTitle(title)
-                //.setContentText(message)
-                .setContentText("Testing from Retrofit")
+                .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setColor(ContextCompat.getColor(this, R.color.primary_pink_light))
                 .setContentIntent(pendingIntent)

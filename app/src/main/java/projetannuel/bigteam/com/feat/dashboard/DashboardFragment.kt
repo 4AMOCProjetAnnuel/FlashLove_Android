@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.github.salomonbrys.kodein.instance
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_dashboard.dashboard_navigator
 import kotlinx.android.synthetic.main.toolbar.app_toolbar
 import projetannuel.bigteam.com.R
@@ -19,8 +21,9 @@ class DashboardFragment : AppMvpFragment<DashboardContract.Presenter>(), Dashboa
 
     override val defaultLayout: Int = R.layout.fragment_dashboard
 
-    private var selfProfileFragment  =  SelfProfileFragment()
     private var userQuizFragment =  UserQuizFragment ()
+
+    private lateinit var firebaseUser : FirebaseUser
 
     companion object {
         const val fragmentTag = "Dashboard"
@@ -32,10 +35,11 @@ class DashboardFragment : AppMvpFragment<DashboardContract.Presenter>(), Dashboa
         (activity as AppCompatActivity).supportActionBar!!.setIcon(R.drawable.ic_home_white)
         (activity as AppCompatActivity).app_toolbar.navigationIcon = null
 
-        if(childFragmentManager.findFragmentByTag(SelfProfileFragment.fragmentTag) != null){
-            selfProfileFragment = childFragmentManager.findFragmentByTag(SelfProfileFragment.fragmentTag) as SelfProfileFragment
+        FirebaseAuth.getInstance().currentUser?.let {
+            this.firebaseUser = it
         }
 
+        val selfProfileFragment = SelfProfileFragment.newInstance(firebaseUser.uid)
 
         if(childFragmentManager.findFragmentByTag(UserQuizFragment.fragmentTag) != null) {
             userQuizFragment = childFragmentManager.findFragmentByTag(UserQuizFragment.fragmentTag) as UserQuizFragment
@@ -50,9 +54,10 @@ class DashboardFragment : AppMvpFragment<DashboardContract.Presenter>(), Dashboa
             when(it.title) {
 
                 getString(R.string.navigation_title_profile) -> {
+
                     childFragmentManager
                             .beginTransaction()
-                            .replace(R.id.navigation_items_container, SelfProfileFragment(), SelfProfileFragment.fragmentTag)
+                            .replace(R.id.navigation_items_container, SelfProfileFragment.newInstance(firebaseUser.uid), SelfProfileFragment.fragmentTag)
                             .commit()
                 }
 

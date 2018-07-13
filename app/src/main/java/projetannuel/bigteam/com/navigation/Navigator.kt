@@ -10,7 +10,7 @@ interface Navigator {
     fun displayRegistration()
     fun displayPartyDetails()
     fun displayParties()
-    fun displaySelfProfile()
+    fun displaySelfProfile(flashLuvUserId: String)
     fun displayDashboard()
     fun displayOtherProfile(flashLuvUserId: String)
     fun displayFlirt(requestUserId: String)

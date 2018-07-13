@@ -13,6 +13,6 @@ import retrofit2.http.POST
  */
 interface FCMServiceInterface {
 
-    @POST("send/")
+    @POST("send")
     fun postNotification(@Body appFCMRequestModel: AppFCMRequestModel) : Observable<Any>
 }
