@@ -1,6 +1,7 @@
 package projetannuel.bigteam.com
 
 import android.app.Application
+import com.facebook.stetho.Stetho
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.KodeinAware
 import com.github.salomonbrys.kodein.bind
@@ -26,6 +27,9 @@ class FlashLoveApplication : Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
+
+        Stetho.initializeWithDefaults(this)
+
         RxPaparazzo
                 .register(this)
                 .withFileProviderAuthority("$packageName.provider")

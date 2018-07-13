@@ -8,6 +8,7 @@ import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.jxinject.jxInjectorModule
 import com.github.salomonbrys.kodein.provider
 import com.github.salomonbrys.kodein.singleton
+import okhttp3.OkHttpClient
 import projetannuel.bigteam.com.MainActivity
 import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
@@ -31,7 +32,11 @@ import projetannuel.bigteam.com.feat.register.RegisterContract
 import projetannuel.bigteam.com.feat.register.RegisterPresenter
 import projetannuel.bigteam.com.feat.register.RegisterFragment
 import projetannuel.bigteam.com.navigation.AppNavigator
-import projetannuel.bigteam.com.view.adapter.DashboardPagerAdapter
+import projetannuel.bigteam.com.network.FCMServiceInterface
+import projetannuel.bigteam.com.network.buildFCMOKHttpClient
+import projetannuel.bigteam.com.network.buildFCMRetrofit
+import projetannuel.bigteam.com.network.buildFCMService
+import retrofit2.Retrofit
 
 /**
  * kodeinModule -
@@ -57,15 +62,13 @@ val kodeinModule = Kodein.Module {
 
     bind<AppFirebaseDatabase>() with singleton { AppFirebaseDatabase() }
 
-    bind<SelfProfileContract.Presenter>() with provider { (SelfProfilePresenter(instance(), instance(), instance())) as SelfProfileContract.Presenter}
+    bind<SelfProfileContract.Presenter>() with provider { (SelfProfilePresenter(instance(), instance(), instance(), instance())) as SelfProfileContract.Presenter}
 
     bind<SelfProfileContract.View>() with provider { (SelfProfileFragment()) as SelfProfileContract.View }
 
     bind<DashboardContract.Presenter>() with provider { (DashboardPresenter(instance(), instance())) as DashboardContract.Presenter }
 
     bind<DashboardContract.View>() with provider { (DashboardFragment()) as DashboardContract.View }
-
-    bind<DashboardPagerAdapter>() with provider { DashboardPagerAdapter(instance()) }
 
     bind<OtherProfileContract.Presenter>() with factory {  params: OtherProfilePresenter.FactoryParameters -> (OtherProfilePresenter(instance(), instance(), params.flashLuvUserId, instance())) as OtherProfileContract.Presenter }
 
@@ -74,5 +77,9 @@ val kodeinModule = Kodein.Module {
     bind<UserQuizContract.Presenter>() with provider { (UserQuizPresenter(instance(), instance(), instance())) as UserQuizContract.Presenter }
 
     bind<UserQuizContract.View>() with provider { (UserQuizFragment()) as UserQuizContract.View }
+
+    bind<OkHttpClient>() with singleton { buildFCMOKHttpClient() }
+    bind<Retrofit>() with singleton { buildFCMRetrofit() }
+    bind<FCMServiceInterface>() with singleton { buildFCMService(instance()) }
 
 }

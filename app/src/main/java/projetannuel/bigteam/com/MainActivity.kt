@@ -17,13 +17,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.toolbar.app_toolbar
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.messaging.FlashLuvFirebaseMessagingService
+import projetannuel.bigteam.com.messaging.model.AppFCMDataModel
+import projetannuel.bigteam.com.messaging.model.AppFCMNotificationModel
+import projetannuel.bigteam.com.messaging.model.AppFCMRequestModel
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.navigation.AppNavigator
-
-
+import projetannuel.bigteam.com.network.FCMServiceInterface
 
 //ref.unauth()
 
@@ -43,6 +46,11 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
         setSupportActionBar(app_toolbar)
 
         createNotificationChannel()
+
+        val appFCMRequestModel = AppFCMRequestModel(
+                to = "cSWsf5Fv8ig:APA91bGYjsM4mNcV6JSOu_pA6kFOZm5EhZhjVh-G-e9-mDg0rii_OabIxIXmEJtuWWFRu4md0iFReIA2t7AdDMnCRQsZLw4-2D6UVnk5oucJF6JMgGBlWnTu_nv3u9ErEnbAa92iWlVyZcvcNWFxUelYU3r7ZLf6pA",
+                data = AppFCMDataModel("dcyNGgJ1NJTjIvsHwn1oIeBL2bD3")
+        )
 
         /*
         authStateListener = FirebaseAuth.AuthStateListener {

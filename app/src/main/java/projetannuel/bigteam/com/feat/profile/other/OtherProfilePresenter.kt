@@ -55,6 +55,8 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
                     override fun onCancelled(error: DatabaseError?) {}
                     override fun onDataChange(snap: DataSnapshot?) {
                         snap?.let {
+
+
                             flashedUser = it.getValue(FlashLuvUser::class.java)!!
 
                             flashedUser?.let {
@@ -85,7 +87,9 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
                                 query = appFirebaseDatabase.usersReference.child(it.uid)
                                 query.addChildEventListener(flashedUserValuesEventListener)
                             }
+
                         }
+
                     }
                 })
     }
