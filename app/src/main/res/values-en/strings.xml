@@ -39,5 +39,8 @@
     <string name="notification_flash_error">Error occurred when notifying the user you\'ve just flashed</string>
     <string name="notification_flash_success">The user you\' ve just flashed have been successfully notified</string>
     <string name="qr_code_camera_permission_denied_message">Camera permission is needed for QrCode Scan</string>
+    <string name="messaging_quiz_alert_message">is currently filling up your quiz</string>
+    <string name="user_quiz_form_submit_btn_title">SUBMIT</string>
+    <string name="quiz_update_success_message">Your quiz has been successfully updated</string>
 
 </resources>

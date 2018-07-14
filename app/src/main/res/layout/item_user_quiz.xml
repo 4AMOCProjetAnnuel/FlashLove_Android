@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/primary_pink_dark"
     android:padding="12dp">
 
     <EditText
@@ -22,6 +21,6 @@
         android:textColorHint="@color/outer_space"
         android:ems="3"
         android:gravity="start|top"
-        android:background="@drawable/background_description_background"
+        android:background="@drawable/background_borders_pink"
         />
 </android.support.constraint.ConstraintLayout>

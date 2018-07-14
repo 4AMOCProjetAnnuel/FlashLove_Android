@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
@@ -81,6 +82,7 @@ class OtherProfileFragment : AppMvpFragment<OtherProfileContract.Presenter>(),
         }
 
         go_to_quizz.setOnClickListener {
+            presenter.notifyQuiz(getString(R.string.messaging_quiz_alert_message))
             presenter.queryFlashLuvUser(false, false, true)
         }
 
@@ -115,6 +117,16 @@ class OtherProfileFragment : AppMvpFragment<OtherProfileContract.Presenter>(),
             user_flirts.text =flashLuvUser.flirts.toString()
             user_description.text = flashLuvUser.description
         }
+    }
+
+    override fun notifyFCMError() {
+        Toast.makeText(context, getString(R.string.notification_quiz_error), Toast.LENGTH_SHORT)
+                .show()
+    }
+
+    override fun notifyFCMSuccess() {
+        Toast.makeText(context, getString(R.string.notification_quiz_success), Toast.LENGTH_SHORT)
+                .show()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

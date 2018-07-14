@@ -8,14 +8,12 @@
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary_pink_dark"
         android:paddingBottom="80dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_user_quiz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary_pink_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -26,13 +24,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:layout_marginStart="12dp"
-            android:background="@color/white"
-            android:text="SUBMIT"
-            android:textColor="#000000"
+            android:background="@drawable/background_rounded_filled_pink_white_border"
+            android:text="@string/user_quiz_form_submit_btn_title"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@id/rv_user_quiz"
             app:layout_constraintStart_toStartOf="@id/rv_user_quiz"
-            app:layout_constraintTop_toBottomOf="@id/rv_user_quiz"
-            tools:text="@string/user_quiz_submt_btn_title" />
+            app:layout_constraintTop_toBottomOf="@id/rv_user_quiz" />
 
     </android.support.constraint.ConstraintLayout>
 

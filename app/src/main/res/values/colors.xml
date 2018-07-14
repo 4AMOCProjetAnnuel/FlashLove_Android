@@ -25,4 +25,6 @@
     <color name="primary_pink_light">#ff79b0</color>
     <color name="primary_pink_dark">#c60055</color>
 
+    <color name="black">#000000</color>
+
 </resources>

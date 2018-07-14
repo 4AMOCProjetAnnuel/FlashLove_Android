@@ -4,15 +4,20 @@ import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.BasePresenter
 import projetannuel.bigteam.com.mvp.BaseView
 
+
 /**
  * OtherProfileContract -
  * @author guirassy
  * @version $Id$
  */
+
+
 interface OtherProfileContract {
 
     interface View : BaseView<Presenter> {
         fun setFlashLuvUser(flashLuvUser: FlashLuvUser)
+        fun notifyFCMError()
+        fun notifyFCMSuccess()
     }
 
     interface Presenter : BasePresenter {
@@ -20,7 +25,6 @@ interface OtherProfileContract {
                 incrementLikes: Boolean,
                 incrementFlirts: Boolean)
 
-        fun goFlirt()
-        fun notifyQuiz()
+        fun notifyQuiz(notificationBody : String)
     }
 }

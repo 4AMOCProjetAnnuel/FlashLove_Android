@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feat.flirt.FlirtFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/top_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/background_blank_no_border"
+        android:elevation="15dp">
 
-</FrameLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_user_profile_pic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:scaleType="centerCrop"
+            app:civ_border_color="@color/primary_pink_dark"
+            app:layout_constraintEnd_toStartOf="@+id/tv_heartBeat"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/pic" />
+
+        <TextView
+            android:id="@+id/tv_heartBeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTint="@color/primary_pink_dark"
+            android:drawableTop="@drawable/ic_spectrum"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_user_profile_pic"
+            app:layout_constraintEnd_toStartOf="@+id/tv_body_temperature"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_profile_pic"
+            app:layout_constraintTop_toTopOf="@+id/iv_user_profile_pic"
+            android:text="240 / 250"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/tv_body_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTint="@color/primary_pink_dark"
+            android:drawableTop="@drawable/ic_body_temp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@id/tv_heartBeat"
+            app:layout_constraintEnd_toStartOf="@+id/tv_body_humidity"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_heartBeat"
+            app:layout_constraintTop_toTopOf="@id/tv_heartBeat"
+            android:text="250 / 250"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/tv_body_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTint="@color/primary_pink_dark"
+            android:drawableTop="@drawable/ic_humidity_icon"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@id/tv_body_temperature"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_body_temperature"
+            app:layout_constraintTop_toTopOf="@id/tv_body_temperature"
+            android:text="200 / 300"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/iv_user_profile_pic"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="@id/iv_user_profile_pic"
+            app:layout_constraintEnd_toEndOf="@id/tv_body_temperature"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/rv_flirt_chat"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

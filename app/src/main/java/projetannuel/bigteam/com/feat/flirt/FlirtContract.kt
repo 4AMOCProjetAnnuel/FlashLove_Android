@@ -12,11 +12,11 @@ import projetannuel.bigteam.com.mvp.BaseView
 interface FlirtContract {
 
     interface View : BaseView<Presenter> {
-        fun setRequestedUserQuiz(requestedUser: FlashLuvUser)
+        fun setFlashedUserQuiz(requestedUser: FlashLuvUser)
     }
 
 
     interface Presenter: BasePresenter {
-        fun queryRequestingUser()
+        fun queryFlashedUser()
     }
 }

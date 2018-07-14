@@ -12,9 +12,10 @@ import projetannuel.bigteam.com.mvp.BaseView
 interface UserQuizContract {
 
     interface View : BaseView<Presenter> {
-
-        fun setFlashLuvUserQuestions(questions: MutableList<String>)
+        fun setUserQuestionsViewModel(questions: MutableList<String>)
+        fun notifyUpdateSuccess()
     }
+
     interface Presenter: BasePresenter {
         fun updateQuizItemText(index: Int, text: String)
         fun setCurrentFlashLuvUser(flashLuvUser: FlashLuvUser)

@@ -2,14 +2,13 @@ package projetannuel.bigteam.com.feat.quiz
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.github.salomonbrys.kodein.instance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_user_quiz.btn_submit_user_quiz
 import kotlinx.android.synthetic.main.fragment_user_quiz.rv_user_quiz
@@ -27,6 +26,11 @@ import projetannuel.bigteam.com.mvp.AppMvpFragment
 class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizContract.View {
 
     override val presenter: UserQuizContract.Presenter by injector.instance()
+
+    companion object {
+        const val fragmentTag = "userQuiz_fragment"
+    }
+
     override val defaultLayout: Int = R.layout.fragment_user_quiz
     private var epoxyController = UserQuizEpoxyController(
             { index:Int , text: String ->presenter.updateQuizItemText(index, text)}
@@ -35,6 +39,8 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
     private val appFirebaseDatabase : AppFirebaseDatabase by injector.instance()
     private lateinit var flashLuvUser: FlashLuvUser
 
+    lateinit var userQuizEventListener : ChildEventListener
+
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +48,8 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
         rv_user_quiz.adapter = epoxyController.adapter
         rv_user_quiz.layoutManager = LinearLayoutManager(context)
 
-        val userQuizEventListener = object : ChildEventListener{
+
+        userQuizEventListener = object : ChildEventListener {
 
             override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
 
@@ -52,48 +59,61 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
 
             override fun onCancelled(p0: DatabaseError?) {}
 
-            override fun onChildChanged(dataSnap: DataSnapshot?, p1: String?) {
+            override fun onChildChanged(dataSnap: DataSnapshot?, childName: String?) {
 
-                dataSnap?.let {
-                    epoxyController.questions = (dataSnap.value as MutableList<String>)
-                    epoxyController.requestModelBuild()
-                    presenter.setCurrentFlashLuvUser(flashLuvUser)
+                    dataSnap?.let {
+                        it.value?.let {
+                            loadFlashLuvUserQuestions()
+                        }
+                    }
                 }
             }
-        }
 
-        FirebaseAuth.getInstance().currentUser?.let {
+        loadFlashLuvUserQuestions()
+
+        btn_submit_user_quiz.setOnClickListener {
+            presenter.saveQuizChanges()
+        }
+    }
+
+    private fun loadFlashLuvUserQuestions() {
+
+
+        FirebaseAuth.getInstance().currentUser?.let{
 
             appFirebaseDatabase.usersReference.child(it.uid)
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError?) {}
                         override fun onDataChange(snap: DataSnapshot?) {
                             snap?.let {
-                                flashLuvUser = snap.getValue(FlashLuvUser::class.java)!!
-                                epoxyController.questions = flashLuvUser.questions
-                                epoxyController.requestModelBuild()
-                                presenter.setCurrentFlashLuvUser(flashLuvUser)
+                                it.getValue(FlashLuvUser::class.java)?.let {
+                                    flashLuvUser = it
+                                    epoxyController.questions = flashLuvUser.questions
+                                    epoxyController.requestModelBuild()
+                                    presenter.setCurrentFlashLuvUser(flashLuvUser)
 
-                                var query =  appFirebaseDatabase.usersReference.child(flashLuvUser.uid)
-                                query.addChildEventListener(userQuizEventListener)
-
+                                    var query =  appFirebaseDatabase
+                                            .usersReference
+                                            .child(flashLuvUser.uid)
+                                    query.addChildEventListener(userQuizEventListener)
+                                }
                             }
                         }
                     })
         }
+    }
 
-        btn_submit_user_quiz.setOnClickListener {
-            presenter.saveQuizChanges()
-
+    override fun notifyUpdateSuccess() {
+        if(this.view != null) {
+            Toast.makeText(context, getString(R.string.quiz_update_success_message), Toast.LENGTH_SHORT).show()
         }
     }
 
-    companion object {
-        const val fragmentTag = "userQuiz_fragment"
+    override fun setUserQuestionsViewModel(questions: MutableList<String>) {
+        epoxyController.questions = questions
+        presenter.setCurrentFlashLuvUser(flashLuvUser)
+        epoxyController.requestModelBuild()
     }
 
-    override fun setFlashLuvUserQuestions(questions: MutableList<String>) {
-        //epoxyController.requestModelBuild()
-    }
 
 }

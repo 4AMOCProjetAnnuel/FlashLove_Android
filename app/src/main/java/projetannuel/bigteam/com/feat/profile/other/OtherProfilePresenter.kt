@@ -7,8 +7,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import projetannuel.bigteam.com.BuildConfig
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
+import projetannuel.bigteam.com.messaging.model.AppFCMDataModel
+import projetannuel.bigteam.com.messaging.model.AppFCMNotificationModel
+import projetannuel.bigteam.com.messaging.model.AppFCMRequestModel
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.AppMvpPresenter
 import projetannuel.bigteam.com.navigation.AppNavigator
@@ -59,10 +65,8 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
         appFirebaseDatabase.usersReference.child(flashingUserId)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(p0: DatabaseError?) {}
-
                     override fun onDataChange(snap: DataSnapshot?) {
                         snap?.let {
-
                             it.getValue(FlashLuvUser::class.java)?.let {
                                 flashingUser = it
                                 Log.v("flashinUser", flashingUser.displayName)
@@ -103,7 +107,7 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
                                     it.flirts++
                                     appFirebaseDatabase.saveFlashLuvUser(it)
                                     queryFlashLuvUser(false, false, false)
-                                    navigator.displayFlirt(it.uid)
+                                    navigator.displayFlirt(it.uid, flashingUser.uid)
                                 }
 
                                 query = appFirebaseDatabase.usersReference.child(it.uid)
@@ -115,19 +119,25 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
                 })
     }
 
-    override fun goFlirt() {
-        navigator.displayFlirt(flashedUser.uid)
-    }
+    override fun notifyQuiz(notificationBody : String) {
 
-    override fun notifyQuiz() {
-        /*
+        val appFCMRequestModel = AppFCMRequestModel(
+                to = flashedUser.fcmToken,
+                notification = AppFCMNotificationModel(BuildConfig.NotificationQuizAlert,
+                        "${flashedUser.displayName} ".plus(notificationBody)),
+                data = AppFCMDataModel(flashedUser.uid, flashingUser.uid))
 
-                            val appFCMRequestModel = AppFCMRequestModel(
-                                    to = flashedUser.fcmToken,
-                                    notification = AppFCMNotificationModel(BuildConfig.NotificationFlashAlert,
-                                            "${flashedUser.displayName} ".plus(notificationBody)),
-                                    data = AppFCMDataModel(flashLuvUser.uid))
-         */
+        val notificationObservable = fcmServiceInterface
+                .postNotification(appFCMRequestModel)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    view.notifyFCMSuccess()
+                }, {
+                    view.notifyFCMError()
+                })
+
+        disposableBag.add(notificationObservable)
 
     }
 

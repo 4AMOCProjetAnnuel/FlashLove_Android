@@ -10,15 +10,14 @@ import com.airbnb.epoxy.EpoxyController
 class UserQuizEpoxyController(private val onQuizItemTextChanges: (index: Int, text: String) -> Any)
     : EpoxyController() {
 
-    var questions = mutableListOf<String>()
+    var questions : MutableList<String>? = null
 
     override fun buildModels() {
-        questions.let {
+        questions?.let {
             it.forEachIndexed { index, question ->
                 UserQuizItemEpoxyModel(index, question, onQuizItemTextChanges)
                         .id(index)
                         .addTo(this)
-
             }
         }
     }
