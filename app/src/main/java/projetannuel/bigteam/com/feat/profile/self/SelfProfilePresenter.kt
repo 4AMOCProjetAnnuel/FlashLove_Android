@@ -64,7 +64,7 @@ class SelfProfilePresenter(view: SelfProfileContract.View,
     }
 
     override fun onScanSuccess(flashedUserId: String) {
-        navigator.displayOtherProfile(flashedUserId)
+        navigator.displayOtherProfile(flashedUserId, flashLuvCurrentUserId)
     }
 
 
@@ -82,20 +82,19 @@ class SelfProfilePresenter(view: SelfProfileContract.View,
                                     to = flashedUser.fcmToken,
                                     notification = AppFCMNotificationModel(BuildConfig.NotificationFlashAlert,
                                             "${flashedUser.displayName} ".plus(notificationBody)),
-                                    data = AppFCMDataModel(flashLuvUser.uid))
+                                    data = AppFCMDataModel(flashLuvUser.uid, ""))
 
                             val notificationObservable = fcmServiceInterface
                                     .postNotification(appFCMRequestModel)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe({
-                                        navigator.displayOtherProfile(flashedUser.uid)
+                                        navigator.displayOtherProfile(flashedUser.uid, flashLuvCurrentUserId)
                                     }, {
                                             view.notifyFCMError()
                                     })
 
                             disposableBag.add(notificationObservable)
-
                         }
                     }
                 })
@@ -125,6 +124,6 @@ class SelfProfilePresenter(view: SelfProfileContract.View,
     }
 
 
-    data class FactoryParameters(val flashLuvUserId: String)
+    data class FactoryParameters(val flashedUserId: String)
 
 }

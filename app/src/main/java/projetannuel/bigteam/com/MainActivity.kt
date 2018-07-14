@@ -19,9 +19,7 @@ import projetannuel.bigteam.com.navigation.AppNavigator
 class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
 
     override val injector = KodeinInjector()
-
     private var appNavigator = AppNavigator(fragmentManager, R.id.main_container_id)
-
     private lateinit var authStateListener : FirebaseAuth.AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,16 +90,17 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
 
         intent?.let {
 
-            val flashingUserId  = it.getStringExtra(FlashLuvFirebaseMessagingService.NOTIFICATION_PENDING_INTENT_TAG)
-            val notificationType = it.getStringExtra(FlashLuvFirebaseMessagingService.NOTIFICATION_TYPE_TAG)
+            val flashedUserId  = it
+                    .getStringExtra(FlashLuvFirebaseMessagingService.MESSAGING_FLASHED_USER_ID_VALUE_TAG)
+            val flashingUserId = it
+                    .getStringExtra(FlashLuvFirebaseMessagingService.MESSAGING_FLASHING_USER_ID_VALUE_TAG)
+            val notificationType = it
+                    .getStringExtra(FlashLuvFirebaseMessagingService.NOTIFICATION_TYPE_TAG)
 
             if (notificationType == resources.getString(R.string.notification_flash)) {
-
-                Log.v("received ID ", flashingUserId)
-
-                appNavigator.displayOtherProfile(flashingUserId)
+                appNavigator.displayOtherProfile(flashedUserId, flashingUserId)
             } else {
-                appNavigator.displayFlirt(flashingUserId)
+                appNavigator.displayFlirt(flashedUserId)
             }
         }
     }

@@ -35,8 +35,10 @@ class OtherProfileFragment : AppMvpFragment<OtherProfileContract.Presenter>(),
         OtherProfileContract.View {
 
     override val presenter: OtherProfileContract.Presenter by lazy {
-        val userId = arguments?.getString(OtherProfileFragment.USER_ID_TAG) ?: "0"
-        val params = OtherProfilePresenter.FactoryParameters(userId)
+        val flashedUserId = arguments?.getString(OtherProfileFragment.FLASHED_USER_ID_TAG) ?: "0"
+        val flashingUserId = arguments?.getString(OtherProfileFragment.FLASHING_USER_ID_TAG) ?: "0"
+
+        val params = OtherProfilePresenter.FactoryParameters(flashedUserId, flashingUserId)
         kodein()
                 .value
                 .with(params)
@@ -48,12 +50,14 @@ class OtherProfileFragment : AppMvpFragment<OtherProfileContract.Presenter>(),
     companion object {
 
         const val FRAGMENT_TAG = "otherProfile"
-        const val USER_ID_TAG = "userId"
+        const val FLASHED_USER_ID_TAG = "userId"
+        const val FLASHING_USER_ID_TAG = "flashingUserId"
 
-        fun newInstance(userId : String) : OtherProfileFragment {
+        fun newInstance(userId : String, flashingUserId: String) : OtherProfileFragment {
             val fragment = OtherProfileFragment()
             val args = Bundle()
-            args.putString(USER_ID_TAG, userId)
+            args.putString(FLASHED_USER_ID_TAG, userId)
+            args.putString(FLASHING_USER_ID_TAG, flashingUserId)
             fragment.arguments = args
             return fragment
         }
@@ -65,6 +69,7 @@ class OtherProfileFragment : AppMvpFragment<OtherProfileContract.Presenter>(),
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         (activity as AppCompatActivity).app_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         (activity as AppCompatActivity).supportActionBar!!.setIcon(
                 ColorDrawable(ContextCompat.getColor(activity, R.color.fui_transparent)).apply {
@@ -82,7 +87,6 @@ class OtherProfileFragment : AppMvpFragment<OtherProfileContract.Presenter>(),
         fab_other_profile_like.setOnClickListener {
             presenter.queryFlashLuvUser(false, true, false)
         }
-
     }
 
     override fun onResume() {

@@ -65,10 +65,10 @@ class AppNavigator(private val fragmentManager: FragmentManager,
                 .commit()
     }
 
-    override fun displayOtherProfile(flashLuvUserId: String) {
+    override fun displayOtherProfile(flashLuvUserId: String, flashingUserId :String) {
         var otherProfileFragment = fragmentManager.findFragmentByTag(OtherProfileFragment.FRAGMENT_TAG)
         if(otherProfileFragment == null) {
-            otherProfileFragment = OtherProfileFragment.newInstance(flashLuvUserId)
+            otherProfileFragment = OtherProfileFragment.newInstance(flashLuvUserId, flashingUserId)
         }
         fragmentManager
                 .beginTransaction()

@@ -31,7 +31,6 @@ import kotlinx.android.synthetic.main.fragment_update_profile.user_status_single
 import kotlinx.android.synthetic.main.fragment_update_profile.user_status_single_yes
 import projetannuel.bigteam.com.QRCodeActivity
 import projetannuel.bigteam.com.R
-import projetannuel.bigteam.com.feat.profile.other.OtherProfileFragment
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.AppMvpFragment
 
@@ -39,8 +38,8 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
         SelfProfileContract.View {
 
     override val presenter: SelfProfileContract.Presenter by lazy {
-        val userId = arguments?.getString(SelfProfileFragment.USER_ID_TAG) ?: "0"
-        val params = SelfProfilePresenter.FactoryParameters(userId)
+        val flashedUserId = arguments?.getString(SelfProfileFragment.FLASHED_USER_ID_TAG) ?: "0"
+        val params = SelfProfilePresenter.FactoryParameters(flashedUserId)
         kodein()
                 .value
                 .with(params)
@@ -51,7 +50,6 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
         bind<SelfProfileContract.View>() with instance(this@SelfProfileFragment)
     }
 
-
     override val defaultLayout: Int = R.layout.fragment_update_profile
 
 
@@ -59,12 +57,13 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
         const val fragmentTag = "update_profile"
         const val scanCode = 124
 
-        const val USER_ID_TAG = "userId"
+        const val FLASHED_USER_ID_TAG = "flashedUserId"
 
-        fun newInstance(userId : String) : SelfProfileFragment {
+        fun newInstance(flashedUserId : String) : SelfProfileFragment {
+
             val fragment = SelfProfileFragment()
             val args = Bundle()
-            args.putString(USER_ID_TAG, userId)
+            args.putString(FLASHED_USER_ID_TAG, flashedUserId)
             fragment.arguments = args
             return fragment
         }
@@ -74,14 +73,15 @@ class SelfProfileFragment : AppMvpFragment<SelfProfileContract.Presenter>(),
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar!!.title = "Dashboard"
 
-
         submit.setOnClickListener {
 
                 val description = ed_user_description.text.toString()
                 val single = false.takeIf { user_status_single_no.isChecked } ?: true
-                val age = (Integer.parseInt(ed_user_age.text.toString()))
+                val age = ed_user_age.text.toString().takeIf { ed_user_age.text.isNotBlank() &&
+                        ed_user_age.text.isNotEmpty() && ed_user_age.text.toString() != ed_user_age.hint.toString() }
+                        ?: "0"
 
-                presenter.updateFlashLuvUser(description, single, age)
+                presenter.updateFlashLuvUser(description, single, age.toInt())
 
                 Toast.makeText(activity, getString(R.string.toast_profile_update_success),
                         Toast.LENGTH_SHORT).show()

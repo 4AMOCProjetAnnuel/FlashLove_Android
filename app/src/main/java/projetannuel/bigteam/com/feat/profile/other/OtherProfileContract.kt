@@ -21,5 +21,6 @@ interface OtherProfileContract {
                 incrementFlirts: Boolean)
 
         fun goFlirt()
+        fun notifyQuiz()
     }
 }

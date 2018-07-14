@@ -6,13 +6,10 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import projetannuel.bigteam.com.MainActivity
 import projetannuel.bigteam.com.R
-import projetannuel.bigteam.com.model.FlashLuvUser
 import java.util.Random
 
 /**
@@ -24,7 +21,8 @@ class FlashLuvFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
 
-        const val NOTIFICATION_PENDING_INTENT_TAG = "userId"
+        const val MESSAGING_FLASHED_USER_ID_VALUE_TAG = "flashedUserId"
+        const val MESSAGING_FLASHING_USER_ID_VALUE_TAG = "flashingUserId"
         const val NOTIFICATION_TYPE_TAG = "notificationType"
     }
 
@@ -33,17 +31,21 @@ class FlashLuvFirebaseMessagingService : FirebaseMessagingService() {
 
         remoteMessage?.let {
 
-            var userId = ""
+            var flashedUserId = ""
+            var flashingUserId = ""
 
             // Check if message contains a data payload.
             if (it.data.isNotEmpty()) {
-
                 Log.d("@@TEST", "Message data payload: " + it.data)
             }
 
             it.data?.let {
-                it["userId"]?.let {
-                    userId = it
+                it["flashedUserId"]?.let {
+                    flashedUserId = it
+                }
+
+                it["flashingUserId"]?.let {
+                    flashingUserId = it
                 }
             }
 
@@ -63,19 +65,20 @@ class FlashLuvFirebaseMessagingService : FirebaseMessagingService() {
                 }
             }
 
-            sendNotification(userId, title, message)
+            sendNotification(flashedUserId, flashingUserId, title, message)
 
         }
 
     }
 
-    private fun sendNotification(userId: String, title: String, message: String) {
+    private fun sendNotification(flashedUserId: String, flashingUserId: String, title: String, message: String) {
 
         val toMainActivity = Intent(this, MainActivity::class.java)
         toMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         toMainActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
-        toMainActivity.putExtra(FlashLuvFirebaseMessagingService.NOTIFICATION_PENDING_INTENT_TAG, userId)
+        toMainActivity.putExtra(FlashLuvFirebaseMessagingService.MESSAGING_FLASHED_USER_ID_VALUE_TAG, flashedUserId)
+        toMainActivity.putExtra(FlashLuvFirebaseMessagingService.MESSAGING_FLASHING_USER_ID_VALUE_TAG, flashingUserId)
 
         if(title == resources.getString(R.string.notification_flash_title)) {
             toMainActivity.putExtra(FlashLuvFirebaseMessagingService.NOTIFICATION_TYPE_TAG, resources.getString(R.string.notification_flash))

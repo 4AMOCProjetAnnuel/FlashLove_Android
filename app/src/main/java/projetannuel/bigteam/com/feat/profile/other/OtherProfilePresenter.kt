@@ -1,14 +1,18 @@
 package projetannuel.bigteam.com.feat.profile.other
 
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
+import io.reactivex.disposables.CompositeDisposable
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.AppMvpPresenter
 import projetannuel.bigteam.com.navigation.AppNavigator
+import projetannuel.bigteam.com.network.FCMServiceInterface
 
 /**
  * OtherProfilePresenter -
@@ -18,13 +22,17 @@ import projetannuel.bigteam.com.navigation.AppNavigator
 
 class OtherProfilePresenter(view: OtherProfileContract.View,
         navigator: AppNavigator,
-        private val flashLuvUserId: String,
-        private val appFirebaseDatabase: AppFirebaseDatabase) :
+        private val appFirebaseDatabase: AppFirebaseDatabase,
+        private val fcmServiceInterface: FCMServiceInterface,
+        private val flashedUserId: String,
+        private val flashingUserId: String) :
         AppMvpPresenter<AppNavigator, OtherProfileContract.View>(view, navigator),
         OtherProfileContract.Presenter {
 
+    private lateinit var flashingUser: FlashLuvUser
     private lateinit var flashedUser: FlashLuvUser
     private lateinit var query: Query
+    private var disposableBag = CompositeDisposable()
 
     val flashedUserValuesEventListener = object : ChildEventListener {
 
@@ -46,10 +54,28 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
         }
     }
 
+    override fun resume() {
+
+        appFirebaseDatabase.usersReference.child(flashingUserId)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError?) {}
+
+                    override fun onDataChange(snap: DataSnapshot?) {
+                        snap?.let {
+
+                            it.getValue(FlashLuvUser::class.java)?.let {
+                                flashingUser = it
+                                Log.v("flashinUser", flashingUser.displayName)
+                            }
+                        }
+                    }
+                })
+    }
+
     override fun queryFlashLuvUser(incrementViews: Boolean, incrementLikes: Boolean,
             incrementFlirts: Boolean) {
 
-        appFirebaseDatabase.usersReference.child(flashLuvUserId)
+        appFirebaseDatabase.usersReference.child(flashedUserId)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(error: DatabaseError?) {}
                     override fun onDataChange(snap: DataSnapshot?) {
@@ -93,10 +119,23 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
         navigator.displayFlirt(flashedUser.uid)
     }
 
+    override fun notifyQuiz() {
+        /*
+
+                            val appFCMRequestModel = AppFCMRequestModel(
+                                    to = flashedUser.fcmToken,
+                                    notification = AppFCMNotificationModel(BuildConfig.NotificationFlashAlert,
+                                            "${flashedUser.displayName} ".plus(notificationBody)),
+                                    data = AppFCMDataModel(flashLuvUser.uid))
+         */
+
+    }
+
     override fun stop() {
         query.removeEventListener(flashedUserValuesEventListener)
+        disposableBag.clear()
         super.stop()
     }
 
-    data class FactoryParameters(val flashLuvUserId: String)
+    data class FactoryParameters(val flashedUserId: String, val flashingUserId: String)
 }

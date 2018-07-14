@@ -17,13 +17,10 @@ import projetannuel.bigteam.com.feat.dashboard.DashboardContract
 import projetannuel.bigteam.com.feat.dashboard.DashboardFragment
 import projetannuel.bigteam.com.feat.dashboard.DashboardPresenter
 import projetannuel.bigteam.com.feat.flirt.FlirtContract
-import projetannuel.bigteam.com.feat.flirt.FlirtFragment
 import projetannuel.bigteam.com.feat.flirt.FlirtPresenter
 import projetannuel.bigteam.com.feat.profile.other.OtherProfileContract
-import projetannuel.bigteam.com.feat.profile.other.OtherProfileFragment
 import projetannuel.bigteam.com.feat.profile.other.OtherProfilePresenter
 import projetannuel.bigteam.com.feat.profile.self.SelfProfileContract
-import projetannuel.bigteam.com.feat.profile.self.SelfProfileFragment
 import projetannuel.bigteam.com.feat.profile.self.SelfProfilePresenter
 import projetannuel.bigteam.com.feat.quiz.UserQuizContract
 import projetannuel.bigteam.com.feat.quiz.UserQuizFragment
@@ -62,13 +59,13 @@ val kodeinModule = Kodein.Module {
 
     bind<AppFirebaseDatabase>() with singleton { AppFirebaseDatabase() }
 
-    bind<SelfProfileContract.Presenter>() with factory { params : SelfProfilePresenter.FactoryParameters -> (SelfProfilePresenter(instance(), instance(), instance(), instance(), params.flashLuvUserId)) as SelfProfileContract.Presenter}
+    bind<SelfProfileContract.Presenter>() with factory { params : SelfProfilePresenter.FactoryParameters -> (SelfProfilePresenter(instance(), instance(), instance(), instance(), params.flashedUserId)) as SelfProfileContract.Presenter}
 
     bind<DashboardContract.Presenter>() with provider { (DashboardPresenter(instance(), instance() )) as DashboardContract.Presenter }
 
     bind<DashboardContract.View>() with provider { (DashboardFragment()) as DashboardContract.View }
 
-    bind<OtherProfileContract.Presenter>() with factory {  params: OtherProfilePresenter.FactoryParameters -> (OtherProfilePresenter(instance(), instance(), params.flashLuvUserId, instance())) as OtherProfileContract.Presenter }
+    bind<OtherProfileContract.Presenter>() with factory {  params: OtherProfilePresenter.FactoryParameters -> (OtherProfilePresenter(instance(), instance(), instance(), instance(), params.flashedUserId, params.flashingUserId)) as OtherProfileContract.Presenter }
 
     bind<FlirtContract.Presenter>() with factory { params : FlirtPresenter.FactoryParameters -> (FlirtPresenter(instance(), instance(), params.requestedUserId)) as FlirtContract.Presenter }
 
