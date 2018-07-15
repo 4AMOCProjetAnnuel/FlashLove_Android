@@ -20,11 +20,10 @@
     <color name="google_sign_in_background">#dd4b39</color>
     <color name="twitter_blue">#1dcaff</color>
     <color name="instagram_orange">#cd486b</color>
-
     <color name="primary_pink_normal">#ff4081</color>
     <color name="primary_pink_light">#ff79b0</color>
     <color name="primary_pink_dark">#c60055</color>
-
     <color name="black">#000000</color>
+    <color name="gainsboro">#DCDCDC</color>
 
 </resources>

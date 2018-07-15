@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_user_quiz.btn_submit_user_quiz
 import kotlinx.android.synthetic.main.fragment_user_quiz.rv_user_quiz
@@ -41,13 +42,13 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
 
     lateinit var userQuizEventListener : ChildEventListener
 
+    private lateinit var query : Query
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         rv_user_quiz.adapter = epoxyController.adapter
         rv_user_quiz.layoutManager = LinearLayoutManager(context)
-
 
         userQuizEventListener = object : ChildEventListener {
 
@@ -92,7 +93,7 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
                                     epoxyController.requestModelBuild()
                                     presenter.setCurrentFlashLuvUser(flashLuvUser)
 
-                                    var query =  appFirebaseDatabase
+                                    query =  appFirebaseDatabase
                                             .usersReference
                                             .child(flashLuvUser.uid)
                                     query.addChildEventListener(userQuizEventListener)
@@ -115,5 +116,8 @@ class UserQuizFragment : AppMvpFragment<UserQuizContract.Presenter>(), UserQuizC
         epoxyController.requestModelBuild()
     }
 
-
+    override fun onStop() {
+        query.removeEventListener(userQuizEventListener)
+        super.onStop()
+    }
 }

@@ -2,21 +2,25 @@ package projetannuel.bigteam.com.feat.flirt
 
 
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
+import com.bumptech.glide.Glide
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.kodein
 import com.github.salomonbrys.kodein.with
 import kotlinx.android.synthetic.main.activity_main.app_toolbar
+import kotlinx.android.synthetic.main.fragment_flirt.iv_user_profile_pic
 import kotlinx.android.synthetic.main.fragment_flirt.rv_flirt_chat
 import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.feat.flirt.epoxy.FlirtEpoxyController
+import projetannuel.bigteam.com.feat.flirt.model.FlirtViewModel
 import projetannuel.bigteam.com.model.FlashLuvUser
 import projetannuel.bigteam.com.mvp.AppMvpFragment
 
@@ -46,7 +50,7 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
         const val FLASHING_USER_ID_TAG = "flashingUserId"
 
 
-        fun newInstance(flashedUserId : String, flashingUserId :String) : FlirtFragment {
+        fun newInstance(flashedUserId: String, flashingUserId: String): FlirtFragment {
             val fragment = FlirtFragment()
             val args = Bundle()
             args.putString(FLASHED_USER_ID_TAG, flashedUserId)
@@ -61,35 +65,51 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
         bind<FlirtContract.View>() with instance(this@FlirtFragment)
     }
 
-    private lateinit var epoxyController : FlirtEpoxyController
+    private lateinit var epoxyController: FlirtEpoxyController
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         (activity as AppCompatActivity).app_toolbar.title = FlirtFragment.fragmentTag
         (activity as AppCompatActivity).app_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         (activity as AppCompatActivity).supportActionBar!!.setIcon(
                 ColorDrawable(ContextCompat.getColor(activity, R.color.fui_transparent)).apply {
-                    setBounds(0,0,0,0)
+                    setBounds(0, 0, 0, 0)
                 }
         )
         (activity as AppCompatActivity).app_toolbar.setNavigationOnClickListener {
             activity.onBackPressed()
         }
 
-        epoxyController = FlirtEpoxyController()
+        epoxyController = FlirtEpoxyController(
+
+                { currentFlirtItem : FlirtViewModel -> presenter.updateFlirt(currentFlirtItem) }
+
+        )
+
         rv_flirt_chat.adapter = epoxyController.adapter
         rv_flirt_chat.layoutManager = LinearLayoutManager(context)
+    }
+
+    override fun setFlashedUserInfo(flashedUser: FlashLuvUser) {
+
+        if (this.view != null) {
+
+            Glide.with(this.view)
+                    .load(Uri.parse(flashedUser.photoUrl))
+                    .into(iv_user_profile_pic)
+
+        }
 
     }
 
-    override fun setFlashedUserQuiz(requestedUser: FlashLuvUser) {
-        Log.v("@@Quiz", requestedUser.displayName)
-        epoxyController.questions = requestedUser.questions
-        epoxyController.requestModelBuild()
+    override fun setCurrentFlirtViewModel(flirtViewModels : MutableList<FlirtViewModel>) {
+        if (this.view != null) {
+
+            epoxyController.flirtViewModels = flirtViewModels
+            epoxyController.requestModelBuild()
+        }
+
+
     }
 
-    override fun onResume() {
-        super.onResume()
-        //presenter.queryFlashedUser()
-    }
 
 }

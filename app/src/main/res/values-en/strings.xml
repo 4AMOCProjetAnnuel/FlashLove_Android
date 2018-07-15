@@ -42,5 +42,6 @@
     <string name="messaging_quiz_alert_message">is currently filling up your quiz</string>
     <string name="user_quiz_form_submit_btn_title">SUBMIT</string>
     <string name="quiz_update_success_message">Your quiz has been successfully updated</string>
+    <string name="flirt_item_quiz_send_btn_title">SEND</string>
 
 </resources>

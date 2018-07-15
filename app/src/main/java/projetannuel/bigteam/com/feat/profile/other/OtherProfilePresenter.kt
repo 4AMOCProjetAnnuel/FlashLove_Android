@@ -124,7 +124,7 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
         val appFCMRequestModel = AppFCMRequestModel(
                 to = flashedUser.fcmToken,
                 notification = AppFCMNotificationModel(BuildConfig.NotificationQuizAlert,
-                        "${flashedUser.displayName} ".plus(notificationBody)),
+                        "${flashingUser.displayName} ".plus(notificationBody)),
                 data = AppFCMDataModel(flashedUser.uid, flashingUser.uid))
 
         val notificationObservable = fcmServiceInterface
@@ -138,7 +138,6 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
                 })
 
         disposableBag.add(notificationObservable)
-
     }
 
     override fun stop() {

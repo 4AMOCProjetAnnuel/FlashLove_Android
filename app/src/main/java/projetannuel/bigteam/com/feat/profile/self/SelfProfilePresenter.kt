@@ -81,7 +81,7 @@ class SelfProfilePresenter(view: SelfProfileContract.View,
                             val appFCMRequestModel = AppFCMRequestModel(
                                     to = flashedUser.fcmToken,
                                     notification = AppFCMNotificationModel(BuildConfig.NotificationFlashAlert,
-                                            "${flashedUser.displayName} ".plus(notificationBody)),
+                                            "${flashLuvUser.displayName} ".plus(notificationBody)),
                                     data = AppFCMDataModel(flashLuvUser.uid, ""))
 
                             val notificationObservable = fcmServiceInterface

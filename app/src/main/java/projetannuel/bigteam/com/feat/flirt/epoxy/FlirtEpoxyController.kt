@@ -1,6 +1,7 @@
 package projetannuel.bigteam.com.feat.flirt.epoxy
 
 import com.airbnb.epoxy.EpoxyController
+import projetannuel.bigteam.com.feat.flirt.model.FlirtViewModel
 
 /**
  * FlirtEpoxyController -
@@ -8,17 +9,14 @@ import com.airbnb.epoxy.EpoxyController
  * @version $Id$
  */
 
-class FlirtEpoxyController : EpoxyController(){
+class FlirtEpoxyController(private val onSubmitCurrentFlirtItemClicked: (currentFlirtItem : FlirtViewModel) -> Any) : EpoxyController(){
 
-    var questions : MutableList<String>? = null
+    var flirtViewModels : MutableList<FlirtViewModel>? = null
 
     override fun buildModels() {
-
-        questions?.let {
-
+        flirtViewModels?.let {
             it.forEach {
-
-                FlirtItemEpoxyModel(it)
+                FlirtItemEpoxyModel(it, onSubmitCurrentFlirtItemClicked)
                         .id(it.hashCode())
                         .addTo(this)
             }

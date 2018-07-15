@@ -2,15 +2,69 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="8dp">
 
-    <TextView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/tv_item"
-        />
+        android:layout_height="match_parent"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="8dp"
+        android:layout_margin="8dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/tv_item"
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@+id/ed_flashing_user_resp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Question 1"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                />
+
+            <EditText
+                android:id="@+id/ed_flashing_user_resp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_description_background"
+                android:gravity="center|top"
+                android:minLines="3"
+                app:layout_constraintBottom_toTopOf="@+id/btn_submit_flirt_quiz_item"
+                app:layout_constraintEnd_toEndOf="@id/tv_item"
+                app:layout_constraintStart_toStartOf="@id/tv_item"
+                app:layout_constraintTop_toBottomOf="@+id/tv_item"
+                tools:hint="Flashing user response"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_submit_flirt_quiz_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_rounded_filled_pink_white_border"
+                android:text="@string/flirt_item_quiz_send_btn_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/ed_flashing_user_resp"
+                app:layout_constraintStart_toStartOf="@id/ed_flashing_user_resp"
+                app:layout_constraintTop_toBottomOf="@+id/ed_flashing_user_resp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"
+                />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
 
 </android.support.constraint.ConstraintLayout>
