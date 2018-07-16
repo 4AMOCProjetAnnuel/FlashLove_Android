@@ -1,6 +1,7 @@
 package projetannuel.bigteam.com.feat.flirt
 
 import android.util.Log
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.Query
@@ -31,22 +32,16 @@ class FlirtPresenter(view: FlirtContract.View,
 
 
     private lateinit var flashedUser: FlashLuvUser
+    private val flashedUserQuery = appFirebaseDatabase.usersReference.child(flashedUserId)
+
     private lateinit var flashingUser: FlashLuvUser
     private lateinit var flirtViewModels: MutableList<FlirtViewModel>
 
-
     private var currentConversationRef: String? = null
-
-
     private var conversation = FlashLuvConversation()
 
 
-    private lateinit var conversationsQuery: Query
-    private lateinit var flirtItemToEdit: FlirtViewModel
-
-
     override fun resume() {
-
 
         appFirebaseDatabase.usersReference.child(flashedUserId)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -68,17 +63,13 @@ class FlirtPresenter(view: FlirtContract.View,
 
                                                         flashingUser = it
 
-
                                                         currentConversationRef = appFirebaseDatabase.conversationsRef.push().key
-                                                        view.setCurrentConversationKey(currentConversationRef!!)
 
                                                         if (!isFromMessaging) {
-
                                                             createDBConversation()
                                                             createDBQuiz()
-
                                                         } else {
-                                                                loadConversation()
+                                                            loadConversation()
                                                         }
                                                     }
                                                 }
@@ -93,31 +84,31 @@ class FlirtPresenter(view: FlirtContract.View,
 
     override fun reloadFlashedUserWithSensorValues() {
 
-        appFirebaseDatabase.usersReference.child(flashingUserId)
+        appFirebaseDatabase.usersReference.child(flashedUserId)
                 .addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onCancelled(p0: DatabaseError?) {}
 
                     override fun onDataChange(snap: DataSnapshot?) {
                         snap?.let {
                             it.getValue(FlashLuvUser::class.java)?.let {
+
+
                                 flashedUser = it
 
-                                Log.v("@@heartBeat", "${flashedUser.heartbeat}")
-                                Log.v("@@temp", "${flashedUser.temperature}")
-                                Log.v("@@humidity", "${flashedUser.humidity}")
+                                Log.v("@@heartBeat new Val", "${flashedUser.heartbeat}")
+                                Log.v("@@temp new Val", "${flashedUser.temperature}")
+                                Log.v("@@humidity new Val", "${flashedUser.humidity}")
 
                                 view.setFlashedUserInfo(it)
+
                             }
                         }
                     }
-
                 })
-
-
     }
 
 
-    private fun loadConversation() {
+    override fun loadConversation() {
 
         appFirebaseDatabase
                 .conversationsRef
@@ -167,7 +158,6 @@ class FlirtPresenter(view: FlirtContract.View,
                 .setValue(1)
     }
 
-
     private fun createDBQuiz() {
 
         flirtViewModels = mutableListOf()
@@ -192,10 +182,6 @@ class FlirtPresenter(view: FlirtContract.View,
 
     override fun updateFlirt(flirtViewModel: FlirtViewModel) {
 
-        flirtItemToEdit = flirtViewModel
-
-        val index = flirtViewModels.indexOf(flirtViewModel)
-
         appFirebaseDatabase.conversationsRef
                 .child(currentConversationRef)
                 .child("quiz")
@@ -204,50 +190,23 @@ class FlirtPresenter(view: FlirtContract.View,
 
     }
 
-    //private val flashingUserQuery = appFirebaseDatabase.usersReference.child(flashingUserId)
-    //private val flashedUserQuery = appFirebaseDatabase.usersReference.child(flashedUserId)
-
-    /*
-    private val flashingUserChildEventChangeListener = object : ChildEventListener {
+    private val flashedUSerSensorValuesListener  = object : ChildEventListener {
         override fun onCancelled(p0: DatabaseError?) {}
 
         override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
 
-        override fun onChildChanged(snap: DataSnapshot?, p1: String?) {
-
-            snap?.let {
-                it.value?.let {
-                   // resume()
-                }
-            }
+        override fun onChildChanged(snap: DataSnapshot?, tableChild: String?) {
+            reloadFlashedUserWithSensorValues()
         }
-
         override fun onChildAdded(p0: DataSnapshot?, p1: String?) {}
 
         override fun onChildRemoved(p0: DataSnapshot?) {}
     }
 
-
-    private val flashedUserChildEventChangeListener = object : ChildEventListener {
-        override fun onCancelled(p0: DatabaseError?) {}
-
-        override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
-
-        override fun onChildChanged(snap: DataSnapshot?, p1: String?) {
-
-            snap?.let {
-                it.value?.let {
-                  //  resume()
-                }
-            }
-        }
-
-        override fun onChildAdded(p0: DataSnapshot?, p1: String?) {}
-
-        override fun onChildRemoved(p0: DataSnapshot?) {}
+    override fun stop() {
+        flashedUserQuery.removeEventListener(flashedUSerSensorValuesListener)
+        super.stop()
     }
-
-    */
 
     data class FactoryParameters(val flashedUserId: String, val flashingUserId: String, val isFromMessaging: Boolean)
 }

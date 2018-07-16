@@ -23,6 +23,9 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_main.app_toolbar
 import kotlinx.android.synthetic.main.fragment_flirt.iv_user_profile_pic
 import kotlinx.android.synthetic.main.fragment_flirt.rv_flirt_chat
+import kotlinx.android.synthetic.main.fragment_flirt.tv_body_humidity
+import kotlinx.android.synthetic.main.fragment_flirt.tv_body_temperature
+import kotlinx.android.synthetic.main.fragment_flirt.tv_heartBeat
 import projetannuel.bigteam.com.R
 import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.feat.flirt.epoxy.FlirtEpoxyController
@@ -79,7 +82,6 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
 
     private lateinit var epoxyController: FlirtEpoxyController
 
-    private lateinit var currentConversationKey: String
     private val appFirebaseDatabase: AppFirebaseDatabase by injector.instance()
     private lateinit var currentConversationChildEventListener: ChildEventListener
     private lateinit var query: Query
@@ -105,6 +107,38 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
         rv_flirt_chat.adapter = epoxyController.adapter
         rv_flirt_chat.layoutManager = LinearLayoutManager(context)
 
+    }
+
+
+    override fun setFlashedUserInfo(flashedUser: FlashLuvUser) {
+
+        if (this.view != null) {
+
+            Glide.with(this.view)
+                    .load(Uri.parse(flashedUser.photoUrl))
+                    .into(iv_user_profile_pic)
+
+            tv_heartBeat.text = resources.getString(R.string.flirt_current_user_heartbeat, flashedUser.heartbeat)
+            tv_body_temperature.text = resources.getString(R.string.flirt_current_user_temperature, flashedUser.temperature)
+            tv_body_humidity.text = resources.getString(R.string.flirt_current_user_humidity, flashedUser.humidity)
+        }
+    }
+
+    override fun setCurrentConversationKey(key: String) {
+
+    }
+
+    override fun setCurrentFlirtViewModel(flirtViewModels: MutableList<FlirtViewModel>) {
+        //if (this.view != null) {
+        epoxyController.flirtViewModels = flirtViewModels
+        epoxyController.requestModelBuild()
+        flirtItems = flirtViewModels
+        //}
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         currentConversationChildEventListener = object : ChildEventListener {
 
             override fun onCancelled(p0: DatabaseError?) {}
@@ -116,8 +150,8 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
                 snap?.let {
 
                     if (it.value != null) {
-
                         flirtItems.clear()
+
                         it.child("quiz")
                                 .children
                                 .forEach {
@@ -129,8 +163,6 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
                                         epoxyController.requestModelBuild()
                                     }
                                 }
-
-                        presenter.reloadFlashedUserWithSensorValues()
                     }
                 }
             }
@@ -154,44 +186,15 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
                                         epoxyController.requestModelBuild()
                                     }
                                 }
-                        
-                        presenter.reloadFlashedUserWithSensorValues()
                     }
                 }
-
             }
             override fun onChildRemoved(p0: DataSnapshot?) {}
         }
 
-    }
-
-
-    override fun setFlashedUserInfo(flashedUser: FlashLuvUser) {
-
-        if (this.view != null) {
-
-            Glide.with(this.view)
-                    .load(Uri.parse(flashedUser.photoUrl))
-                    .into(iv_user_profile_pic)
-        }
-    }
-
-    override fun setCurrentConversationKey(key: String) {
-        currentConversationKey = key
         query = appFirebaseDatabase.conversationsRef
         query.addChildEventListener(currentConversationChildEventListener)
-    }
 
-    override fun setCurrentFlirtViewModel(flirtViewModels: MutableList<FlirtViewModel>) {
-        //if (this.view != null) {
-        epoxyController.flirtViewModels = flirtViewModels
-        epoxyController.requestModelBuild()
-        flirtItems = flirtViewModels
-        //}
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onStop() {

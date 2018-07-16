@@ -54,7 +54,6 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/iv_user_profile_pic"
                 app:layout_constraintTop_toTopOf="@+id/iv_user_profile_pic"
-                android:text="240 / 250"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 />
@@ -71,7 +70,6 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tv_heartBeat"
                 app:layout_constraintTop_toTopOf="@id/tv_heartBeat"
-                android:text="250 / 250"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 />
@@ -88,7 +86,6 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tv_body_temperature"
                 app:layout_constraintTop_toTopOf="@id/tv_body_temperature"
-                android:text="200 / 300"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 />

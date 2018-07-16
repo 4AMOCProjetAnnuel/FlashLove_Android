@@ -20,7 +20,7 @@ interface FlirtContract {
     }
 
     interface Presenter : BasePresenter {
-
+        fun loadConversation()
         fun updateFlirt(flirtViewModel: FlirtViewModel)
         fun reloadFlashedUserWithSensorValues()
     }

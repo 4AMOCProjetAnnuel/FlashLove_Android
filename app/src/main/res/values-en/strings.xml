@@ -44,4 +44,9 @@
     <string name="quiz_update_success_message">Your quiz has been successfully updated</string>
     <string name="flirt_item_quiz_send_btn_title">SEND</string>
 
+    <!-- flirt -->
+    <string name="flirt_current_user_heartbeat">%d / 250</string>
+    <string name="flirt_current_user_temperature">%d / 250</string>
+    <string name="flirt_current_user_humidity">%d / 300</string>
+
 </resources>
