@@ -21,9 +21,6 @@ class FlirtListEpoxyController : EpoxyController() {
 
             it.forEach {
 
-                Log.v("@@photo", "${it.fromPhotoUrl}")
-                Log.v("@@photo", "${it.toPhotoUrl}")
-
                 FlirtListItemEpoxyModel(it)
                         .id(Random(500).hashCode())
                         .addTo(this)

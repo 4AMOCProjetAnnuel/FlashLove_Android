@@ -94,6 +94,23 @@ class FlirtPresenter(view: FlirtContract.View,
                         snap?.let {
                             it.getValue(FlashLuvUser::class.java)?.let {
                                 flashedUser = it
+
+
+                                appFirebaseDatabase.conversationsRef
+                                        .child(currentConversationRef)
+                                        .child("recordedHeartBeat")
+                                        .setValue(flashedUser.heartbeat)
+
+                                appFirebaseDatabase.conversationsRef
+                                        .child(currentConversationRef)
+                                        .child("recordedHumidity")
+                                        .setValue(flashedUser.humidity)
+
+                                appFirebaseDatabase.conversationsRef
+                                        .child(currentConversationRef)
+                                        .child("recordedTemperature")
+                                        .setValue(flashedUser.temperature)
+
                                 view.setFlashedUserInfo(it)
                             }
                         }
