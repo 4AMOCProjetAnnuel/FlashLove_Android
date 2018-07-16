@@ -18,6 +18,9 @@ import projetannuel.bigteam.com.feat.dashboard.DashboardFragment
 import projetannuel.bigteam.com.feat.dashboard.DashboardPresenter
 import projetannuel.bigteam.com.feat.flirt.FlirtContract
 import projetannuel.bigteam.com.feat.flirt.FlirtPresenter
+import projetannuel.bigteam.com.feat.flirtList.FlirtListContract
+import projetannuel.bigteam.com.feat.flirtList.FlirtListFragment
+import projetannuel.bigteam.com.feat.flirtList.FlirtListPresenter
 import projetannuel.bigteam.com.feat.profile.other.OtherProfileContract
 import projetannuel.bigteam.com.feat.profile.other.OtherProfilePresenter
 import projetannuel.bigteam.com.feat.profile.self.SelfProfileContract
@@ -26,8 +29,8 @@ import projetannuel.bigteam.com.feat.quiz.UserQuizContract
 import projetannuel.bigteam.com.feat.quiz.UserQuizFragment
 import projetannuel.bigteam.com.feat.quiz.UserQuizPresenter
 import projetannuel.bigteam.com.feat.register.RegisterContract
-import projetannuel.bigteam.com.feat.register.RegisterPresenter
 import projetannuel.bigteam.com.feat.register.RegisterFragment
+import projetannuel.bigteam.com.feat.register.RegisterPresenter
 import projetannuel.bigteam.com.navigation.AppNavigator
 import projetannuel.bigteam.com.network.FCMServiceInterface
 import projetannuel.bigteam.com.network.buildFCMOKHttpClient
@@ -77,6 +80,6 @@ val kodeinModule = Kodein.Module {
     bind<Retrofit>() with singleton { buildFCMRetrofit() }
     bind<FCMServiceInterface>() with singleton { buildFCMService(instance()) }
 
-
-
+    bind<FlirtListContract.Presenter>() with provider { (FlirtListPresenter(instance(), instance(), instance())) as FlirtListContract.Presenter }
+    bind<FlirtListContract.View>() with provider { (FlirtListFragment()) as FlirtListContract.View }
 }

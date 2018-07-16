@@ -3,6 +3,7 @@ package projetannuel.bigteam.com.navigation
 import android.app.FragmentManager
 import projetannuel.bigteam.com.feat.dashboard.DashboardFragment
 import projetannuel.bigteam.com.feat.flirt.FlirtFragment
+import projetannuel.bigteam.com.feat.flirtList.FlirtListFragment
 import projetannuel.bigteam.com.feat.parties.PartiesFragment
 import projetannuel.bigteam.com.feat.profile.other.OtherProfileFragment
 import projetannuel.bigteam.com.feat.profile.self.SelfProfileFragment
@@ -90,6 +91,20 @@ class AppNavigator(private val fragmentManager: FragmentManager,
         fragmentManager
                 .beginTransaction()
                 .replace(containerId, flirtFragment, FlirtFragment.fragmentTag)
+                .addToBackStack(FlirtFragment.fragmentTag)
+                .commit()
+    }
+
+    override fun displayFlirtList() {
+
+        var flirtListFragment = fragmentManager.findFragmentByTag(FlirtListFragment.FLIRT_LIST_FRAGMENT_TAG)
+        if(flirtListFragment == null) {
+            flirtListFragment = FlirtListFragment()
+        }
+
+        fragmentManager
+                .beginTransaction()
+                .replace(containerId, flirtListFragment, FlirtListFragment.FLIRT_LIST_FRAGMENT_TAG)
                 .addToBackStack(FlirtFragment.fragmentTag)
                 .commit()
     }

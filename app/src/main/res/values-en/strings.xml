@@ -19,7 +19,7 @@
     <string name="sign_up_with_instagram_title">Sign up with Instagram</string>
     <string name="navigation_title_user_quiz">Quiz</string>
     <string name="navigation_title_profile">Profile</string>
-    <string name="navigation_titile_figures">flirts</string>
+    <string name="navigation_title_figures">flirts</string>
     <string name="btn_go_to_user_quizz_title">Quiz</string>
     <string name="user_quiz_submt_btn_title">Submit changes</string>
     <string name="other_profile_status_and_age">%s, %d years</string>
@@ -48,5 +48,7 @@
     <string name="flirt_current_user_heartbeat">%d / 250</string>
     <string name="flirt_current_user_temperature">%d / 250</string>
     <string name="flirt_current_user_humidity">%d / 300</string>
+    <string name="flirt_item_enter_response_hint">Enter a response here</string>
+    <string name="flirt_list_fragment_toolbar_title">My flirts</string>
 
 </resources>

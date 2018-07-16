@@ -14,4 +14,5 @@ interface Navigator {
     fun displayDashboard()
     fun displayOtherProfile(flashLuvUserId: String, flashingUSerID: String)
     fun displayFlirt(flashedUserId: String, flashingUserId: String, isFromMessagig: Boolean)
+    fun displayFlirtList()
 }

@@ -54,6 +54,8 @@ class FlirtPresenter(view: FlirtContract.View,
 
                                 view.setFlashedUserInfo(it)
 
+                                flashedUserQuery.addChildEventListener(flashedUSerSensorValuesListener)
+
                                 appFirebaseDatabase.usersReference.child(flashingUserId)
                                         .addListenerForSingleValueEvent(object : ValueEventListener {
                                             override fun onCancelled(p0: DatabaseError?) {}
@@ -91,16 +93,8 @@ class FlirtPresenter(view: FlirtContract.View,
                     override fun onDataChange(snap: DataSnapshot?) {
                         snap?.let {
                             it.getValue(FlashLuvUser::class.java)?.let {
-
-
                                 flashedUser = it
-
-                                Log.v("@@heartBeat new Val", "${flashedUser.heartbeat}")
-                                Log.v("@@temp new Val", "${flashedUser.temperature}")
-                                Log.v("@@humidity new Val", "${flashedUser.humidity}")
-
                                 view.setFlashedUserInfo(it)
-
                             }
                         }
                     }
@@ -169,7 +163,7 @@ class FlirtPresenter(view: FlirtContract.View,
                     .child("quiz")
                     .push()
 
-            val quizItem = QuizItem(it, "view Model")
+            val quizItem = QuizItem(it, "")
 
             databaseReference.setValue(quizItem)
 

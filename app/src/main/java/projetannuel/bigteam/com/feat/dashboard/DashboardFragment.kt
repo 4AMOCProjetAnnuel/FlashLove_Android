@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_dashboard.dashboard_navigator
 import kotlinx.android.synthetic.main.toolbar.app_toolbar
 import projetannuel.bigteam.com.R
+import projetannuel.bigteam.com.feat.flirtList.FlirtListFragment
 import projetannuel.bigteam.com.feat.profile.self.SelfProfileFragment
 import projetannuel.bigteam.com.feat.quiz.UserQuizFragment
 import projetannuel.bigteam.com.mvp.AppMvpFragment
@@ -21,7 +22,8 @@ class DashboardFragment : AppMvpFragment<DashboardContract.Presenter>(), Dashboa
 
     override val defaultLayout: Int = R.layout.fragment_dashboard
 
-    private var userQuizFragment =  UserQuizFragment ()
+    private var userQuizFragment =  UserQuizFragment()
+    private var flirtListFragment = FlirtListFragment()
 
     private lateinit var firebaseUser : FirebaseUser
 
@@ -50,6 +52,10 @@ class DashboardFragment : AppMvpFragment<DashboardContract.Presenter>(), Dashboa
                 .replace(R.id.navigation_items_container, selfProfileFragment, SelfProfileFragment.fragmentTag)
                 .commit()
 
+        if(childFragmentManager.findFragmentByTag(FlirtListFragment.FLIRT_LIST_FRAGMENT_TAG) != null) {
+            flirtListFragment = childFragmentManager.findFragmentByTag(FlirtListFragment.FLIRT_LIST_FRAGMENT_TAG) as FlirtListFragment
+        }
+
         dashboard_navigator.setOnNavigationItemSelectedListener({
             when(it.title) {
 
@@ -65,6 +71,13 @@ class DashboardFragment : AppMvpFragment<DashboardContract.Presenter>(), Dashboa
                     childFragmentManager
                             .beginTransaction()
                             .replace(R.id.navigation_items_container, userQuizFragment, UserQuizFragment.fragmentTag)
+                            .commit()
+                }
+
+                getString(R.string.navigation_title_figures) -> {
+                    childFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.navigation_items_container, flirtListFragment, FlirtListFragment.FLIRT_LIST_FRAGMENT_TAG)
                             .commit()
                 }
 

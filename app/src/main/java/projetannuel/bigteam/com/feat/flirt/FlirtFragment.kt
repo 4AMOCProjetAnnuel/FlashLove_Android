@@ -172,9 +172,7 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
                 snap?.let {
 
                     if (it.value != null) {
-
                         flirtItems = mutableListOf()
-
                         it.child("quiz")
                                 .children
                                 .forEach {
@@ -189,12 +187,12 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
                     }
                 }
             }
+
             override fun onChildRemoved(p0: DataSnapshot?) {}
         }
 
         query = appFirebaseDatabase.conversationsRef
         query.addChildEventListener(currentConversationChildEventListener)
-
     }
 
     override fun onStop() {

@@ -5,6 +5,6 @@
 
     <item android:id="@+id/flirt" android:icon="@drawable/ic_add_to_list" android:title="@string/navigation_title_user_quiz"  android:iconTint="@color/primary_pink_dark"/>
 
-    <item android:id="@+id/stats" android:icon="@drawable/ic_chat" android:title="@string/navigation_titile_figures"  android:iconTint="@color/primary_pink_dark"/>
+    <item android:id="@+id/flirtList" android:icon="@drawable/ic_chat" android:title="@string/navigation_title_figures"  android:iconTint="@color/primary_pink_dark"/>
 
 </menu>
