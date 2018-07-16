@@ -67,7 +67,7 @@ val kodeinModule = Kodein.Module {
 
     bind<OtherProfileContract.Presenter>() with factory {  params: OtherProfilePresenter.FactoryParameters -> (OtherProfilePresenter(instance(), instance(), instance(), instance(), params.flashedUserId, params.flashingUserId)) as OtherProfileContract.Presenter }
 
-    bind<FlirtContract.Presenter>() with factory { params : FlirtPresenter.FactoryParameters -> (FlirtPresenter(instance(), instance(), instance(), params.flashedUserId, params.flashingUserId)) as FlirtContract.Presenter }
+    bind<FlirtContract.Presenter>() with factory { params : FlirtPresenter.FactoryParameters -> (FlirtPresenter(instance(), instance(), instance(), params.flashedUserId, params.flashingUserId, params.isFromMessaging)) as FlirtContract.Presenter }
 
     bind<UserQuizContract.Presenter>() with provider { (UserQuizPresenter(instance(), instance(), instance())) as UserQuizContract.Presenter }
 

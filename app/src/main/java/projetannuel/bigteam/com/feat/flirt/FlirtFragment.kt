@@ -15,13 +15,20 @@ import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.kodein
 import com.github.salomonbrys.kodein.with
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.Query
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_main.app_toolbar
 import kotlinx.android.synthetic.main.fragment_flirt.iv_user_profile_pic
 import kotlinx.android.synthetic.main.fragment_flirt.rv_flirt_chat
 import projetannuel.bigteam.com.R
+import projetannuel.bigteam.com.appFirebase.AppFirebaseDatabase
 import projetannuel.bigteam.com.feat.flirt.epoxy.FlirtEpoxyController
 import projetannuel.bigteam.com.feat.flirt.model.FlirtViewModel
 import projetannuel.bigteam.com.model.FlashLuvUser
+import projetannuel.bigteam.com.model.QuizItem
 import projetannuel.bigteam.com.mvp.AppMvpFragment
 
 
@@ -31,8 +38,10 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
     override val presenter: FlirtContract.Presenter by lazy {
         val flashedUserId = arguments?.getString(FlirtFragment.FLASHED_USER_ID_TAG) ?: "0"
         val flashingUserId = arguments?.getString(FlirtFragment.FLASHING_USER_ID_TAG) ?: "0"
+        val isFromMessaging = arguments?.getBoolean(FlirtFragment.ISFROMMESSSAGING_TAG) ?: false
+
         val params = FlirtPresenter.FactoryParameters(flashedUserId,
-                flashingUserId)
+                flashingUserId, isFromMessaging)
 
         kodein()
                 .value
@@ -43,18 +52,21 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
 
     override val defaultLayout: Int = R.layout.fragment_flirt
 
+
     companion object {
 
         const val fragmentTag = "Flirt"
         const val FLASHED_USER_ID_TAG = "flashedUserId"
         const val FLASHING_USER_ID_TAG = "flashingUserId"
+        const val ISFROMMESSSAGING_TAG = "isFromMessaging"
 
 
-        fun newInstance(flashedUserId: String, flashingUserId: String): FlirtFragment {
+        fun newInstance(flashedUserId: String, flashingUserId: String, isFromMessaging : Boolean): FlirtFragment {
             val fragment = FlirtFragment()
             val args = Bundle()
             args.putString(FLASHED_USER_ID_TAG, flashedUserId)
             args.putString(FLASHING_USER_ID_TAG, flashingUserId)
+            args.putBoolean(ISFROMMESSSAGING_TAG, isFromMessaging)
             fragment.arguments = args
             return fragment
         }
@@ -66,6 +78,13 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
     }
 
     private lateinit var epoxyController: FlirtEpoxyController
+
+    private lateinit var currentConversationKey: String
+    private val appFirebaseDatabase: AppFirebaseDatabase by injector.instance()
+    private lateinit var currentConversationChildEventListener: ChildEventListener
+    private lateinit var query: Query
+    private lateinit var flirtItems: MutableList<FlirtViewModel>
+
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         (activity as AppCompatActivity).app_toolbar.title = FlirtFragment.fragmentTag
@@ -80,14 +99,72 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
         }
 
         epoxyController = FlirtEpoxyController(
-
-                { currentFlirtItem : FlirtViewModel -> presenter.updateFlirt(currentFlirtItem) }
-
+                { currentFlirtItem: FlirtViewModel -> presenter.updateFlirt(currentFlirtItem) }
         )
 
         rv_flirt_chat.adapter = epoxyController.adapter
         rv_flirt_chat.layoutManager = LinearLayoutManager(context)
+
+        currentConversationChildEventListener = object : ChildEventListener {
+
+            override fun onCancelled(p0: DatabaseError?) {}
+
+            override fun onChildMoved(snap: DataSnapshot?, p1: String?) {}
+
+            override fun onChildChanged(snap: DataSnapshot?, childName: String?) {
+
+                snap?.let {
+
+                    if (it.value != null) {
+
+                        flirtItems.clear()
+                        it.child("quiz")
+                                .children
+                                .forEach {
+                                    if(it.getValue(QuizItem::class.java) != null) {
+                                        val quizItem = it.getValue(QuizItem::class.java)!!
+                                        val currentFlirt = FlirtViewModel(it.key, quizItem.question, quizItem.response)
+                                        flirtItems.add(currentFlirt)
+                                        epoxyController.flirtViewModels = flirtItems
+                                        epoxyController.requestModelBuild()
+                                    }
+                                }
+
+                        presenter.reloadFlashedUserWithSensorValues()
+                    }
+                }
+            }
+
+            override fun onChildAdded(snap: DataSnapshot?, p1: String?) {
+
+                snap?.let {
+
+                    if (it.value != null) {
+
+                        flirtItems = mutableListOf()
+
+                        it.child("quiz")
+                                .children
+                                .forEach {
+                                    if(it.getValue(QuizItem::class.java) != null) {
+                                        val quizItem = it.getValue(QuizItem::class.java)!!
+                                        val currentFlirt = FlirtViewModel(it.key, quizItem.question, quizItem.response)
+                                        flirtItems.add(currentFlirt)
+                                        epoxyController.flirtViewModels = flirtItems
+                                        epoxyController.requestModelBuild()
+                                    }
+                                }
+                        
+                        presenter.reloadFlashedUserWithSensorValues()
+                    }
+                }
+
+            }
+            override fun onChildRemoved(p0: DataSnapshot?) {}
+        }
+
     }
+
 
     override fun setFlashedUserInfo(flashedUser: FlashLuvUser) {
 
@@ -96,20 +173,29 @@ class FlirtFragment : AppMvpFragment<FlirtContract.Presenter>(),
             Glide.with(this.view)
                     .load(Uri.parse(flashedUser.photoUrl))
                     .into(iv_user_profile_pic)
-
         }
-
     }
 
-    override fun setCurrentFlirtViewModel(flirtViewModels : MutableList<FlirtViewModel>) {
-        if (this.view != null) {
-
-            epoxyController.flirtViewModels = flirtViewModels
-            epoxyController.requestModelBuild()
-        }
-
-
+    override fun setCurrentConversationKey(key: String) {
+        currentConversationKey = key
+        query = appFirebaseDatabase.conversationsRef
+        query.addChildEventListener(currentConversationChildEventListener)
     }
 
+    override fun setCurrentFlirtViewModel(flirtViewModels: MutableList<FlirtViewModel>) {
+        //if (this.view != null) {
+        epoxyController.flirtViewModels = flirtViewModels
+        epoxyController.requestModelBuild()
+        flirtItems = flirtViewModels
+        //}
+    }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onStop() {
+        query.removeEventListener(currentConversationChildEventListener)
+        super.onStop()
+    }
 }

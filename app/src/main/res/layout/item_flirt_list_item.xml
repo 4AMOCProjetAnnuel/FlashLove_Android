@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="8dp"
+        android:layout_margin="8dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_from"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:scaleType="centerCrop"
+                app:civ_border_color="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_heartBeat"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/pic" />
+
+
+            <TextView
+                android:id="@+id/tv_heartBeat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTint="@color/primary_pink_dark"
+                android:drawableTop="@drawable/ic_spectrum"
+                android:text="240 / 250"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_from"
+                app:layout_constraintEnd_toStartOf="@+id/tv_body_temperature"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/iv_from"
+                app:layout_constraintTop_toTopOf="@+id/iv_from" />
+
+            <TextView
+                android:id="@+id/tv_body_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTint="@color/primary_pink_dark"
+                android:drawableTop="@drawable/ic_body_temp"
+                android:text="250 / 250"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tv_heartBeat"
+                app:layout_constraintEnd_toStartOf="@+id/tv_body_humidity"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_heartBeat"
+                app:layout_constraintTop_toTopOf="@id/tv_heartBeat" />
+
+            <TextView
+                android:id="@+id/tv_body_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTint="@color/primary_pink_dark"
+                android:drawableTop="@drawable/ic_humidity_icon"
+                android:text="200 / 300"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tv_body_temperature"
+                app:layout_constraintEnd_toStartOf="@+id/iv_to"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_body_temperature"
+                app:layout_constraintTop_toTopOf="@id/tv_body_temperature" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_to"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:scaleType="centerCrop"
+                app:civ_border_color="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/tv_body_temperature"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_body_humidity"
+                app:layout_constraintTop_toTopOf="@id/tv_body_temperature"
+                tools:src="@drawable/pic" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>

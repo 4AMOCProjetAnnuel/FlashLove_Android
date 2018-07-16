@@ -40,6 +40,9 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
     private lateinit var query: Query
     private var disposableBag = CompositeDisposable()
 
+
+    private lateinit var currentConversationKey : String
+
     val flashedUserValuesEventListener = object : ChildEventListener {
 
         override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
@@ -76,6 +79,11 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
                 })
     }
 
+    private fun CreateConversation() {
+
+
+    }
+
     override fun queryFlashLuvUser(incrementViews: Boolean, incrementLikes: Boolean,
             incrementFlirts: Boolean) {
 
@@ -107,7 +115,7 @@ class OtherProfilePresenter(view: OtherProfileContract.View,
                                     it.flirts++
                                     appFirebaseDatabase.saveFlashLuvUser(it)
                                     queryFlashLuvUser(false, false, false)
-                                    navigator.displayFlirt(it.uid, flashingUser.uid)
+                                    navigator.displayFlirt(it.uid, flashingUser.uid, false)
                                 }
 
                                 query = appFirebaseDatabase.usersReference.child(it.uid)

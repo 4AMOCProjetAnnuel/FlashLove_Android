@@ -13,6 +13,8 @@ import projetannuel.bigteam.com.feat.flirt.model.FlirtViewModel
  * @author guirassy
  * @version $Id$
  */
+
+
 class FlirtItemEpoxyModel(private val currentFlirtItem: FlirtViewModel,
        private val onSubmitFlirtItemClicked: (currentFlirtItem: FlirtViewModel) -> Any) : EpoxyModel<ConstraintLayout>() {
 

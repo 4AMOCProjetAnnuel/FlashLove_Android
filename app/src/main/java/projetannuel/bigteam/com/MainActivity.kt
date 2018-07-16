@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity(), AppCompatActivityInjector {
             if (notificationType == resources.getString(R.string.notification_flash)) {
                 appNavigator.displayOtherProfile(flashedUserId, flashingUserId)
             } else {
-                appNavigator.displayFlirt(flashedUserId, flashingUserId)
+                appNavigator.displayFlirt(flashedUserId, flashingUserId, true)
             }
         }
     }

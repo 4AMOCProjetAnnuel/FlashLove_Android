@@ -78,12 +78,13 @@ class AppNavigator(private val fragmentManager: FragmentManager,
                 .commitAllowingStateLoss()
     }
 
-    override fun displayFlirt(flashedUserId: String, flashingUserId: String) {
+    override fun displayFlirt(flashedUserId: String, flashingUserId: String,
+            isFromMessagig: Boolean) {
 
         var flirtFragment = fragmentManager.findFragmentByTag(FlirtFragment.fragmentTag)
 
         if(flirtFragment == null){
-            flirtFragment = FlirtFragment.newInstance(flashedUserId, flashingUserId)
+            flirtFragment = FlirtFragment.newInstance(flashedUserId, flashingUserId, isFromMessagig)
         }
 
         fragmentManager

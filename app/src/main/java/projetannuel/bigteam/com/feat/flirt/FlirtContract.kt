@@ -16,13 +16,13 @@ interface FlirtContract {
     interface View : BaseView<Presenter> {
         fun setCurrentFlirtViewModel(flirtViewModels: MutableList<FlirtViewModel>)
         fun setFlashedUserInfo(flashedUser: FlashLuvUser)
+        fun setCurrentConversationKey(key: String)
     }
 
-    interface Presenter: BasePresenter {
+    interface Presenter : BasePresenter {
 
         fun updateFlirt(flirtViewModel: FlirtViewModel)
-
-
+        fun reloadFlashedUserWithSensorValues()
     }
 
 }
